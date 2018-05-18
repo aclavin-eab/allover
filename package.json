@@ -1,0 +1,54 @@
+{
+  "name": "allover",
+  "version": "0.0.1",
+  "description": "Dispersed art gallery",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack -w & nodemon server -w server",
+    "start-server": "nodemon server",
+    "build-client": "webpack",
+    "seed": "node seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewclavin/allover.git"
+  },
+  "author": "Andrew Clavin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewclavin/allover/issues"
+  },
+  "homepage": "https://github.com/andrewclavin/allover#readme",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "body-parser": "^1.16.1",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.1",
+    "morgan": "^1.8.1",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.0.0",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "sequelize": "^4.4.0",
+    "socket.io": "^1.7.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "css-loader": "^0.26.2",
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^6.0.2",
+    "style-loader": "^0.13.2",
+    "webpack": "^2.2.1"
+  }
+}
