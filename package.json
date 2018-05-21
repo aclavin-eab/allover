@@ -4,7 +4,7 @@
   "description": "Dispersed art gallery",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & nodemon server -w server",
+    "start": "webpack -w & nodemon dubuffet -w dubuffet",
     "start-server": "nodemon server",
     "build-client": "webpack",
     "seed": "node seed.js"
