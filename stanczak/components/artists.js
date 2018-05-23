@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browseArtists} from '../store'
 import Artist from './artist'
+import NewArtist from './newArtist'
 
 class Artists extends Component {
     componentDidMount() {
@@ -16,6 +17,7 @@ class Artists extends Component {
                 {artists && artists.map(ar => (
                     <Artist key={ar.id} artist={ar} />
                 ))}
+                <NewArtist />
             </div>
         )
     }

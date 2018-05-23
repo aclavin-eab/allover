@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browseArtwork} from '../store'
 import Piece from './piece'
+import NewPiece from './newPiece'
 
 class Artwork extends Component {
     componentDidMount() {
@@ -15,6 +16,7 @@ class Artwork extends Component {
                 {artwork && artwork.map(piece => (
                     <Piece key={piece.id} piece={piece} />
                 ))}
+                <NewPiece />
             </div>
         )
     }

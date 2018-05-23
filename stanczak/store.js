@@ -12,7 +12,9 @@ const initialState = {
 
 const ACTIONS = {
     BROWSE_ARTWORK: 'BROWSE_ARTWORK',
-    BROWSE_ARTISTS: 'BROWSE_ARTISTS'
+    BROWSE_ARTISTS: 'BROWSE_ARTISTS',
+    ADD_ARTIST: 'ADD_ARTIST',
+    ADD_PIECE: 'ADD_PIECE',
 }
 
 export const stockArtwork = (artwork) => {
@@ -21,6 +23,14 @@ export const stockArtwork = (artwork) => {
 
 export const stockArtists = (artists) => {
     return {type: ACTIONS.BROWSE_ARTISTS, artists}
+}
+
+export const buyArtist = (artist) => {
+    return {type: ACTIONS.ADD_ARTIST, artist}
+}
+
+export const buyPiece = (piece) => {
+    return {type: ACTIONS.ADD_PIECE, piece}
 }
 
 //THUNKS
@@ -40,6 +50,24 @@ export function browseArtists() {
     }
 }
 
+export function addArtist(artistObj) {
+    console.log(artistObj)
+    return async dispatch => {
+        const response = await axios.post('/api/artists', artistObj)
+        const artist = response.data
+        dispatch(buyArtist(artist))
+    }
+}
+
+export function addPiece(artObj) {
+    console.log(artObj)
+    return async dispatch => {
+        const response = await axios.post('/api/artwork', artObj)
+        const piece = response.data
+        dispatch(buyPiece(piece))
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIONS.BROWSE_ARTWORK: {
@@ -52,6 +80,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 artists: action.artists
+            }
+        }
+        case ACTIONS.ADD_ARTIST: {
+            return {
+                ...state,
+                artists: state.artists.concat([action.artist])
+            }
+        }
+        case ACTIONS.ADD_PIECE: {
+            return {
+                ...state,
+                artwork: state.artwork.concat([action.piece])
             }
         }
         default: {
