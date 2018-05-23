@@ -1,17 +1,17 @@
 //import './index.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 import Components from './components'
 import { Provider } from 'react-redux'
 import store from './store'
+import Artwork from './components/artwork'
 
 ReactDOM.render(
     <Provider store={store}>
-      <Router>
+      <BrowserRouter>
         <Components />
-      </Router>
+      </BrowserRouter>
     </Provider>,
-      document.getElementById('app')
+    document.getElementById('app')
 )
-console.log('running front end')
