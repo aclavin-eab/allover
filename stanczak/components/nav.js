@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-export default class Nav extends Component {
-
-    render(){
-        return (
-            <div>
-                <nav>
-                    <Link to="/artwork"> Art </Link>
-                    <Link to="/"> Home </Link>
-                </nav>
-            </div>
-        )
-    }
+export default (props) => {
+    return (
+        <div>
+            <nav>
+                <Link to="/"> Allover </Link>
+                <Link to="/artwork"> Art </Link>
+                <Link to="/artists"> Artists </Link>
+            </nav>
+        </div>
+    )
 }

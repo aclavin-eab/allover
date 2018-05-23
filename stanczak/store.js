@@ -32,12 +32,26 @@ export function browseArtwork() {
     }
 }
 
+export function browseArtists() {
+    return async dispatch => {
+        const response = await axios.get('/api/artists')
+        const artists = response.data
+        dispatch(stockArtists(artists))
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIONS.BROWSE_ARTWORK: {
             return {
                 ...state,
                 artwork: action.artwork
+            }
+        }
+        case ACTIONS.BROWSE_ARTISTS: {
+            return {
+                ...state,
+                artists: action.artists
             }
         }
         default: {

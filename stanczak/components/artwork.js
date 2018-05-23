@@ -1,20 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browseArtwork} from '../store'
+import Piece from './piece'
 
 class Artwork extends Component {
     componentDidMount() {
-        console.log("DONE MOUNTING")
         this.props.browseInitialArtwork()
     }
 
     render() {
-        console.log(this.props);
         const artwork = this.props.artwork
         return (
             <div>
                 {artwork && artwork.map(piece => (
-                    <div key={piece.id}>{piece.title}</div>
+                    <Piece key={piece.id} piece={piece} />
                 ))}
             </div>
         )

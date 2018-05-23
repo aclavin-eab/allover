@@ -3,6 +3,7 @@ import {Route, Link, Switch, Redirect, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {browseArtwork} from '../store'
 import Artwork from './artwork'
+import Artists from './artists'
 import Nav from './nav'
 
 class Components extends Component {
@@ -18,6 +19,7 @@ class Components extends Component {
                 <Nav />
                 <div className="content">
                     <Route path="/artwork" component={Artwork} />
+                    <Route path="/artists" component={Artists} />
                 </div>
             </div>
         )
