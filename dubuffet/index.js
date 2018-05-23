@@ -10,7 +10,7 @@ const server = app.listen(PORT, () => console.log(`Buncha Bruts on ${PORT}`))
 
 module.exports = app
 
-db.sync({force: true}).then(() => console.log('Database is synced'))
+db.sync().then(() => console.log('Database is synced'))
 
 app.use(dex('dev'))
 

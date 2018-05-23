@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('./database')
 
 const Artist = db.define('artist', {
-    Name: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false
     }
