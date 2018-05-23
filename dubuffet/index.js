@@ -3,7 +3,7 @@ const path = require('path')
 const express = require('express')
 const dex = require('morgan')
 const bodyParser = require('body-parser')
-const db = require('./model')
+const { db } = require('./models')
 const PORT = process.env.PORT || 8888
 const app = express()
 const server = app.listen(PORT, () => console.log(`Buncha Bruts on ${PORT}`))
@@ -17,4 +17,11 @@ app.use(dex('dev'))
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))
 app.use(express.static(path.join(__dirname, '..', 'stanczak/public')))
 
-//app.use('/api')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
+
+app.use('/api', require('./routes'))
+
+app.use((err, req, res, next) =>
+    res.status(err.status || 500).send(err.message || 'internal server error')
+)
