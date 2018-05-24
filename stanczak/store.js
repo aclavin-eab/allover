@@ -18,14 +18,16 @@ const ACTIONS = {
     READ_PIECE: 'READ_PIECE',
     EDIT_PIECE: 'EDIT_PIECE',
     DELETE_PIECE: 'DELETE_PIECE',
+    READ_ARTIST: 'READ_ARTIST',
+    EDIT_ARTIST: 'EDIT_ARTIST',
+    DELETE_ARTIST: 'DELETE_ARTIST',
 }
 
 //helper
-const getIndexOfPiece = (piece, state) => {
-    return state.artwork.findIndex(art => {
-        return art.id === +piece
+const getIndexOfPiece = (id, arr) => {
+    return arr.findIndex(art => {
+        return art.id === +id
     })
-
 }
 
 export const stockArtwork = (artwork) => {
@@ -48,12 +50,24 @@ export const featurePiece = (piece) => {
     return {type: ACTIONS.READ_PIECE, piece}
 }
 
+export const featureArtist = (artist) => {
+    return {type: ACTIONS.READ_ARTIST, artist}
+}
+
 export const changePiece = (piece => {
     return {type: ACTIONS.EDIT_PIECE, piece}
 })
 
+export const changeArtist = (artist => {
+    return {type: ACTIONS.EDIT_ARTIST, artist}
+})
+
 export const sellPiece = (piece) => {
     return {type: ACTIONS.DELETE_PIECE, piece}
+}
+
+export const sellArtist = (artist) => {
+    return {type: ACTIONS.DELETE_ARTIST, artist}
 }
 
 //THUNKS
@@ -113,6 +127,30 @@ export function deletePiece(id) {
     }
 }
 
+export function readArtist(id) {
+    return async dispatch => {
+        const response = await axios.get(`/api/artist/${id}`)
+        const artist = response.data
+        dispatch(featureArtist(artist))
+    }
+}
+
+export function editArtist(obj) {
+    return async dispatch => {
+        const response = await axios.put(`/api/artist/${obj.id}`, obj)
+        const artist = response.data
+        dispatch(changeArtist(artist))
+    }
+}
+
+export function deleteArtist(id) {
+    return async dispatch => {
+        const response = await axios.delete(`/api/artist/${id}`)
+        const artist = response.data
+        dispatch(sellArtist(artist))
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIONS.BROWSE_ARTWORK: {
@@ -148,17 +186,39 @@ const reducer = (state = initialState, action) => {
         case ACTIONS.EDIT_PIECE: {
             return {
                 ...state,
-                artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece.id, state)),
+                artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece.id, state.artwork)),
                             action.piece,
-                          ...state.artwork.slice(getIndexOfPiece(action.piece.id, state) + 1)],
+                          ...state.artwork.slice(getIndexOfPiece(action.piece.id, state.artwork) + 1)],
                 selectedPiece: action.piece,
             }
         }
         case ACTIONS.DELETE_PIECE: {
             return {
                 ...state,
-                artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece, state)),
-                          ...state.artwork.slice(getIndexOfPiece(action.piece, state) + 1)]
+                artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece, state.artwork)),
+                          ...state.artwork.slice(getIndexOfPiece(action.piece, state.artwork) + 1)]
+            }
+        }
+        case ACTIONS.READ_ARTIST: {
+            return {
+                ...state,
+                selectedArtist: action.artist
+            }
+        }
+        case ACTIONS.EDIT_ARTIST: {
+            return {
+                ...state,
+                artists: [...state.artists.slice(0, getIndexOfPiece(action.artist.id, state.artists)),
+                            action.artist,
+                          ...state.artist.slice(getIndexOfPiece(action.artist.id, state.artists) + 1)],
+                selectedArtist: action.artist,
+            }
+        }
+        case ACTIONS.DELETE_PIECE: {
+            return {
+                ...state,
+                artists: [...state.artists.slice(0, getIndexOfPiece(action.artist, state.artists)),
+                          ...state.artists.slice(getIndexOfPiece(action.artist, state.artists) + 1)]
             }
         }
         default: {
