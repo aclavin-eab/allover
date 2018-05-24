@@ -15,7 +15,16 @@ const ACTIONS = {
     BROWSE_ARTISTS: 'BROWSE_ARTISTS',
     ADD_ARTIST: 'ADD_ARTIST',
     ADD_PIECE: 'ADD_PIECE',
-    READ_PIECE: 'READ_PIECE'
+    READ_PIECE: 'READ_PIECE',
+    DELETE_PIECE: 'DELETE_PIECE'
+}
+
+//helper
+const getIndexOfPiece = (piece, state) => {
+    return state.artwork.findIndex(art => {
+        return art.id === +piece.id
+    })
+
 }
 
 export const stockArtwork = (artwork) => {
@@ -36,6 +45,10 @@ export const buyPiece = (piece) => {
 
 export const featurePiece = (piece) => {
     return {type: ACTIONS.READ_PIECE, piece}
+}
+
+export const sellPiece = (piece) => {
+    return {type: ACTIONS.DELETE_PIECE, piece}
 }
 
 //THUNKS
@@ -73,10 +86,17 @@ export function addPiece(artObj) {
 
 export function readPiece(id) {
     return async dispatch => {
-        console.log("THIS THE ID", id)
         const response = await axios.get(`/api/artwork/${id}`)
         const piece = response.data
         dispatch(featurePiece(piece))
+    }
+}
+
+export function deletePiece(id) {
+    return async dispatch => {
+        const response = await axios.delete(`/api/artwork/${id}`)
+        const piece = response.data
+        dispatch(sellPiece(piece))
     }
 }
 
@@ -110,6 +130,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 selectedPiece: action.piece
+            }
+        }
+        case ACTIONS.DELETE_PIECE: {
+            return {
+                ...state,
+                artwork: [...state.artwork.slice(),
+                          ...state.artwork.slice(getIndexOfPiece(action.piece, state) + 1)]
             }
         }
         default: {

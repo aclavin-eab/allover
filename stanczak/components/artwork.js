@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {browseArtwork, readArtwork} from '../store'
+import {browseArtwork, deletePiece} from '../store'
 import Piece from './piece'
 import NewPiece from './newPiece'
 
@@ -12,12 +12,16 @@ class Artwork extends Component {
 
     render() {
         const artwork = this.props.artwork
+        const deletePiece = this.props.deletePiece
         return (
             <div>
                 {artwork && artwork.map(piece => (
-                    <Link key={piece.id} to={`/artwork/${piece.id}`}>
-                        <Piece onClick={_ => {console.log('clicked it' + piece.id)}} piece={piece} />
-                    </Link>
+                    <div key={piece.id}>
+                        <Link to={`/artwork/${piece.id}`}>
+                            <Piece piece={piece} />
+                        </Link>
+                        <div onClick={_ => {deletePiece(piece.id)}}>X</div>
+                    </div>
                 ))}
                 <NewPiece />
             </div>
@@ -28,6 +32,7 @@ class Artwork extends Component {
 const mapDispatch = dispatch => {
     return {
         browseInitialArtwork: () => dispatch(browseArtwork()),
+        deletePiece: (id) => dispatch(deletePiece(id))
 
     }
 }
