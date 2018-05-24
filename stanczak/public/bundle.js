@@ -5432,6 +5432,9 @@ var newPiece = function (_Component) {
             var objy = { title: ev.target.title.value, artistId: +ev.target.artistId.value };
             if (_this.state.selectedPiece.id) {
                 objy = _this.state.selectedPiece;
+                if (objy.artistId === "null") {
+                    objy.artistId = null;
+                }
             }
             _this.props.addPiece(objy).then(function (_) {
                 _this.props.readPiece(_this.props.match.params.id);
@@ -5468,6 +5471,11 @@ var newPiece = function (_Component) {
                     _react2.default.createElement(
                         'select',
                         { name: 'artistId', value: this.state.selectedPiece.artistId, onChange: this.updateField },
+                        _react2.default.createElement(
+                            'option',
+                            { value: 'null' },
+                            'Select An Artist'
+                        ),
                         artists && artists.map(function (artist) {
                             return _react2.default.createElement(
                                 'option',
@@ -5487,7 +5495,6 @@ var newPiece = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        ' YO WE ON HERE',
                         this.state.selectedPiece.title
                     ),
                     _react2.default.createElement(

@@ -14,7 +14,6 @@ class newPiece extends Component {
     componentDidMount = () => {
         this.props.browseInitialArtists()
         this.props.match && this.props.match.params.id && this.props.readPiece(this.props.match.params.id)
-
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -28,6 +27,9 @@ class newPiece extends Component {
         let objy = {title: ev.target.title.value, artistId: +ev.target.artistId.value}
         if(this.state.selectedPiece.id){
             objy = this.state.selectedPiece
+            if(objy.artistId === "null"){
+                objy.artistId = null
+            }
         }
         this.props.addPiece(objy).then(_ => {
             this.props.readPiece(this.props.match.params.id)
@@ -54,22 +56,21 @@ class newPiece extends Component {
             <form onSubmit={this.handleSubmit}>
                 <input name="title" type="text" value={this.state.selectedPiece.title} onChange={this.updateField}/>
                 <select name="artistId" value={this.state.selectedPiece.artistId} onChange={this.updateField}>
+                        <option value={'null'} >Select An Artist</option>
                     {artists && artists.map(artist => (
                         <option key={artist.id} value={artist.id}>{artist.name}</option>
                     ))}
                 </select>
                 <button type="submit">Submit</button>
             </form>
-        ) : (
+            ) : (
                 <div>
-                    <div> YO WE ON HERE{this.state.selectedPiece.title}</div>
+                    <div>{this.state.selectedPiece.title}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )
             }
             </div>
-
-
         )
     }
 }
