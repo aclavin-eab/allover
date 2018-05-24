@@ -1,15 +1,39 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { addArtist } from '../store'
+import { addArtist, readArtist, editArtist } from '../store'
 
 class newArtist extends Component {
+    constructor() {
+        super()
+        this.state = {
+            editMode: false,
+            selectedArtist: this.props ? this.props.selectedArtist : {}
+        }
+    }
+
+    componentDidMount = () => {
+        this.props.match && this.props.match.params.id && this.props.readArtist(this.props.match.params.id)
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({
+            selectedArtist: nextProps.selectedArtist
+        })
+    }
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        console.log(ev.target.name.value)
-        this.props.addArtist({name: ev.target.name.value})
+        let objy = {name: ev.target.name.value}
+        if(this.state.selectedArtist.id){
+            objy = this.state.selectedArtist
+        }
+        this.props.addArtist(objy).then(_ => {
+            this.props.readArtist(this.props.match.params.id)
+            this.setState({editMode: false})
+        }, function(err){
+            console.log(err)
+        })
     }
-
     render() {
         const artists = this.props.artists
         console.log(artists)
@@ -24,12 +48,14 @@ class newArtist extends Component {
 
 const mapDispatch = dispatch => {
     return {
-        addArtist: (obj) => dispatch(addArtist(obj))
+        addArtist: (obj) => dispatch(obj.id? editArtist(obj) : addArtist(obj)),
+        readArtist: (id) => dispatch(readArtist(id))
     }
 }
 const mapProps = state => {
     return {
-        artists: state.artists
+        artists: state.artists,
+        selectedArtist: state.selectedArtist
     }
 }
 
