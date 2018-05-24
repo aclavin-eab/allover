@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { addPiece, browseArtists, readPiece } from '../store'
+import { addPiece, browseArtists, readPiece, editPiece } from '../store'
 
 class newPiece extends Component {
     constructor() {
@@ -25,7 +25,13 @@ class newPiece extends Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        this.props.addPiece({title: ev.target.title.value, artistId: +ev.target.artistId.value})
+        let objy = {title: ev.target.title.value, artistId: +ev.target.artistId.value}
+        console.log(this.state.selectedPiece)
+        if(this.state.selectedPiece.id){
+            console.log("SHOULD EDIT")
+            objy = this.state.selectedPiece
+        }
+        this.props.addPiece(objy)
     }
 
     toggleEdit = () => {
@@ -34,6 +40,7 @@ class newPiece extends Component {
 
     updateField = (ev) => {
         this.setState({selectedPiece : {
+            ...this.state.selectedPiece,
             [ev.target.name]: ev.target.value
         }})
     }
@@ -68,11 +75,12 @@ class newPiece extends Component {
 
 const mapDispatch = dispatch => {
     return {
-        addPiece: (obj) => dispatch(obj.id ? editPiece(obj) : addPiece(obj)),
+        addPiece: (obj) => {console.log('editter', obj); return dispatch(obj.id ? editPiece(obj) : addPiece(obj))},
         browseInitialArtists: () => dispatch(browseArtists()),
         readPiece: (id) => dispatch(readPiece(id))
     }
 }
+
 const mapProps = state => {
     return {
         artists: state.artists,

@@ -82,6 +82,7 @@ export function addArtist(artistObj) {
 }
 
 export function addPiece(artObj) {
+    console.log("RUNNING MY ADD")
     return async dispatch => {
         const response = await axios.post('/api/artwork', artObj)
         const piece = response.data
@@ -98,8 +99,9 @@ export function readPiece(id) {
 }
 
 export function editPiece(obj) {
+    console.log("RUNNING MY EDIT")
     return async dispatch => {
-        const response = await axios.delete(`/api/artwork/${obj.id}`, obj)
+        const response = await axios.put(`/api/artwork/${obj.id}`, obj)
         const piece = response.data
         dispatch(changePiece(piece))
     }
