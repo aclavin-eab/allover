@@ -16,13 +16,14 @@ const ACTIONS = {
     ADD_ARTIST: 'ADD_ARTIST',
     ADD_PIECE: 'ADD_PIECE',
     READ_PIECE: 'READ_PIECE',
+    EDIT_PIECE: 'EDIT_PIECE',
     DELETE_PIECE: 'DELETE_PIECE'
 }
 
 //helper
 const getIndexOfPiece = (piece, state) => {
     return state.artwork.findIndex(art => {
-        return art.id === +piece.id
+        return art.id === +piece
     })
 
 }
@@ -47,7 +48,12 @@ export const featurePiece = (piece) => {
     return {type: ACTIONS.READ_PIECE, piece}
 }
 
+export const changePiece = (piece => {
+    return {type: ACTIONS.EDIT_PIECE, piece}
+})
+
 export const sellPiece = (piece) => {
+    console.log("IN ACTION", piece)
     return {type: ACTIONS.DELETE_PIECE, piece}
 }
 
@@ -92,6 +98,14 @@ export function readPiece(id) {
     }
 }
 
+export function editPiece(obj) {
+    return async dispatch => {
+        const response = await axios.delete(`/api/artwork/${obj.id}`, obj)
+        const piece = response.data
+        dispatch(changePiece(piece))
+    }
+}
+
 export function deletePiece(id) {
     return async dispatch => {
         const response = await axios.delete(`/api/artwork/${id}`)
@@ -132,10 +146,19 @@ const reducer = (state = initialState, action) => {
                 selectedPiece: action.piece
             }
         }
-        case ACTIONS.DELETE_PIECE: {
+        case ACTIONS.EDIT_PIECE: {
             return {
                 ...state,
-                artwork: [...state.artwork.slice(),
+                artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece.id, state)),
+                            action.piece,
+                          ...state.artwork.slice(getIndexOfPiece(action.piece.id, state) + 1)]
+            }
+        }
+        case ACTIONS.DELETE_PIECE: {
+            console.log("PIECE", getIndexOfPiece(action.piece, state))
+            return {
+                ...state,
+                artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece, state)),
                           ...state.artwork.slice(getIndexOfPiece(action.piece, state) + 1)]
             }
         }

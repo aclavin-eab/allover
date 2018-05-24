@@ -22,8 +22,9 @@ router.put('/:id', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res, next) => {
-    const art = await Artwork.create(req.body).catch(next)
-    res.json(art)
+    const art = await Artwork.destroy({where: {id: +req.params.id}}).catch(next)
+    console.log(art)
+    res.json(req.params.id)
 })
 
 module.exports = router

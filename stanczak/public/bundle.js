@@ -1853,7 +1853,7 @@ var meta = module.exports = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.sellPiece = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
+exports.sellPiece = exports.changePiece = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1862,6 +1862,7 @@ exports.browseArtists = browseArtists;
 exports.addArtist = addArtist;
 exports.addPiece = addPiece;
 exports.readPiece = readPiece;
+exports.editPiece = editPiece;
 exports.deletePiece = deletePiece;
 
 var _redux = __webpack_require__(174);
@@ -1897,12 +1898,13 @@ var ACTIONS = {
     ADD_ARTIST: 'ADD_ARTIST',
     ADD_PIECE: 'ADD_PIECE',
     READ_PIECE: 'READ_PIECE',
+    EDIT_PIECE: 'EDIT_PIECE',
     DELETE_PIECE: 'DELETE_PIECE'
 
     //helper
 };var getIndexOfPiece = function getIndexOfPiece(piece, state) {
     return state.artwork.findIndex(function (art) {
-        return art.id === +piece.id;
+        return art.id === +piece;
     });
 };
 
@@ -1926,7 +1928,12 @@ var featurePiece = exports.featurePiece = function featurePiece(piece) {
     return { type: ACTIONS.READ_PIECE, piece: piece };
 };
 
+var changePiece = exports.changePiece = function changePiece(piece) {
+    return { type: ACTIONS.EDIT_PIECE, piece: piece };
+};
+
 var sellPiece = exports.sellPiece = function sellPiece(piece) {
+    console.log("IN ACTION", piece);
     return { type: ACTIONS.DELETE_PIECE, piece: piece };
 };
 
@@ -2096,7 +2103,7 @@ function readPiece(id) {
     }();
 }
 
-function deletePiece(id) {
+function editPiece(obj) {
     var _this6 = this;
 
     return function () {
@@ -2107,13 +2114,13 @@ function deletePiece(id) {
                     switch (_context6.prev = _context6.next) {
                         case 0:
                             _context6.next = 2;
-                            return _axios2.default.delete('/api/artwork/' + id);
+                            return _axios2.default.delete('/api/artwork/' + obj.id, obj);
 
                         case 2:
                             response = _context6.sent;
                             piece = response.data;
 
-                            dispatch(sellPiece(piece));
+                            dispatch(changePiece(piece));
 
                         case 5:
                         case 'end':
@@ -2125,6 +2132,39 @@ function deletePiece(id) {
 
         return function (_x6) {
             return _ref6.apply(this, arguments);
+        };
+    }();
+}
+
+function deletePiece(id) {
+    var _this7 = this;
+
+    return function () {
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
+            var response, piece;
+            return regeneratorRuntime.wrap(function _callee7$(_context7) {
+                while (1) {
+                    switch (_context7.prev = _context7.next) {
+                        case 0:
+                            _context7.next = 2;
+                            return _axios2.default.delete('/api/artwork/' + id);
+
+                        case 2:
+                            response = _context7.sent;
+                            piece = response.data;
+
+                            dispatch(sellPiece(piece));
+
+                        case 5:
+                        case 'end':
+                            return _context7.stop();
+                    }
+                }
+            }, _callee7, _this7);
+        }));
+
+        return function (_x7) {
+            return _ref7.apply(this, arguments);
         };
     }();
 }
@@ -2164,10 +2204,17 @@ var reducer = function reducer() {
                     selectedPiece: action.piece
                 });
             }
-        case ACTIONS.DELETE_PIECE:
+        case ACTIONS.EDIT_PIECE:
             {
                 return _extends({}, state, {
-                    artwork: [].concat(_toConsumableArray(state.artwork.slice()), _toConsumableArray(state.artwork.slice(getIndexOfPiece(action.piece, state) + 1)))
+                    artwork: [].concat(_toConsumableArray(state.artwork.slice(0, getIndexOfPiece(action.piece.id, state))), [action.piece], _toConsumableArray(state.artwork.slice(getIndexOfPiece(action.piece.id, state) + 1)))
+                });
+            }
+        case ACTIONS.DELETE_PIECE:
+            {
+                console.log("PIECE", getIndexOfPiece(action.piece, state));
+                return _extends({}, state, {
+                    artwork: [].concat(_toConsumableArray(state.artwork.slice(0, getIndexOfPiece(action.piece, state))), _toConsumableArray(state.artwork.slice(getIndexOfPiece(action.piece, state) + 1)))
                 });
             }
         default:
