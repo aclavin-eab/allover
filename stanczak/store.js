@@ -82,7 +82,6 @@ export function addArtist(artistObj) {
 }
 
 export function addPiece(artObj) {
-    console.log("RUNNING MY ADD")
     return async dispatch => {
         const response = await axios.post('/api/artwork', artObj)
         const piece = response.data
@@ -99,7 +98,6 @@ export function readPiece(id) {
 }
 
 export function editPiece(obj) {
-    console.log("RUNNING MY EDIT")
     return async dispatch => {
         const response = await axios.put(`/api/artwork/${obj.id}`, obj)
         const piece = response.data
@@ -152,7 +150,8 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece.id, state)),
                             action.piece,
-                          ...state.artwork.slice(getIndexOfPiece(action.piece.id, state) + 1)]
+                          ...state.artwork.slice(getIndexOfPiece(action.piece.id, state) + 1)],
+                selectedPiece: action.piece,
             }
         }
         case ACTIONS.DELETE_PIECE: {

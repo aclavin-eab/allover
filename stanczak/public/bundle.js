@@ -2039,7 +2039,6 @@ function addArtist(artistObj) {
 function addPiece(artObj) {
     var _this4 = this;
 
-    console.log("RUNNING MY ADD");
     return function () {
         var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
             var response, piece;
@@ -2106,7 +2105,6 @@ function readPiece(id) {
 function editPiece(obj) {
     var _this6 = this;
 
-    console.log("RUNNING MY EDIT");
     return function () {
         var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
             var response, piece;
@@ -2208,7 +2206,8 @@ var reducer = function reducer() {
         case ACTIONS.EDIT_PIECE:
             {
                 return _extends({}, state, {
-                    artwork: [].concat(_toConsumableArray(state.artwork.slice(0, getIndexOfPiece(action.piece.id, state))), [action.piece], _toConsumableArray(state.artwork.slice(getIndexOfPiece(action.piece.id, state) + 1)))
+                    artwork: [].concat(_toConsumableArray(state.artwork.slice(0, getIndexOfPiece(action.piece.id, state))), [action.piece], _toConsumableArray(state.artwork.slice(getIndexOfPiece(action.piece.id, state) + 1))),
+                    selectedPiece: action.piece
                 });
             }
         case ACTIONS.DELETE_PIECE:
@@ -5431,12 +5430,13 @@ var newPiece = function (_Component) {
         _this.handleSubmit = function (ev) {
             ev.preventDefault();
             var objy = { title: ev.target.title.value, artistId: +ev.target.artistId.value };
-            console.log(_this.state.selectedPiece);
             if (_this.state.selectedPiece.id) {
-                console.log("SHOULD EDIT");
                 objy = _this.state.selectedPiece;
             }
-            _this.props.addPiece(objy);
+            _this.props.addPiece(objy).then(function (_) {
+                _this.props.readPiece(_this.props.match.params.id);
+                _this.setState({ editMode: false });
+            }, function () {});
         };
 
         _this.toggleEdit = function () {

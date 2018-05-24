@@ -26,12 +26,13 @@ class newPiece extends Component {
     handleSubmit = (ev) => {
         ev.preventDefault()
         let objy = {title: ev.target.title.value, artistId: +ev.target.artistId.value}
-        console.log(this.state.selectedPiece)
         if(this.state.selectedPiece.id){
-            console.log("SHOULD EDIT")
             objy = this.state.selectedPiece
         }
-        this.props.addPiece(objy)
+        this.props.addPiece(objy).then(_ => {
+            this.props.readPiece(this.props.match.params.id)
+            this.setState({editMode: false})
+        }, function(){})
     }
 
     toggleEdit = () => {
