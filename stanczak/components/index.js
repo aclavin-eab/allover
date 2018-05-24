@@ -5,6 +5,7 @@ import {browseArtwork} from '../store'
 import Artwork from './artwork'
 import Artists from './artists'
 import PieceView from './pieceView'
+import NewPiece from './newPiece'
 import Nav from './nav'
 
 class Components extends Component {
@@ -20,7 +21,7 @@ class Components extends Component {
                 <Nav />
                 <div className="content">
                     <Route exact path="/artwork" component={Artwork} />
-                    <Route path="/artwork/:id" component={PieceView} />
+                    <Route path="/artwork/:id" component={NewPiece} />
                     <Route path="/artists" component={Artists} />
                 </div>
             </div>

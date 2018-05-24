@@ -17,7 +17,7 @@ const ACTIONS = {
     ADD_PIECE: 'ADD_PIECE',
     READ_PIECE: 'READ_PIECE',
     EDIT_PIECE: 'EDIT_PIECE',
-    DELETE_PIECE: 'DELETE_PIECE'
+    DELETE_PIECE: 'DELETE_PIECE',
 }
 
 //helper
@@ -53,7 +53,6 @@ export const changePiece = (piece => {
 })
 
 export const sellPiece = (piece) => {
-    console.log("IN ACTION", piece)
     return {type: ACTIONS.DELETE_PIECE, piece}
 }
 
@@ -155,7 +154,6 @@ const reducer = (state = initialState, action) => {
             }
         }
         case ACTIONS.DELETE_PIECE: {
-            console.log("PIECE", getIndexOfPiece(action.piece, state))
             return {
                 ...state,
                 artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece, state)),
