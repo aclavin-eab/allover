@@ -7,7 +7,9 @@ class newPiece extends Component {
         super()
         this.state = {
             editMode: false,
-            selectedPiece: this.props ? this.props.selectedPiece : {}
+            selectedPiece: {
+                title: ''
+            }
         }
     }
 
@@ -52,10 +54,10 @@ class newPiece extends Component {
         const artists = this.props.artists
         return (
             <div>
-            { !this.state.selectedPiece.id || this.state.editMode ? (
+            {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
             <form onSubmit={this.handleSubmit}>
-                <input name="title" type="text" value={this.state.selectedPiece.title} onChange={this.updateField}/>
-                <select name="artistId" value={this.state.selectedPiece.artistId} onChange={this.updateField}>
+                <input name="title" type="text" value={this.state.selectedPiece && this.state.selectedPiece.title} onChange={this.updateField}/>
+                <select name="artistId" value={this.state.selectedPiece && this.state.selectedPiece.artistId} onChange={this.updateField}>
                         <option value={'null'} >Select An Artist</option>
                     {artists && artists.map(artist => (
                         <option key={artist.id} value={artist.id}>{artist.name}</option>
@@ -65,7 +67,7 @@ class newPiece extends Component {
             </form>
             ) : (
                 <div>
-                    <div>{this.state.selectedPiece.title}</div>
+                    <div>{this.state.selectedPiece && this.state.selectedPiece.title}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )

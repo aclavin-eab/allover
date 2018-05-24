@@ -12,17 +12,17 @@ router.post('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-    const artists = await Artwork.findById(req.params.id).catch(next)
+    const artists = await Artist.findById(req.params.id).catch(next)
     res.json(artists)
 })
 
 router.put('/:id', async (req, res, next) => {
-    const artists = await Artwork.update(req.body, { where: {id: req.body.id} }).catch(next)
+    const artists = await Artist.update(req.body, { where: {id: req.body.id} }).catch(next)
     res.json(artists)
 })
 
 router.delete('/:id', async (req, res, next) => {
-    const artists = await Artwork.destroy({where: {id: +req.params.id}}).catch(next)
+    const artists = await Artist.destroy({where: {id: +req.params.id}}).catch(next)
     res.json(req.params.id)
 })
 

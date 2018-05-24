@@ -1853,7 +1853,7 @@ var meta = module.exports = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.sellArtist = exports.sellPiece = exports.changeArtist = exports.changePiece = exports.featureArtist = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
+exports.sellArtist = exports.clearSelection = exports.sellPiece = exports.changeArtist = exports.changePiece = exports.featureArtist = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1905,11 +1905,13 @@ var ACTIONS = {
     DELETE_PIECE: 'DELETE_PIECE',
     READ_ARTIST: 'READ_ARTIST',
     EDIT_ARTIST: 'EDIT_ARTIST',
-    DELETE_ARTIST: 'DELETE_ARTIST'
+    DELETE_ARTIST: 'DELETE_ARTIST',
+    CLEAR_SELECTION: 'CLEAR_SELECTION'
 
     //helper
 };var getIndexOfPiece = function getIndexOfPiece(id, arr) {
     return arr.findIndex(function (art) {
+        console.log(art.id, id);
         return art.id === +id;
     });
 };
@@ -1950,7 +1952,12 @@ var sellPiece = exports.sellPiece = function sellPiece(piece) {
     return { type: ACTIONS.DELETE_PIECE, piece: piece };
 };
 
+var clearSelection = exports.clearSelection = function clearSelection() {
+    return { type: ACTIONS.CLEAR_SELECTION, piece: {}, artist: {} };
+};
+
 var sellArtist = exports.sellArtist = function sellArtist(artist) {
+    console.log('selling', artist);
     return { type: ACTIONS.DELETE_ARTIST, artist: artist };
 };
 
@@ -2197,7 +2204,7 @@ function readArtist(id) {
                     switch (_context8.prev = _context8.next) {
                         case 0:
                             _context8.next = 2;
-                            return _axios2.default.get('/api/artist/' + id);
+                            return _axios2.default.get('/api/artists/' + id);
 
                         case 2:
                             response = _context8.sent;
@@ -2230,7 +2237,7 @@ function editArtist(obj) {
                     switch (_context9.prev = _context9.next) {
                         case 0:
                             _context9.next = 2;
-                            return _axios2.default.put('/api/artist/' + obj.id, obj);
+                            return _axios2.default.put('/api/artists/' + obj.id, obj);
 
                         case 2:
                             response = _context9.sent;
@@ -2263,7 +2270,7 @@ function deleteArtist(id) {
                     switch (_context10.prev = _context10.next) {
                         case 0:
                             _context10.next = 2;
-                            return _axios2.default.delete('/api/artist/' + id);
+                            return _axios2.default.delete('/api/artists/' + id);
 
                         case 2:
                             response = _context10.sent;
@@ -2346,10 +2353,17 @@ var reducer = function reducer() {
                     selectedArtist: action.artist
                 });
             }
-        case ACTIONS.DELETE_PIECE:
+        case ACTIONS.DELETE_ARTIST:
             {
                 return _extends({}, state, {
                     artists: [].concat(_toConsumableArray(state.artists.slice(0, getIndexOfPiece(action.artist, state.artists))), _toConsumableArray(state.artists.slice(getIndexOfPiece(action.artist, state.artists) + 1)))
+                });
+            }
+        case ACTIONS.CLEAR_SELECTION:
+            {
+                return _extends({}, state, {
+                    selectedPiece: action.selectedPiece,
+                    selectedArtist: action.selectedArtist
                 });
             }
         default:
@@ -5457,6 +5471,7 @@ var Artwork = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.browseInitialArtwork();
+            this.props.clearSelection();
         }
     }, {
         key: 'render',
@@ -5499,6 +5514,9 @@ var mapDispatch = function mapDispatch(dispatch) {
         },
         deletePiece: function deletePiece(id) {
             return dispatch((0, _store.deletePiece)(id));
+        },
+        clearSelection: function clearSelection() {
+            return dispatch((0, _store.clearSelection)());
         }
 
     };
@@ -5588,7 +5606,9 @@ var newPiece = function (_Component) {
 
         _this.state = {
             editMode: false,
-            selectedPiece: _this.props ? _this.props.selectedPiece : {}
+            selectedPiece: {
+                title: ''
+            }
         };
         return _this;
     }
@@ -5600,13 +5620,13 @@ var newPiece = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(
+                !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(
                     'form',
                     { onSubmit: this.handleSubmit },
-                    _react2.default.createElement('input', { name: 'title', type: 'text', value: this.state.selectedPiece.title, onChange: this.updateField }),
+                    _react2.default.createElement('input', { name: 'title', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField }),
                     _react2.default.createElement(
                         'select',
-                        { name: 'artistId', value: this.state.selectedPiece.artistId, onChange: this.updateField },
+                        { name: 'artistId', value: this.state.selectedPiece && this.state.selectedPiece.artistId, onChange: this.updateField },
                         _react2.default.createElement(
                             'option',
                             { value: 'null' },
@@ -5631,7 +5651,7 @@ var newPiece = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        this.state.selectedPiece.title
+                        this.state.selectedPiece && this.state.selectedPiece.title
                     ),
                     _react2.default.createElement(
                         'button',
@@ -9596,6 +9616,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(51);
 
+var _reactRouterDom = __webpack_require__(61);
+
 var _store = __webpack_require__(38);
 
 var _artist = __webpack_require__(198);
@@ -9627,17 +9649,34 @@ var Artists = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.browseInitialArtists();
+            this.props.clearSelection();
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var artists = this.props.artists;
-            console.log(artists);
             return _react2.default.createElement(
                 'div',
                 null,
                 artists && artists.map(function (ar) {
-                    return _react2.default.createElement(_artist2.default, { key: ar.id, artist: ar });
+                    return _react2.default.createElement(
+                        'div',
+                        { key: ar.id },
+                        _react2.default.createElement(
+                            _reactRouterDom.Link,
+                            { to: '/artists/' + ar.id },
+                            _react2.default.createElement(_artist2.default, { artist: ar })
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: function onClick(_) {
+                                    return _this2.props.deleteArtist(ar.id);
+                                } },
+                            'X'
+                        )
+                    );
                 }),
                 _react2.default.createElement(_newArtist2.default, null)
             );
@@ -9651,6 +9690,12 @@ var mapDispatch = function mapDispatch(dispatch) {
     return {
         browseInitialArtists: function browseInitialArtists() {
             return dispatch((0, _store.browseArtists)());
+        },
+        deleteArtist: function deleteArtist(id) {
+            return dispatch((0, _store.deleteArtist)(id));
+        },
+        clearSelection: function clearSelection() {
+            return dispatch((0, _store.clearSelection)());
         }
     };
 };
@@ -9701,6 +9746,10 @@ var _newPiece = __webpack_require__(123);
 
 var _newPiece2 = _interopRequireDefault(_newPiece);
 
+var _newArtist = __webpack_require__(202);
+
+var _newArtist2 = _interopRequireDefault(_newArtist);
+
 var _nav = __webpack_require__(201);
 
 var _nav2 = _interopRequireDefault(_nav);
@@ -9740,7 +9789,8 @@ var Components = function (_Component) {
                     { className: 'content' },
                     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/artwork', component: _artwork2.default }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/artwork/:id', component: _newPiece2.default }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/artists', component: _artists2.default })
+                    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/artists', component: _artists2.default }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/artists/:id', component: _newArtist2.default })
                 )
             );
         }
@@ -9822,6 +9872,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(5);
@@ -9833,6 +9885,8 @@ var _reactRedux = __webpack_require__(51);
 var _store = __webpack_require__(38);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -9861,20 +9915,33 @@ var newArtist = function (_Component) {
         _this.handleSubmit = function (ev) {
             ev.preventDefault();
             var objy = { name: ev.target.name.value };
+
             if (_this.state.selectedArtist.id) {
                 objy = _this.state.selectedArtist;
             }
             _this.props.addArtist(objy).then(function (_) {
-                _this.props.readArtist(_this.props.match.params.id);
+                if (_this.props.match && _this.props.match.params.id) {
+                    _this.props.readArtist(_this.props.match.params.id);
+                }
                 _this.setState({ editMode: false });
             }, function (err) {
                 console.log(err);
             });
         };
 
+        _this.toggleEdit = function () {
+            _this.setState({ editMode: true });
+        };
+
+        _this.updateField = function (ev) {
+            _this.setState({ selectedArtist: _extends({}, _this.state.selectedArtist, _defineProperty({}, ev.target.name, ev.target.value)) });
+        };
+
         _this.state = {
             editMode: false,
-            selectedArtist: _this.props ? _this.props.selectedArtist : {}
+            selectedArtist: {
+                name: ''
+            }
         };
         return _this;
     }
@@ -9883,15 +9950,31 @@ var newArtist = function (_Component) {
         key: 'render',
         value: function render() {
             var artists = this.props.artists;
-            console.log(artists);
             return _react2.default.createElement(
-                'form',
-                { onSubmit: this.handleSubmit },
-                _react2.default.createElement('input', { name: 'name', type: 'text' }),
-                _react2.default.createElement(
-                    'button',
-                    { type: 'submit' },
-                    'Submit'
+                'div',
+                null,
+                !this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? _react2.default.createElement(
+                    'form',
+                    { onSubmit: this.handleSubmit },
+                    _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField }),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'submit' },
+                        'Submit'
+                    )
+                ) : _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        this.state.selectedArtist && this.state.selectedArtist.name
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.toggleEdit },
+                        'EDIT'
+                    )
                 )
             );
         }
@@ -9918,100 +10001,6 @@ var mapProps = function mapProps(state) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapProps, mapDispatch)(newArtist);
-
-// import React, {Component} from 'react'
-// import { connect } from 'react-redux'
-// import { addPiece, browseArtists, readPiece, editPiece } from '../store'
-
-// class newPiece extends Component {
-//     constructor() {
-//         super()
-//         this.state = {
-//             editMode: false,
-//             selectedPiece: this.props ? this.props.selectedPiece : {}
-//         }
-//     }
-//
-//     componentDidMount = () => {
-//         this.props.browseInitialArtists()
-//         this.props.match && this.props.match.params.id && this.props.readPiece(this.props.match.params.id)
-//     }
-//
-//     componentWillReceiveProps = (nextProps) => {
-//         this.setState({
-//             selectedPiece: nextProps.selectedPiece
-//         })
-//     }
-//
-//     handleSubmit = (ev) => {
-//         ev.preventDefault()
-//         let objy = {title: ev.target.title.value, artistId: +ev.target.artistId.value}
-//         if(this.state.selectedPiece.id){
-//             objy = this.state.selectedPiece
-//             if(objy.artistId === "null"){
-//                 objy.artistId = null
-//             }
-//         }
-//         this.props.addPiece(objy).then(_ => {
-//             this.props.readPiece(this.props.match.params.id)
-//             this.setState({editMode: false})
-//         }, function(){})
-//     }
-//
-//     toggleEdit = () => {
-//         this.setState({editMode: true})
-//     }
-//
-//     updateField = (ev) => {
-//         this.setState({selectedPiece : {
-//             ...this.state.selectedPiece,
-//             [ev.target.name]: ev.target.value
-//         }})
-//     }
-//
-//     render() {
-//         const artists = this.props.artists
-//         return (
-//             <div>
-//             { !this.state.selectedPiece.id || this.state.editMode ? (
-//             <form onSubmit={this.handleSubmit}>
-//                 <input name="title" type="text" value={this.state.selectedPiece.title} onChange={this.updateField}/>
-//                 <select name="artistId" value={this.state.selectedPiece.artistId} onChange={this.updateField}>
-//                         <option value={'null'} >Select An Artist</option>
-//                     {artists && artists.map(artist => (
-//                         <option key={artist.id} value={artist.id}>{artist.name}</option>
-//                     ))}
-//                 </select>
-//                 <button type="submit">Submit</button>
-//             </form>
-//             ) : (
-//                 <div>
-//                     <div>{this.state.selectedPiece.title}</div>
-//                     <button onClick={this.toggleEdit}>EDIT</button>
-//                 </div>
-//             )
-//             }
-//             </div>
-//         )
-//     }
-// }
-//
-// const mapDispatch = dispatch => {
-//     return {
-//         addPiece: (obj) => {console.log('editter', obj); return dispatch(obj.id ? editPiece(obj) : addPiece(obj))},
-//         browseInitialArtists: () => dispatch(browseArtists()),
-//         readPiece: (id) => dispatch(readPiece(id))
-//     }
-// }
-//
-// const mapProps = state => {
-//     return {
-//         artists: state.artists,
-//         selectedPiece: state.selectedPiece
-//     }
-// }
-//
-// export default connect(mapProps, mapDispatch)(newPiece)
 
 /***/ }),
 /* 203 */

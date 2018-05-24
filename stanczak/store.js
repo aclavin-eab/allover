@@ -21,11 +21,13 @@ const ACTIONS = {
     READ_ARTIST: 'READ_ARTIST',
     EDIT_ARTIST: 'EDIT_ARTIST',
     DELETE_ARTIST: 'DELETE_ARTIST',
+    CLEAR_SELECTION: 'CLEAR_SELECTION',
 }
 
 //helper
 const getIndexOfPiece = (id, arr) => {
     return arr.findIndex(art => {
+        console.log(art.id, id)
         return art.id === +id
     })
 }
@@ -66,7 +68,12 @@ export const sellPiece = (piece) => {
     return {type: ACTIONS.DELETE_PIECE, piece}
 }
 
+export const clearSelection = () => {
+    return {type: ACTIONS.CLEAR_SELECTION, piece: {}, artist: {}}
+}
+
 export const sellArtist = (artist) => {
+    console.log('selling', artist)
     return {type: ACTIONS.DELETE_ARTIST, artist}
 }
 
@@ -129,7 +136,7 @@ export function deletePiece(id) {
 
 export function readArtist(id) {
     return async dispatch => {
-        const response = await axios.get(`/api/artist/${id}`)
+        const response = await axios.get(`/api/artists/${id}`)
         const artist = response.data
         dispatch(featureArtist(artist))
     }
@@ -137,7 +144,7 @@ export function readArtist(id) {
 
 export function editArtist(obj) {
     return async dispatch => {
-        const response = await axios.put(`/api/artist/${obj.id}`, obj)
+        const response = await axios.put(`/api/artists/${obj.id}`, obj)
         const artist = response.data
         dispatch(changeArtist(artist))
     }
@@ -145,7 +152,7 @@ export function editArtist(obj) {
 
 export function deleteArtist(id) {
     return async dispatch => {
-        const response = await axios.delete(`/api/artist/${id}`)
+        const response = await axios.delete(`/api/artists/${id}`)
         const artist = response.data
         dispatch(sellArtist(artist))
     }
@@ -214,11 +221,18 @@ const reducer = (state = initialState, action) => {
                 selectedArtist: action.artist,
             }
         }
-        case ACTIONS.DELETE_PIECE: {
+        case ACTIONS.DELETE_ARTIST: {
             return {
                 ...state,
                 artists: [...state.artists.slice(0, getIndexOfPiece(action.artist, state.artists)),
                           ...state.artists.slice(getIndexOfPiece(action.artist, state.artists) + 1)]
+            }
+        }
+        case ACTIONS.CLEAR_SELECTION: {
+            return {
+                ...state,
+                selectedPiece: action.selectedPiece,
+                selectedArtist: action.selectedArtist
             }
         }
         default: {

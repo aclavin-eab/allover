@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {browseArtwork, deletePiece} from '../store'
+import {browseArtwork, deletePiece, clearSelection} from '../store'
 import Piece from './piece'
 import NewPiece from './newPiece'
 
 class Artwork extends Component {
     componentDidMount() {
         this.props.browseInitialArtwork()
+        this.props.clearSelection()
     }
 
     render() {
@@ -32,7 +33,8 @@ class Artwork extends Component {
 const mapDispatch = dispatch => {
     return {
         browseInitialArtwork: () => dispatch(browseArtwork()),
-        deletePiece: (id) => dispatch(deletePiece(id))
+        deletePiece: (id) => dispatch(deletePiece(id)),
+        clearSelection: () => dispatch(clearSelection())
 
     }
 }
