@@ -15,6 +15,7 @@ const ACTIONS = {
     BROWSE_ARTISTS: 'BROWSE_ARTISTS',
     ADD_ARTIST: 'ADD_ARTIST',
     ADD_PIECE: 'ADD_PIECE',
+    READ_PIECE: 'READ_PIECE'
 }
 
 export const stockArtwork = (artwork) => {
@@ -31,6 +32,10 @@ export const buyArtist = (artist) => {
 
 export const buyPiece = (piece) => {
     return {type: ACTIONS.ADD_PIECE, piece}
+}
+
+export const featurePiece = (piece) => {
+    return {type: ACTIONS.READ_PIECE, piece}
 }
 
 //THUNKS
@@ -51,7 +56,6 @@ export function browseArtists() {
 }
 
 export function addArtist(artistObj) {
-    console.log(artistObj)
     return async dispatch => {
         const response = await axios.post('/api/artists', artistObj)
         const artist = response.data
@@ -60,11 +64,19 @@ export function addArtist(artistObj) {
 }
 
 export function addPiece(artObj) {
-    console.log(artObj)
     return async dispatch => {
         const response = await axios.post('/api/artwork', artObj)
         const piece = response.data
         dispatch(buyPiece(piece))
+    }
+}
+
+export function readPiece(id) {
+    return async dispatch => {
+        console.log("THIS THE ID", id)
+        const response = await axios.get(`/api/artwork/${id}`)
+        const piece = response.data
+        dispatch(featurePiece(piece))
     }
 }
 
@@ -92,6 +104,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 artwork: state.artwork.concat([action.piece])
+            }
+        }
+        case ACTIONS.READ_PIECE: {
+            return {
+                ...state,
+                selectedPiece: action.piece
             }
         }
         default: {

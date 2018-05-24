@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {browseArtwork} from '../store'
 import Artwork from './artwork'
 import Artists from './artists'
+import PieceView from './pieceView'
 import Nav from './nav'
 
 class Components extends Component {
@@ -18,7 +19,8 @@ class Components extends Component {
             <div>
                 <Nav />
                 <div className="content">
-                    <Route path="/artwork" component={Artwork} />
+                    <Route exact path="/artwork" component={Artwork} />
+                    <Route path="/artwork/:id" component={PieceView} />
                     <Route path="/artists" component={Artists} />
                 </div>
             </div>

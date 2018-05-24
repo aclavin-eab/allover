@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {browseArtwork} from '../store'
+import {Link} from 'react-router-dom'
+import {browseArtwork, readArtwork} from '../store'
 import Piece from './piece'
 import NewPiece from './newPiece'
 
@@ -14,7 +15,9 @@ class Artwork extends Component {
         return (
             <div>
                 {artwork && artwork.map(piece => (
-                    <Piece key={piece.id} piece={piece} />
+                    <Link key={piece.id} to={`/artwork/${piece.id}`}>
+                        <Piece onClick={_ => {console.log('clicked it' + piece.id)}} piece={piece} />
+                    </Link>
                 ))}
                 <NewPiece />
             </div>
@@ -24,7 +27,8 @@ class Artwork extends Component {
 
 const mapDispatch = dispatch => {
     return {
-        browseInitialArtwork: () => dispatch(browseArtwork())
+        browseInitialArtwork: () => dispatch(browseArtwork()),
+
     }
 }
 const mapProps = state => {
