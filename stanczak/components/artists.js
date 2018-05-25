@@ -16,7 +16,7 @@ class Artists extends Component {
         return (
             <div>
                 {artists && artists.map(ar => (
-                    <div key={ar.id}>
+                    <div className="item" key={ar.id}>
                         <Link to={`/artists/${ar.id}`}>
                             <Artist artist={ar} />
                         </Link>

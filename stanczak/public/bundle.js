@@ -5635,14 +5635,14 @@ var Artwork = function (_Component) {
                 artwork && artwork.map(function (piece) {
                     return _react2.default.createElement(
                         'div',
-                        { key: piece.id },
+                        { className: 'item', key: piece.id },
                         _react2.default.createElement(
                             _reactRouterDom.Link,
                             { to: '/artwork/' + piece.id },
                             _react2.default.createElement(_piece2.default, { piece: piece })
                         ),
                         _react2.default.createElement(
-                            'div',
+                            'button',
                             { onClick: function onClick(_) {
                                     deletePiece(piece.id);
                                 } },
@@ -5796,13 +5796,18 @@ var newArtist = function (_Component) {
             var artists = this.props.artists;
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'itemView' },
                 !this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement(
                         'form',
                         { onSubmit: this.handleSubmit },
+                        _react2.default.createElement(
+                            'h2',
+                            null,
+                            'Add New Artist'
+                        ),
                         _react2.default.createElement(
                             'label',
                             null,
@@ -5833,19 +5838,19 @@ var newArtist = function (_Component) {
                             'Submit'
                         )
                     ),
-                    _react2.default.createElement(
-                        'h3',
-                        null,
-                        'art'
-                    ),
-                    _react2.default.createElement(
-                        'h4',
-                        null,
-                        'Add art to artist'
-                    ),
                     this.state.selectedArtist && this.state.selectedArtist.id && _react2.default.createElement(
                         'div',
                         null,
+                        _react2.default.createElement(
+                            'h3',
+                            null,
+                            'art'
+                        ),
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Add art to artist'
+                        ),
                         _react2.default.createElement(
                             'form',
                             { onSubmit: this.handleSecondarySubmit },
@@ -5902,8 +5907,11 @@ var newArtist = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        'Name: ',
-                        this.state.selectedArtist && this.state.selectedArtist.name
+                        _react2.default.createElement(
+                            'h1',
+                            null,
+                            this.state.selectedArtist && this.state.selectedArtist.name
+                        )
                     ),
                     _react2.default.createElement(
                         'div',
@@ -6097,10 +6105,15 @@ var newPiece = function (_Component) {
             var artists = this.props.artists;
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'itemView' },
                 !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(
                     'form',
                     { onSubmit: this.handleSubmit },
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        'Add New Artwork'
+                    ),
                     _react2.default.createElement(
                         'label',
                         null,
@@ -6158,8 +6171,11 @@ var newPiece = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        'Title: ',
-                        this.state.selectedPiece && this.state.selectedPiece.title
+                        _react2.default.createElement(
+                            'h1',
+                            null,
+                            this.state.selectedPiece && this.state.selectedPiece.title
+                        )
                     ),
                     _react2.default.createElement(
                         'div',
@@ -10721,7 +10737,7 @@ var Artists = function (_Component) {
                 artists && artists.map(function (ar) {
                     return _react2.default.createElement(
                         'div',
-                        { key: ar.id },
+                        { className: 'item', key: ar.id },
                         _react2.default.createElement(
                             _reactRouterDom.Link,
                             { to: '/artists/' + ar.id },

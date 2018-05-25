@@ -17,11 +17,11 @@ class Artwork extends Component {
         return (
             <div>
                 {artwork && artwork.map(piece => (
-                    <div key={piece.id}>
+                    <div className="item" key={piece.id}>
                         <Link to={`/artwork/${piece.id}`}>
                             <Piece piece={piece} />
                         </Link>
-                        <div onClick={_ => {deletePiece(piece.id)}}>X</div>
+                        <button onClick={_ => {deletePiece(piece.id)}}>X</button>
                     </div>
                 ))}
                 <NewPiece />

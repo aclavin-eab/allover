@@ -67,10 +67,11 @@ class newArtist extends Component {
     render() {
         const artists = this.props.artists
         return (
-            <div>
+            <div className="itemView">
             {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
                 <div>
                 <form onSubmit={this.handleSubmit}>
+                <h2>Add New Artist</h2>
                 <label>Name
                 <input name="name" type="text" required value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
                 </label>
@@ -85,10 +86,11 @@ class newArtist extends Component {
                 </label>
                 <button type="submit">Submit</button>
                 </form>
-                <h3>art</h3>
-                <h4>Add art to artist</h4>
                 {this.state.selectedArtist && this.state.selectedArtist.id && (
                     <div>
+                    <h3>art</h3>
+                    <h4>Add art to artist</h4>
+
                 <form onSubmit={this.handleSecondarySubmit}>
                     <select name="artworkToAdd">
                         {this.props && this.props.artwork.map(art => (
@@ -112,7 +114,7 @@ class newArtist extends Component {
                 </div>
             ) : (
                 <div>
-                    <div>Name: {this.state.selectedArtist && this.state.selectedArtist.name}</div>
+                    <div><h1>{this.state.selectedArtist && this.state.selectedArtist.name}</h1></div>
                     <div>Origin: {this.state.selectedArtist && this.state.selectedArtist.origin}</div>
                     <div>Bio: {this.state.selectedArtist && this.state.selectedArtist.bio}</div>
                     <h2>ART PIECES</h2>

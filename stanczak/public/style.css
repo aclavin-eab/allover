@@ -1,0 +1,97 @@
+nav{
+    position: absolute;
+left: 50%;
+margin-left: -198px;
+top: 20px;
+padding: 20px 50px;
+color: white;
+background-color: #ff4444;
+}
+button{
+    background-color: transparent;
+    border-color: #ff4444;
+    color: #ff4444;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+a{
+    color: #aa0000;
+}
+
+h2{
+    font-weight: 100;
+}
+
+a, a:hover, a:visited, a:focus{
+    text-decoration: none;
+    transition: 0.2s;
+}
+a:hover{
+    color: #88ff00;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    margin: 15px;
+    font-weight: 200;
+    letter-spacing: 3px;
+}
+
+nav a:first-child {
+    font-weight: 800
+}
+
+.content{
+    margin-top: 110px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.item{
+    float: left;
+    margin: 5px 5px;
+    height:100px;
+    width: 100px;
+    background-color: #494444;
+    color: white;
+    position: relative;
+    padding:10px;
+    text-transform: uppercase;
+    font-weight: 200;
+}
+
+.item a{
+    color: white;
+}
+
+.item button{
+    padding: 2px 5px;
+    background-color: transparent;
+    border: 1px solid white;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    color: white;
+    font-weight: 100;
+}
+
+.itemView{
+    clear: both;
+}
+input, textarea{
+    display:block;
+    width: 100%;
+}
+label{
+    display: block;
+    width: 100%;
+    font-weight: 200;
+}
+form{
+    display: block;
+    width: 50%;
+    margin: 20px auto 0 auto;
+}

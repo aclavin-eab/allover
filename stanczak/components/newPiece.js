@@ -71,9 +71,10 @@ class newPiece extends Component {
     render() {
         const artists = this.props.artists
         return (
-            <div>
+            <div className="itemView">
             {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
             <form onSubmit={this.handleSubmit}>
+                <h2>Add New Artwork</h2>
                 <label>Title
                 <input name="title" type="text" required value={this.state.selectedPiece && this.state.selectedPiece.title} onChange={this.updateField}/>
                 </label>
@@ -99,7 +100,7 @@ class newPiece extends Component {
             </form>
             ) : (
                 <div>
-                    <div>Title: {this.state.selectedPiece && this.state.selectedPiece.title}</div>
+                    <div><h1>{this.state.selectedPiece && this.state.selectedPiece.title}</h1></div>
                     <div>Medium: {this.state.selectedPiece && this.state.selectedPiece.medium}</div>
                     <div>Contact: {this.state.selectedPiece && this.state.selectedPiece.contact}</div>
                     <div>Rating: {this.state.selectedPiece && this.state.selectedPiece.rating}</div>
