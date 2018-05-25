@@ -5807,7 +5807,7 @@ var newArtist = function (_Component) {
                             'label',
                             null,
                             'Name',
-                            _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField })
+                            _react2.default.createElement('input', { name: 'name', type: 'text', required: true, value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField })
                         ),
                         _react2.default.createElement(
                             'label',
@@ -6105,7 +6105,7 @@ var newPiece = function (_Component) {
                         'label',
                         null,
                         'Title',
-                        _react2.default.createElement('input', { name: 'title', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField })
+                        _react2.default.createElement('input', { name: 'title', type: 'text', required: true, value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField })
                     ),
                     _react2.default.createElement(
                         'label',
@@ -6117,7 +6117,7 @@ var newPiece = function (_Component) {
                         'label',
                         null,
                         'Contact',
-                        _react2.default.createElement('input', { name: 'contact', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.contact, onChange: this.updateField })
+                        _react2.default.createElement('input', { name: 'contact', type: 'email', required: true, value: this.state.selectedPiece && this.state.selectedPiece.contact, onChange: this.updateField })
                     ),
                     _react2.default.createElement(
                         'label',

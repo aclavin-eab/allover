@@ -72,7 +72,7 @@ class newArtist extends Component {
                 <div>
                 <form onSubmit={this.handleSubmit}>
                 <label>Name
-                <input name="name" type="text" value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
+                <input name="name" type="text" required value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
                 </label>
                 <label>Origin
                 <input name="origin" type="text" value={this.state.selectedArtist && this.state.selectedArtist.origin} onChange={this.updateField}/>

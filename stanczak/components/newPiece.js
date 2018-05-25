@@ -75,13 +75,13 @@ class newPiece extends Component {
             {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
             <form onSubmit={this.handleSubmit}>
                 <label>Title
-                <input name="title" type="text" value={this.state.selectedPiece && this.state.selectedPiece.title} onChange={this.updateField}/>
+                <input name="title" type="text" required value={this.state.selectedPiece && this.state.selectedPiece.title} onChange={this.updateField}/>
                 </label>
                 <label>Medium
                 <input name="medium" type="text" value={this.state.selectedPiece && this.state.selectedPiece.medium} onChange={this.updateField}/>
                 </label>
                 <label>Contact
-                <input name="contact" type="text" value={this.state.selectedPiece && this.state.selectedPiece.contact} onChange={this.updateField}/>
+                <input name="contact" type="email" required value={this.state.selectedPiece && this.state.selectedPiece.contact} onChange={this.updateField}/>
                 </label>
                 <label> ImageUrl
                 <input name="imageUrl" type="text" value={this.state.selectedPiece && this.state.selectedPiece.imageUrl} onChange={this.updateField}/>
