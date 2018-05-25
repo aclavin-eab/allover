@@ -1,5 +1,9 @@
 # allover
 
+create a database named allover
+run npm intsall
+and then npm start
+
 The definition of artistic activity occurs, first of all, in the field of distribution.
  Marcel Broodthaers
 
@@ -34,6 +38,6 @@ most notorious example), provoking an oscillation
 between skilled and de-skilled, authority and pretense,
 style and strategy, art and not-art.
 
-Communicative web software lends itself prefectly to be the dispersed gallery.
+Communicative web software lends itself well to function as a dispersed gallery.
 
 The aim of the project is to document location of art, whether geographically, by uri, or beyond in a social and analyzable way to better assist interaction with art however possible. With an endless goal of better facilitating art experiences, the highest hope is that the intersection of software and gallery breaches into the sphere of art object itself, though maybe only in innevitably sharing normative Conceptualism's property; "radically incomplete"
