@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { addPiece, browseArtists, readPiece, editPiece } from '../store'
 
 class newPiece extends Component {
@@ -31,19 +32,20 @@ class newPiece extends Component {
             artistId: +ev.target.artistId.value,
             medium: ev.target.medium.value,
             contact: ev.target.contact.value,
-            imageUrl: ev.target.imageUrl.value,
             rating: +ev.target.rating.value,
         }
+        !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value)
         if(this.state.selectedPiece.id){
             objy = this.state.selectedPiece
             if(objy.artistId === "null"){
                 objy.artistId = null
             }
         }
-        this.props.addPiece(objy).then(_ => {
+        this.props.addPiece(objy).then(art => {
             if(this.props.match && this.props.match.params.id){
                 this.props.readPiece(this.props.match.params.id)
             }
+            !objy.id && this.props.history.push(`/artwork/${art.id}`)
             this.setState({editMode: false})
         }, function(){})
     }
@@ -119,4 +121,4 @@ const mapProps = state => {
     }
 }
 
-export default connect(mapProps, mapDispatch)(newPiece)
+export default withRouter(connect(mapProps, mapDispatch)(newPiece))

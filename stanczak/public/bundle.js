@@ -5746,13 +5746,11 @@ var newArtist = function (_Component) {
             if (_this.state.selectedArtist.id) {
                 objy = _this.state.selectedArtist;
             }
-            _this.props.addArtist(objy).then(function (_) {
+            _this.props.addArtist(objy).then(function (artist) {
                 if (_this.props.match && _this.props.match.params.id) {
                     _this.props.readArtist(_this.props.match.params.id);
                 }
-                console.log('IN HERE', objy, !objy.id, _this.props.history);
-                console.log("ANOTHER ONE", _);
-                !objy.id && _this.props.history.push('/artists/' + _.id);
+                !objy.id && _this.props.history.push('/artists/' + artist.id);
                 _this.setState({ editMode: false });
             }, function (err) {
                 console.log(err);
@@ -5980,6 +5978,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(51);
 
+var _reactRouter = __webpack_require__(460);
+
 var _store = __webpack_require__(38);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -6018,19 +6018,20 @@ var newPiece = function (_Component) {
                 artistId: +ev.target.artistId.value,
                 medium: ev.target.medium.value,
                 contact: ev.target.contact.value,
-                imageUrl: ev.target.imageUrl.value,
                 rating: +ev.target.rating.value
             };
+            !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value);
             if (_this.state.selectedPiece.id) {
                 objy = _this.state.selectedPiece;
                 if (objy.artistId === "null") {
                     objy.artistId = null;
                 }
             }
-            _this.props.addPiece(objy).then(function (_) {
+            _this.props.addPiece(objy).then(function (art) {
                 if (_this.props.match && _this.props.match.params.id) {
                     _this.props.readPiece(_this.props.match.params.id);
                 }
+                !objy.id && _this.props.history.push('/artwork/' + art.id);
                 _this.setState({ editMode: false });
             }, function () {});
         };
@@ -6180,7 +6181,7 @@ var mapProps = function mapProps(state) {
     };
 };
 
-exports.default = (0, _reactRedux.connect)(mapProps, mapDispatch)(newPiece);
+exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapProps, mapDispatch)(newPiece));
 
 /***/ }),
 /* 126 */

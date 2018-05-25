@@ -36,13 +36,11 @@ class newArtist extends Component {
         if(this.state.selectedArtist.id){
             objy = this.state.selectedArtist
         }
-        this.props.addArtist(objy).then(_ => {
+        this.props.addArtist(objy).then(artist => {
             if(this.props.match && this.props.match.params.id){
                 this.props.readArtist(this.props.match.params.id)
             }
-            console.log('IN HERE', objy, !objy.id, this.props.history)
-            console.log("ANOTHER ONE", _)
-            !objy.id && this.props.history.push(`/artists/${_.id}`)
+            !objy.id && this.props.history.push(`/artists/${artist.id}`)
             this.setState({editMode: false})
         }, function(err){
             console.log(err)
