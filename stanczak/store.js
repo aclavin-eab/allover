@@ -99,6 +99,7 @@ export function addArtist(artistObj) {
         const response = await axios.post('/api/artists', artistObj)
         const artist = response.data
         dispatch(buyArtist(artist))
+        return artist
     }
 }
 
@@ -107,6 +108,7 @@ export function addPiece(artObj) {
         const response = await axios.post('/api/artwork', artObj)
         const piece = response.data
         dispatch(buyPiece(piece))
+        return piece
     }
 }
 

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { addArtist, readArtist, editArtist, browseArtwork, editPiece } from '../store'
 import Piece from './piece'
 
@@ -29,8 +30,9 @@ class newArtist extends Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        let objy = {name: ev.target.name.value, origin: ev.target.origin.value, imageUrl: ev.target.imageUrl.value, bio: ev.target.bio.value}
-
+        console.log(ev.target.imageUrl.value, !!ev.target.imageUrl.value)
+        let objy = {name: ev.target.name.value, origin: ev.target.origin.value, bio: ev.target.bio.value}
+        !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value)
         if(this.state.selectedArtist.id){
             objy = this.state.selectedArtist
         }
@@ -38,6 +40,9 @@ class newArtist extends Component {
             if(this.props.match && this.props.match.params.id){
                 this.props.readArtist(this.props.match.params.id)
             }
+            console.log('IN HERE', objy, !objy.id, this.props.history)
+            console.log("ANOTHER ONE", _)
+            !objy.id && this.props.history.push(`/artists/${_.id}`)
             this.setState({editMode: false})
         }, function(err){
             console.log(err)
@@ -133,4 +138,4 @@ const mapProps = state => {
     }
 }
 
-export default connect(mapProps, mapDispatch)(newArtist)
+export default withRouter(connect(mapProps, mapDispatch)(newArtist))
