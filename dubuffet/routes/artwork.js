@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { Artist, Artwork } = require('../models')
 
 router.get('/', async (req, res, next) => {
-    const art = await Artwork.findAll().catch(next)
+    const art = await Artwork.findAll({include: [{model: Artist, required: false}]}).catch(next)
     res.json(art)
 })
 
