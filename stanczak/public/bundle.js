@@ -6076,6 +6076,12 @@ var newPiece = function (_Component) {
             _this.setState({ selectedPiece: _extends({}, _this.state.selectedPiece, _defineProperty({}, ev.target.name, ev.target.value)) });
         };
 
+        _this.delete = function () {
+            _this.props.deletePiece(_this.props.match.params.id).then(function (_) {
+                _this.props.history.push('/artwork/');
+            });
+        };
+
         _this.state = {
             editMode: false,
             selectedPiece: {
@@ -6193,6 +6199,11 @@ var newPiece = function (_Component) {
                         'button',
                         { onClick: this.toggleEdit },
                         'EDIT'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.delete },
+                        'DELETE'
                     )
                 )
             );
@@ -6212,6 +6223,9 @@ var mapDispatch = function mapDispatch(dispatch) {
         },
         readPiece: function readPiece(id) {
             return dispatch((0, _store.readPiece)(id));
+        },
+        deletePiece: function deletePiece(id) {
+            return dispatch((0, _store.deletePiece)(id));
         }
     };
 };

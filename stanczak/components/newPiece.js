@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
-import { addPiece, browseArtists, readPiece, editPiece } from '../store'
+import { addPiece, browseArtists, readPiece, editPiece, deletePiece } from '../store'
 
 class newPiece extends Component {
     constructor() {
@@ -62,6 +62,12 @@ class newPiece extends Component {
         }})
     }
 
+    delete = () => {
+        this.props.deletePiece(this.props.match.params.id).then(_ => {
+            this.props.history.push(`/artwork/`)
+        })
+    }
+
     render() {
         const artists = this.props.artists
         return (
@@ -102,6 +108,7 @@ class newPiece extends Component {
                         <Link to={`/artists/${this.state.selectedPiece.artist.id}`}>{this.state.selectedPiece.artist.name}</Link>
                     ) || 'artist unknown'}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
+                    <button onClick={this.delete}>DELETE</button>
                 </div>
             )
             }
@@ -114,7 +121,8 @@ const mapDispatch = dispatch => {
     return {
         addPiece: (obj) => dispatch(obj.id ? editPiece(obj) : addPiece(obj)),
         browseInitialArtists: () => dispatch(browseArtists()),
-        readPiece: (id) => dispatch(readPiece(id))
+        readPiece: (id) => dispatch(readPiece(id)),
+        deletePiece: (id) => dispatch(deletePiece(id)),
     }
 }
 
