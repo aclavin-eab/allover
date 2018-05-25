@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+const Artwork = require('./artwork')
 const db = require('./database')
 
 const Artist = db.define('artist', {
@@ -16,6 +17,11 @@ const Artist = db.define('artist', {
     },
     bio: {
         type: Sequelize.TEXT
+    }
+},
+{
+    defaultScope: {
+        include: [{ model: Artwork}]
     }
 })
 
