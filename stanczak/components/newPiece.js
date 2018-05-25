@@ -102,13 +102,13 @@ class newPiece extends Component {
                     <div>Title: {this.state.selectedPiece && this.state.selectedPiece.title}</div>
                     <div>Medium: {this.state.selectedPiece && this.state.selectedPiece.medium}</div>
                     <div>Contact: {this.state.selectedPiece && this.state.selectedPiece.contact}</div>
-                    <div>imageUrl: {this.state.selectedPiece && this.state.selectedPiece.imageUrl}</div>
                     <div>Rating: {this.state.selectedPiece && this.state.selectedPiece.rating}</div>
                     <div>By: {this.state.selectedPiece && this.state.selectedPiece.artist && (
                         <Link to={`/artists/${this.state.selectedPiece.artist.id}`}>{this.state.selectedPiece.artist.name}</Link>
                     ) || 'artist unknown'}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                     <button onClick={this.delete}>DELETE</button>
+                    <div>image: <img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/></div>
                 </div>
             )
             }

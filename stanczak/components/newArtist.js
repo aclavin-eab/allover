@@ -114,9 +114,8 @@ class newArtist extends Component {
                 <div>
                     <div>Name: {this.state.selectedArtist && this.state.selectedArtist.name}</div>
                     <div>Origin: {this.state.selectedArtist && this.state.selectedArtist.origin}</div>
-                    <div>Image: {this.state.selectedArtist && this.state.selectedArtist.imageUrl}</div>
                     <div>Bio: {this.state.selectedArtist && this.state.selectedArtist.bio}</div>
-                    <h2>ART SHIT</h2>
+                    <h2>ART PIECES</h2>
                     {this.state.selectedArtist && this.state.selectedArtist.artworks.length < 1 && (
                         <div>No art to be found here</div>
                     )}
@@ -125,6 +124,7 @@ class newArtist extends Component {
                     })}
                     <button onClick={this.toggleEdit}>EDIT</button>
                     <button onClick={this.delete}>DELETE</button>
+                    <div>Artist Picture: <img src={this.state.selectedArtist && this.state.selectedArtist.imageUrl}/></div>
                 </div>
             )
             }

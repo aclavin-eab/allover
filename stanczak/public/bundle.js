@@ -5914,19 +5914,13 @@ var newArtist = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        'Image: ',
-                        this.state.selectedArtist && this.state.selectedArtist.imageUrl
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
                         'Bio: ',
                         this.state.selectedArtist && this.state.selectedArtist.bio
                     ),
                     _react2.default.createElement(
                         'h2',
                         null,
-                        'ART SHIT'
+                        'ART PIECES'
                     ),
                     this.state.selectedArtist && this.state.selectedArtist.artworks.length < 1 && _react2.default.createElement(
                         'div',
@@ -5949,6 +5943,12 @@ var newArtist = function (_Component) {
                         'button',
                         { onClick: this.delete },
                         'DELETE'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        'Artist Picture: ',
+                        _react2.default.createElement('img', { src: this.state.selectedArtist && this.state.selectedArtist.imageUrl })
                     )
                 )
             );
@@ -6176,12 +6176,6 @@ var newPiece = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        'imageUrl: ',
-                        this.state.selectedPiece && this.state.selectedPiece.imageUrl
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
                         'Rating: ',
                         this.state.selectedPiece && this.state.selectedPiece.rating
                     ),
@@ -6204,6 +6198,12 @@ var newPiece = function (_Component) {
                         'button',
                         { onClick: this.delete },
                         'DELETE'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        'image: ',
+                        _react2.default.createElement('img', { src: this.state.selectedPiece && this.state.selectedPiece.imageUrl })
                     )
                 )
             );
