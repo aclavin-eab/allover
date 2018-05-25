@@ -5607,7 +5607,7 @@ var newArtist = function (_Component) {
         };
 
         _this.toggleEdit = function () {
-            _this.setState({ editMode: !_this.state.editeMode });
+            _this.setState({ editMode: !_this.state.editMode });
         };
 
         _this.updateField = function (ev) {
@@ -5680,49 +5680,53 @@ var newArtist = function (_Component) {
                         null,
                         'Add art to artist'
                     ),
-                    _react2.default.createElement(
-                        'form',
-                        { onSubmit: this.handleSecondarySubmit },
-                        _react2.default.createElement(
-                            'select',
-                            { name: 'artworkToAdd' },
-                            this.props && this.props.artwork.map(function (art) {
-                                return _react2.default.createElement(
-                                    'option',
-                                    { key: 'unowned' + art.id, value: art.id },
-                                    art.title
-                                );
-                            })
-                        ),
-                        _react2.default.createElement(
-                            'button',
-                            { type: 'submit' },
-                            'Claim work'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'h4',
+                    this.state.selectedArtist && this.state.selectedArtist.id && _react2.default.createElement(
+                        'div',
                         null,
-                        'Artists work'
-                    ),
-                    this.state.selectedArtist && this.state.selectedArtist.artworks.map(function (art) {
-                        return _react2.default.createElement(
-                            'div',
-                            { key: art.id },
-                            _react2.default.createElement(_piece2.default, { piece: art }),
+                        _react2.default.createElement(
+                            'form',
+                            { onSubmit: this.handleSecondarySubmit },
+                            _react2.default.createElement(
+                                'select',
+                                { name: 'artworkToAdd' },
+                                this.props && this.props.artwork.map(function (art) {
+                                    return _react2.default.createElement(
+                                        'option',
+                                        { key: 'unowned' + art.id, value: art.id },
+                                        art.title
+                                    );
+                                })
+                            ),
                             _react2.default.createElement(
                                 'button',
-                                { onClick: function onClick(_) {
-                                        _this2.props.editPiece({ id: art.id, artistId: null });
-                                    } },
-                                'Remove work'
+                                { type: 'submit' },
+                                'Claim work'
                             )
-                        );
-                    }),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.toggleEdit },
-                        'CANCEL'
+                        ),
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Artists work'
+                        ),
+                        this.state.selectedArtist && this.state.selectedArtist.artworks.map(function (art) {
+                            return _react2.default.createElement(
+                                'div',
+                                { key: art.id },
+                                _react2.default.createElement(_piece2.default, { piece: art }),
+                                _react2.default.createElement(
+                                    'button',
+                                    { onClick: function onClick(_) {
+                                            _this2.props.editPiece({ id: art.id, artistId: null });
+                                        } },
+                                    'Remove work'
+                                )
+                            );
+                        }),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.toggleEdit },
+                            'CANCEL'
+                        )
                     )
                 ) : _react2.default.createElement(
                     'div',

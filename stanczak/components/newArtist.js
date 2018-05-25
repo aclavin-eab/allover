@@ -47,7 +47,7 @@ class newArtist extends Component {
         ev.preventDefault(); this.props.editPiece({id: ev.target.artworkToAdd.value, artistId: this.props.match.params.id})
     }
     toggleEdit = () => {
-        this.setState({editMode: !this.state.editeMode})
+        this.setState({editMode: !this.state.editMode})
     }
     updateField = (ev) => {
         this.setState({selectedArtist : {
@@ -78,6 +78,8 @@ class newArtist extends Component {
                 </form>
                 <h3>art</h3>
                 <h4>Add art to artist</h4>
+                {this.state.selectedArtist && this.state.selectedArtist.id && (
+                    <div>
                 <form onSubmit={this.handleSecondarySubmit}>
                     <select name="artworkToAdd">
                         {this.props && this.props.artwork.map(art => (
@@ -91,6 +93,10 @@ class newArtist extends Component {
                     <div key={art.id}><Piece piece={art} /><button onClick={_ => {this.props.editPiece({id: art.id, artistId: null})}}>Remove work</button></div>
                 ))}
                 <button onClick={this.toggleEdit}>CANCEL</button>
+                </div>
+                )
+                }
+
                 </div>
             ) : (
                 <div>
