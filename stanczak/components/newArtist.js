@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import {Link} from 'react-router-dom'
 import { addArtist, readArtist, editArtist, browseArtwork, editPiece } from '../store'
 import Piece from './piece'
 
@@ -115,7 +116,7 @@ class newArtist extends Component {
                         <div>No art to be found here</div>
                     )}
                     {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => {
-                        return <Piece key={art.id} piece={art} />
+                        return <Link to={`/artwork/${art.id}`}><Piece key={art.id} piece={art} /></Link>
                     })}
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>

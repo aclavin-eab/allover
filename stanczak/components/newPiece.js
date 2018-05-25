@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import {Link} from 'react-router-dom'
 import { addPiece, browseArtists, readPiece, editPiece } from '../store'
 
 class newPiece extends Component {
@@ -97,7 +98,9 @@ class newPiece extends Component {
                     <div>Contact: {this.state.selectedPiece && this.state.selectedPiece.contact}</div>
                     <div>imageUrl: {this.state.selectedPiece && this.state.selectedPiece.imageUrl}</div>
                     <div>Rating: {this.state.selectedPiece && this.state.selectedPiece.rating}</div>
-                    <div>By: {this.state.selectedPiece && this.state.selectedPiece.artist && this.state.selectedPiece.artist.name || 'artist unknown'}</div>
+                    <div>By: {this.state.selectedPiece && this.state.selectedPiece.artist && (
+                        <Link to={`/artists/${this.state.selectedPiece.artist.id}`}>{this.state.selectedPiece.artist.name}</Link>
+                    ) || 'artist unknown'}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )
