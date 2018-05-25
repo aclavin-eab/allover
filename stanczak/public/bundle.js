@@ -5582,7 +5582,7 @@ var newArtist = function (_Component) {
 
         _this.handleSubmit = function (ev) {
             ev.preventDefault();
-            var objy = { name: ev.target.name.value };
+            var objy = { name: ev.target.name.value, origin: ev.target.origin.value, imageUrl: ev.target.imageUrl.value, bio: ev.target.bio.value };
 
             if (_this.state.selectedArtist.id) {
                 objy = _this.state.selectedArtist;
@@ -5625,6 +5625,9 @@ var newArtist = function (_Component) {
                     'form',
                     { onSubmit: this.handleSubmit },
                     _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField }),
+                    _react2.default.createElement('input', { name: 'origin', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.origin, onChange: this.updateField }),
+                    _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.imageUrl, onChange: this.updateField }),
+                    _react2.default.createElement('textarea', { name: 'bio', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.bio, onChange: this.updateField }),
                     _react2.default.createElement(
                         'button',
                         { type: 'submit' },
@@ -5636,7 +5639,26 @@ var newArtist = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
+                        'Name: ',
                         this.state.selectedArtist && this.state.selectedArtist.name
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        'Origin: ',
+                        this.state.selectedArtist && this.state.selectedArtist.origin
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        'Image: ',
+                        this.state.selectedArtist && this.state.selectedArtist.imageUrl
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        'Bio: ',
+                        this.state.selectedArtist && this.state.selectedArtist.bio
                     ),
                     _react2.default.createElement(
                         'button',
@@ -5724,7 +5746,14 @@ var newPiece = function (_Component) {
 
         _this.handleSubmit = function (ev) {
             ev.preventDefault();
-            var objy = { title: ev.target.title.value, artistId: +ev.target.artistId.value };
+            var objy = {
+                title: ev.target.title.value,
+                artistId: +ev.target.artistId.value,
+                medium: ev.target.medium.value,
+                contact: ev.target.contact.value,
+                imageUrl: ev.target.imageUrl.value,
+                rating: +ev.target.rating.value
+            };
             if (_this.state.selectedPiece.id) {
                 objy = _this.state.selectedPiece;
                 if (objy.artistId === "null") {
@@ -5732,7 +5761,9 @@ var newPiece = function (_Component) {
                 }
             }
             _this.props.addPiece(objy).then(function (_) {
-                _this.props.readPiece(_this.props.match.params.id);
+                if (_this.props.match && _this.props.match.params.id) {
+                    _this.props.readPiece(_this.props.match.params.id);
+                }
                 _this.setState({ editMode: false });
             }, function () {});
         };
@@ -5765,6 +5796,10 @@ var newPiece = function (_Component) {
                     'form',
                     { onSubmit: this.handleSubmit },
                     _react2.default.createElement('input', { name: 'title', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField }),
+                    _react2.default.createElement('input', { name: 'medium', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.medium, onChange: this.updateField }),
+                    _react2.default.createElement('input', { name: 'contact', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.contact, onChange: this.updateField }),
+                    _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.imageUrl, onChange: this.updateField }),
+                    _react2.default.createElement('input', { name: 'rating', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.rating, onChange: this.updateField }),
                     _react2.default.createElement(
                         'select',
                         { name: 'artistId', value: this.state.selectedPiece && this.state.selectedPiece.artistId, onChange: this.updateField },
@@ -5795,6 +5830,26 @@ var newPiece = function (_Component) {
                         this.state.selectedPiece && this.state.selectedPiece.title
                     ),
                     _react2.default.createElement(
+                        'div',
+                        null,
+                        this.state.selectedPiece && this.state.selectedPiece.medium
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        this.state.selectedPiece && this.state.selectedPiece.contact
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        this.state.selectedPiece && this.state.selectedPiece.imageUrl
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        this.state.selectedPiece && this.state.selectedPiece.rating
+                    ),
+                    _react2.default.createElement(
                         'button',
                         { onClick: this.toggleEdit },
                         'EDIT'
@@ -5810,7 +5865,7 @@ var newPiece = function (_Component) {
 var mapDispatch = function mapDispatch(dispatch) {
     return {
         addPiece: function addPiece(obj) {
-            console.log('editter', obj);return dispatch(obj.id ? (0, _store.editPiece)(obj) : (0, _store.addPiece)(obj));
+            return dispatch(obj.id ? (0, _store.editPiece)(obj) : (0, _store.addPiece)(obj));
         },
         browseInitialArtists: function browseInitialArtists() {
             return dispatch((0, _store.browseArtists)());

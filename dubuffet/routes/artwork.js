@@ -12,7 +12,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-    const art = await Artwork.create(req.body).catch(next)
+    const art = await Artwork.create(req.body)
     res.json(art)
 })
 

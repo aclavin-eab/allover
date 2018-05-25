@@ -25,7 +25,7 @@ class newArtist extends Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        let objy = {name: ev.target.name.value}
+        let objy = {name: ev.target.name.value, origin: ev.target.origin.value, imageUrl: ev.target.imageUrl.value, bio: ev.target.bio.value}
 
         if(this.state.selectedArtist.id){
             objy = this.state.selectedArtist
@@ -54,12 +54,18 @@ class newArtist extends Component {
             <div>
             {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
                 <form onSubmit={this.handleSubmit}>
-                    <input name="name" type="text" value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
+                <input name="name" type="text" value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
+                <input name="origin" type="text" value={this.state.selectedArtist && this.state.selectedArtist.origin} onChange={this.updateField}/>
+                <input name="imageUrl" type="text" value={this.state.selectedArtist && this.state.selectedArtist.imageUrl} onChange={this.updateField}/>
+                <textarea name="bio" type="text" value={this.state.selectedArtist && this.state.selectedArtist.bio} onChange={this.updateField}></textarea>
                     <button type="submit">Submit</button>
                 </form>
             ) : (
                 <div>
-                    <div>{this.state.selectedArtist && this.state.selectedArtist.name}</div>
+                    <div>Name: {this.state.selectedArtist && this.state.selectedArtist.name}</div>
+                    <div>Origin: {this.state.selectedArtist && this.state.selectedArtist.origin}</div>
+                    <div>Image: {this.state.selectedArtist && this.state.selectedArtist.imageUrl}</div>
+                    <div>Bio: {this.state.selectedArtist && this.state.selectedArtist.bio}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )

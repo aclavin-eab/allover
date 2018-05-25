@@ -26,7 +26,14 @@ class newPiece extends Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        let objy = {title: ev.target.title.value, artistId: +ev.target.artistId.value}
+        let objy = {
+            title: ev.target.title.value,
+            artistId: +ev.target.artistId.value,
+            medium: ev.target.medium.value,
+            contact: ev.target.contact.value,
+            imageUrl: ev.target.imageUrl.value,
+            rating: +ev.target.rating.value,
+        }
         if(this.state.selectedPiece.id){
             objy = this.state.selectedPiece
             if(objy.artistId === "null"){
@@ -34,7 +41,9 @@ class newPiece extends Component {
             }
         }
         this.props.addPiece(objy).then(_ => {
-            this.props.readPiece(this.props.match.params.id)
+            if(this.props.match && this.props.match.params.id){
+                this.props.readPiece(this.props.match.params.id)
+            }
             this.setState({editMode: false})
         }, function(){})
     }
@@ -57,6 +66,10 @@ class newPiece extends Component {
             {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
             <form onSubmit={this.handleSubmit}>
                 <input name="title" type="text" value={this.state.selectedPiece && this.state.selectedPiece.title} onChange={this.updateField}/>
+                <input name="medium" type="text" value={this.state.selectedPiece && this.state.selectedPiece.medium} onChange={this.updateField}/>
+                <input name="contact" type="text" value={this.state.selectedPiece && this.state.selectedPiece.contact} onChange={this.updateField}/>
+                <input name="imageUrl" type="text" value={this.state.selectedPiece && this.state.selectedPiece.imageUrl} onChange={this.updateField}/>
+                <input name="rating" type="text" value={this.state.selectedPiece && this.state.selectedPiece.rating} onChange={this.updateField}/>
                 <select name="artistId" value={this.state.selectedPiece && this.state.selectedPiece.artistId} onChange={this.updateField}>
                         <option value={'null'} >Select An Artist</option>
                     {artists && artists.map(artist => (
@@ -68,6 +81,10 @@ class newPiece extends Component {
             ) : (
                 <div>
                     <div>{this.state.selectedPiece && this.state.selectedPiece.title}</div>
+                    <div>{this.state.selectedPiece && this.state.selectedPiece.medium}</div>
+                    <div>{this.state.selectedPiece && this.state.selectedPiece.contact}</div>
+                    <div>{this.state.selectedPiece && this.state.selectedPiece.imageUrl}</div>
+                    <div>{this.state.selectedPiece && this.state.selectedPiece.rating}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )
@@ -79,7 +96,7 @@ class newPiece extends Component {
 
 const mapDispatch = dispatch => {
     return {
-        addPiece: (obj) => {console.log('editter', obj); return dispatch(obj.id ? editPiece(obj) : addPiece(obj))},
+        addPiece: (obj) => dispatch(obj.id ? editPiece(obj) : addPiece(obj)),
         browseInitialArtists: () => dispatch(browseArtists()),
         readPiece: (id) => dispatch(readPiece(id))
     }
