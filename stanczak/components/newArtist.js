@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
-import { addArtist, readArtist, editArtist, browseArtwork, editPiece } from '../store'
+import { addArtist, readArtist, editArtist, browseArtwork, editPiece, deleteArtist } from '../store'
 import Piece from './piece'
 
 class newArtist extends Component {
@@ -58,6 +58,11 @@ class newArtist extends Component {
             ...this.state.selectedArtist,
             [ev.target.name]: ev.target.value
         }})
+    }
+    delete = () => {
+        this.props.deleteArtist(this.props.match.params.id).then(_ => {
+            this.props.history.push(`/artists/`)
+        })
     }
     render() {
         const artists = this.props.artists
@@ -119,6 +124,7 @@ class newArtist extends Component {
                         return <Link to={`/artwork/${art.id}`}><Piece key={art.id} piece={art} /></Link>
                     })}
                     <button onClick={this.toggleEdit}>EDIT</button>
+                    <button onClick={this.delete}>DELETE</button>
                 </div>
             )
             }
@@ -133,6 +139,7 @@ const mapDispatch = dispatch => {
         readArtist: (id) => dispatch(readArtist(id)),
         browseArtwork: () => dispatch(browseArtwork()),
         editPiece: (obj) => dispatch(editPiece(obj)),
+        deleteArtist: (id) => dispatch(deleteArtist(id)),
     }
 }
 const mapProps = state => {
