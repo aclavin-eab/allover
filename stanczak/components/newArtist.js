@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { addArtist, readArtist, editArtist, browseArtwork } from '../store'
+import { addArtist, readArtist, editArtist, browseArtwork, editPiece } from '../store'
 import Piece from './piece'
 
 class newArtist extends Component {
@@ -43,8 +43,11 @@ class newArtist extends Component {
             console.log(err)
         })
     }
+    handleSecondarySubmit = (ev) => {
+        ev.preventDefault(); this.props.editPiece({id: ev.target.artworkToAdd.value, artistId: this.props.match.params.id})
+    }
     toggleEdit = () => {
-        this.setState({editMode: true})
+        this.setState({editMode: !this.state.editeMode})
     }
     updateField = (ev) => {
         this.setState({selectedArtist : {
@@ -66,15 +69,20 @@ class newArtist extends Component {
                     <button type="submit">Submit</button>
                 </form>
                 <h3>art</h3>
-                <select>
-                {this.props && this.props.artwork.map(art => {
-                    return <option key={art.id} value={art.id}>{art.title}</option>
-                })}
-                </select>
-                {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => {
-                    console.log(art)
-                    return <Piece key={art.id} piece={art} />
-                })}
+                <h4>Add art to artist</h4>
+                <form onSubmit={this.handleSecondarySubmit}>
+                    <select name="artworkToAdd">
+                        {this.props && this.props.artwork.map(art => (
+                            <option key={`unowned${art.id}`} value={art.id}>{art.title}</option>
+                        )) }
+                    </select>
+                    <button type="submit">Claim work</button>
+                </form>
+                <h4>Artists work</h4>
+                {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => (
+                    <div key={art.id}><Piece piece={art} /><button onClick={_ => {this.props.editPiece({id: art.id, artistId: null})}}>Remove work</button></div>
+                ))}
+                <button onClick={this.toggleEdit}>CANCEL</button>
                 </div>
             ) : (
                 <div>
@@ -84,7 +92,6 @@ class newArtist extends Component {
                     <div>Bio: {this.state.selectedArtist && this.state.selectedArtist.bio}</div>
                     <h2>ART SHIT</h2>
                     {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => {
-                        console.log(art)
                         return <Piece key={art.id} piece={art} />
                     })}
                     <button onClick={this.toggleEdit}>EDIT</button>
@@ -100,7 +107,8 @@ const mapDispatch = dispatch => {
     return {
         addArtist: (obj) => dispatch(obj.id? editArtist(obj) : addArtist(obj)),
         readArtist: (id) => dispatch(readArtist(id)),
-        browseArtwork: () => dispatch(browseArtwork())
+        browseArtwork: () => dispatch(browseArtwork()),
+        editPiece: (obj) => dispatch(editPiece(obj)),
     }
 }
 const mapProps = state => {
