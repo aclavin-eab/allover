@@ -92,6 +92,9 @@ class newArtist extends Component {
                     <button type="submit">Claim work</button>
                 </form>
                 <h4>Artists work</h4>
+                {this.state.selectedArtist && this.state.selectedArtist.artworks.length < 1 && (
+                    <div>No art to be found here</div>
+                )}
                 {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => (
                     <div key={art.id}><Piece piece={art} /><button onClick={_ => {this.props.editPiece({id: art.id, artistId: null})}}>Remove work</button></div>
                 ))}
@@ -108,6 +111,9 @@ class newArtist extends Component {
                     <div>Image: {this.state.selectedArtist && this.state.selectedArtist.imageUrl}</div>
                     <div>Bio: {this.state.selectedArtist && this.state.selectedArtist.bio}</div>
                     <h2>ART SHIT</h2>
+                    {this.state.selectedArtist && this.state.selectedArtist.artworks.length < 1 && (
+                        <div>No art to be found here</div>
+                    )}
                     {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => {
                         return <Piece key={art.id} piece={art} />
                     })}
