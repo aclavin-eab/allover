@@ -22,7 +22,8 @@ router.put('/:id', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res, next) => {
-    const artists = await Artist.destroy({where: {id: +req.params.id}}).catch(next)
+    Artwork.update({artistId: null}, {where: {artistId: +req.params.id}})
+    const artist = await Artist.destroy({where: {id: +req.params.id}}).catch(next)
     res.json(req.params.id)
 })
 
