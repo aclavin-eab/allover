@@ -1,20 +1,24 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { addArtist, readArtist, editArtist } from '../store'
+import { addArtist, readArtist, editArtist, browseArtwork } from '../store'
+import Piece from './piece'
 
 class newArtist extends Component {
     constructor() {
         super()
         this.state = {
             editMode: false,
+            artworks: [],
             selectedArtist: {
-                name: ''
+                name: '',
+                artworks: []
             }
         }
     }
 
     componentDidMount = () => {
         this.props.match && this.props.match.params.id && this.props.readArtist(this.props.match.params.id)
+        this.props.browseArtwork()
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -53,6 +57,7 @@ class newArtist extends Component {
         return (
             <div>
             {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
+                <div>
                 <form onSubmit={this.handleSubmit}>
                 <input name="name" type="text" value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
                 <input name="origin" type="text" value={this.state.selectedArtist && this.state.selectedArtist.origin} onChange={this.updateField}/>
@@ -60,12 +65,28 @@ class newArtist extends Component {
                 <textarea name="bio" type="text" value={this.state.selectedArtist && this.state.selectedArtist.bio} onChange={this.updateField}></textarea>
                     <button type="submit">Submit</button>
                 </form>
+                <h3>art</h3>
+                <select>
+                {this.props && this.props.artwork.map(art => {
+                    return <option key={art.id} value={art.id}>{art.title}</option>
+                })}
+                </select>
+                {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => {
+                    console.log(art)
+                    return <Piece key={art.id} piece={art} />
+                })}
+                </div>
             ) : (
                 <div>
                     <div>Name: {this.state.selectedArtist && this.state.selectedArtist.name}</div>
                     <div>Origin: {this.state.selectedArtist && this.state.selectedArtist.origin}</div>
                     <div>Image: {this.state.selectedArtist && this.state.selectedArtist.imageUrl}</div>
                     <div>Bio: {this.state.selectedArtist && this.state.selectedArtist.bio}</div>
+                    <h2>ART SHIT</h2>
+                    {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => {
+                        console.log(art)
+                        return <Piece key={art.id} piece={art} />
+                    })}
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )
@@ -78,13 +99,15 @@ class newArtist extends Component {
 const mapDispatch = dispatch => {
     return {
         addArtist: (obj) => dispatch(obj.id? editArtist(obj) : addArtist(obj)),
-        readArtist: (id) => dispatch(readArtist(id))
+        readArtist: (id) => dispatch(readArtist(id)),
+        browseArtwork: () => dispatch(browseArtwork())
     }
 }
 const mapProps = state => {
     return {
         artists: state.artists,
-        selectedArtist: state.selectedArtist
+        selectedArtist: state.selectedArtist,
+        artwork: state.artwork
     }
 }
 

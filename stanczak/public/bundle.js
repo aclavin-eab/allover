@@ -5552,6 +5552,10 @@ var _reactRedux = __webpack_require__(51);
 
 var _store = __webpack_require__(38);
 
+var _piece = __webpack_require__(203);
+
+var _piece2 = _interopRequireDefault(_piece);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -5572,6 +5576,7 @@ var newArtist = function (_Component) {
 
         _this.componentDidMount = function () {
             _this.props.match && _this.props.match.params.id && _this.props.readArtist(_this.props.match.params.id);
+            _this.props.browseArtwork();
         };
 
         _this.componentWillReceiveProps = function (nextProps) {
@@ -5607,8 +5612,10 @@ var newArtist = function (_Component) {
 
         _this.state = {
             editMode: false,
+            artworks: [],
             selectedArtist: {
-                name: ''
+                name: '',
+                artworks: []
             }
         };
         return _this;
@@ -5622,17 +5629,41 @@ var newArtist = function (_Component) {
                 'div',
                 null,
                 !this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? _react2.default.createElement(
-                    'form',
-                    { onSubmit: this.handleSubmit },
-                    _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField }),
-                    _react2.default.createElement('input', { name: 'origin', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.origin, onChange: this.updateField }),
-                    _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.imageUrl, onChange: this.updateField }),
-                    _react2.default.createElement('textarea', { name: 'bio', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.bio, onChange: this.updateField }),
+                    'div',
+                    null,
                     _react2.default.createElement(
-                        'button',
-                        { type: 'submit' },
-                        'Submit'
-                    )
+                        'form',
+                        { onSubmit: this.handleSubmit },
+                        _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField }),
+                        _react2.default.createElement('input', { name: 'origin', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.origin, onChange: this.updateField }),
+                        _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.imageUrl, onChange: this.updateField }),
+                        _react2.default.createElement('textarea', { name: 'bio', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.bio, onChange: this.updateField }),
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'submit' },
+                            'Submit'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'art'
+                    ),
+                    _react2.default.createElement(
+                        'select',
+                        null,
+                        this.props && this.props.artwork.map(function (art) {
+                            return _react2.default.createElement(
+                                'option',
+                                { key: art.id, value: art.id },
+                                art.title
+                            );
+                        })
+                    ),
+                    this.state.selectedArtist && this.state.selectedArtist.artworks.map(function (art) {
+                        console.log(art);
+                        return _react2.default.createElement(_piece2.default, { key: art.id, piece: art });
+                    })
                 ) : _react2.default.createElement(
                     'div',
                     null,
@@ -5661,6 +5692,15 @@ var newArtist = function (_Component) {
                         this.state.selectedArtist && this.state.selectedArtist.bio
                     ),
                     _react2.default.createElement(
+                        'h2',
+                        null,
+                        'ART SHIT'
+                    ),
+                    this.state.selectedArtist && this.state.selectedArtist.artworks.map(function (art) {
+                        console.log(art);
+                        return _react2.default.createElement(_piece2.default, { key: art.id, piece: art });
+                    }),
+                    _react2.default.createElement(
                         'button',
                         { onClick: this.toggleEdit },
                         'EDIT'
@@ -5680,13 +5720,17 @@ var mapDispatch = function mapDispatch(dispatch) {
         },
         readArtist: function readArtist(id) {
             return dispatch((0, _store.readArtist)(id));
+        },
+        browseArtwork: function browseArtwork() {
+            return dispatch((0, _store.browseArtwork)());
         }
     };
 };
 var mapProps = function mapProps(state) {
     return {
         artists: state.artists,
-        selectedArtist: state.selectedArtist
+        selectedArtist: state.selectedArtist,
+        artwork: state.artwork
     };
 };
 
