@@ -62,11 +62,19 @@ class newArtist extends Component {
             {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
                 <div>
                 <form onSubmit={this.handleSubmit}>
+                <label>Name
                 <input name="name" type="text" value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
+                </label>
+                <label>Origin
                 <input name="origin" type="text" value={this.state.selectedArtist && this.state.selectedArtist.origin} onChange={this.updateField}/>
+                </label>
+                <label>ImageUrl
                 <input name="imageUrl" type="text" value={this.state.selectedArtist && this.state.selectedArtist.imageUrl} onChange={this.updateField}/>
+                </label>
+                <label> Bio
                 <textarea name="bio" type="text" value={this.state.selectedArtist && this.state.selectedArtist.bio} onChange={this.updateField}></textarea>
-                    <button type="submit">Submit</button>
+                </label>
+                <button type="submit">Submit</button>
                 </form>
                 <h3>art</h3>
                 <h4>Add art to artist</h4>

@@ -65,11 +65,21 @@ class newPiece extends Component {
             <div>
             {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
             <form onSubmit={this.handleSubmit}>
+                <label>Title
                 <input name="title" type="text" value={this.state.selectedPiece && this.state.selectedPiece.title} onChange={this.updateField}/>
+                </label>
+                <label>Medium
                 <input name="medium" type="text" value={this.state.selectedPiece && this.state.selectedPiece.medium} onChange={this.updateField}/>
+                </label>
+                <label>Contact
                 <input name="contact" type="text" value={this.state.selectedPiece && this.state.selectedPiece.contact} onChange={this.updateField}/>
+                </label>
+                <label> ImageUrl
                 <input name="imageUrl" type="text" value={this.state.selectedPiece && this.state.selectedPiece.imageUrl} onChange={this.updateField}/>
+                </label>
+                <label>Rating
                 <input name="rating" type="text" value={this.state.selectedPiece && this.state.selectedPiece.rating} onChange={this.updateField}/>
+                </label>
                 <select name="artistId" value={this.state.selectedPiece && this.state.selectedPiece.artistId} onChange={this.updateField}>
                         <option value={'null'} >Select An Artist</option>
                     {artists && artists.map(artist => (
@@ -80,11 +90,11 @@ class newPiece extends Component {
             </form>
             ) : (
                 <div>
-                    <div>{this.state.selectedPiece && this.state.selectedPiece.title}</div>
-                    <div>{this.state.selectedPiece && this.state.selectedPiece.medium}</div>
-                    <div>{this.state.selectedPiece && this.state.selectedPiece.contact}</div>
-                    <div>{this.state.selectedPiece && this.state.selectedPiece.imageUrl}</div>
-                    <div>{this.state.selectedPiece && this.state.selectedPiece.rating}</div>
+                    <div>Title: {this.state.selectedPiece && this.state.selectedPiece.title}</div>
+                    <div>Medium: {this.state.selectedPiece && this.state.selectedPiece.medium}</div>
+                    <div>Contact: {this.state.selectedPiece && this.state.selectedPiece.contact}</div>
+                    <div>imageUrl: {this.state.selectedPiece && this.state.selectedPiece.imageUrl}</div>
+                    <div>Rating: {this.state.selectedPiece && this.state.selectedPiece.rating}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )

@@ -5640,10 +5640,30 @@ var newArtist = function (_Component) {
                     _react2.default.createElement(
                         'form',
                         { onSubmit: this.handleSubmit },
-                        _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField }),
-                        _react2.default.createElement('input', { name: 'origin', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.origin, onChange: this.updateField }),
-                        _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.imageUrl, onChange: this.updateField }),
-                        _react2.default.createElement('textarea', { name: 'bio', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.bio, onChange: this.updateField }),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Name',
+                            _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.name, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Origin',
+                            _react2.default.createElement('input', { name: 'origin', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.origin, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'ImageUrl',
+                            _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.imageUrl, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            ' Bio',
+                            _react2.default.createElement('textarea', { name: 'bio', type: 'text', value: this.state.selectedArtist && this.state.selectedArtist.bio, onChange: this.updateField })
+                        ),
                         _react2.default.createElement(
                             'button',
                             { type: 'submit' },
@@ -5881,11 +5901,36 @@ var newPiece = function (_Component) {
                 !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(
                     'form',
                     { onSubmit: this.handleSubmit },
-                    _react2.default.createElement('input', { name: 'title', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField }),
-                    _react2.default.createElement('input', { name: 'medium', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.medium, onChange: this.updateField }),
-                    _react2.default.createElement('input', { name: 'contact', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.contact, onChange: this.updateField }),
-                    _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.imageUrl, onChange: this.updateField }),
-                    _react2.default.createElement('input', { name: 'rating', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.rating, onChange: this.updateField }),
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        'Title',
+                        _react2.default.createElement('input', { name: 'title', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField })
+                    ),
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        'Medium',
+                        _react2.default.createElement('input', { name: 'medium', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.medium, onChange: this.updateField })
+                    ),
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        'Contact',
+                        _react2.default.createElement('input', { name: 'contact', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.contact, onChange: this.updateField })
+                    ),
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        ' ImageUrl',
+                        _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.imageUrl, onChange: this.updateField })
+                    ),
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        'Rating',
+                        _react2.default.createElement('input', { name: 'rating', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.rating, onChange: this.updateField })
+                    ),
                     _react2.default.createElement(
                         'select',
                         { name: 'artistId', value: this.state.selectedPiece && this.state.selectedPiece.artistId, onChange: this.updateField },
@@ -5913,26 +5958,31 @@ var newPiece = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
+                        'Title: ',
                         this.state.selectedPiece && this.state.selectedPiece.title
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
+                        'Medium: ',
                         this.state.selectedPiece && this.state.selectedPiece.medium
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
+                        'Contact: ',
                         this.state.selectedPiece && this.state.selectedPiece.contact
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
+                        'imageUrl: ',
                         this.state.selectedPiece && this.state.selectedPiece.imageUrl
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
+                        'Rating: ',
                         this.state.selectedPiece && this.state.selectedPiece.rating
                     ),
                     _react2.default.createElement(
