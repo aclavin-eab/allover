@@ -97,6 +97,7 @@ class newPiece extends Component {
                     <div>Contact: {this.state.selectedPiece && this.state.selectedPiece.contact}</div>
                     <div>imageUrl: {this.state.selectedPiece && this.state.selectedPiece.imageUrl}</div>
                     <div>Rating: {this.state.selectedPiece && this.state.selectedPiece.rating}</div>
+                    <div>By: {this.state.selectedPiece && this.state.selectedPiece.artist && this.state.selectedPiece.artist.name || 'artist unknown'}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                 </div>
             )

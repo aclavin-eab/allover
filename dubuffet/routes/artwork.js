@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-    const art = await Artwork.findById(req.params.id).catch(next)
+    const art = await Artwork.findById(req.params.id, {include: [{model: Artist, required: false}]}).catch(next)
     res.json(art)
 })
 

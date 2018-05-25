@@ -6158,6 +6158,12 @@ var newPiece = function (_Component) {
                         this.state.selectedPiece && this.state.selectedPiece.rating
                     ),
                     _react2.default.createElement(
+                        'div',
+                        null,
+                        'By: ',
+                        this.state.selectedPiece && this.state.selectedPiece.artist && this.state.selectedPiece.artist.name || 'artist unknown'
+                    ),
+                    _react2.default.createElement(
                         'button',
                         { onClick: this.toggleEdit },
                         'EDIT'
