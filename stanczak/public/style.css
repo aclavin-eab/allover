@@ -7,13 +7,52 @@ padding: 20px 50px;
 color: white;
 background-color: #ff4444;
 }
+
+select {
+    appearance: none;
+-webkit-appearance: none;
+padding: 8px 15px;
+border-radius: 0;
+display: block;
+margin-top: 10px;
+margin-bottom: 5px;
+background: none;
+border-color: #ff4444;
+color: #ff4444;
+text-transform: uppercase;
+font-weight: 800;
+letter-spacing: 3px;
+}
+
+img{
+    max-width: 100%;
+}
 button{
+    margin-top: 20px;
     background-color: transparent;
     border-color: #ff4444;
     color: #ff4444;
     text-transform: uppercase;
     font-weight: 800;
     letter-spacing: 3px;
+    padding: 8px 15px;
+}
+input, textarea{
+    display:block;
+    width: 100%;
+}
+option{
+    background-color: white;
+    color: #ff4444;
+}
+label{
+    display: block;
+    width: 100%;
+    font-weight: 200;
+}
+form{
+    display: block;
+    margin: 20px auto 0 auto;
 }
 a{
     color: #aa0000;
@@ -51,47 +90,49 @@ nav a:first-child {
 }
 
 .item{
-    float: left;
+    flex: 1 1 15%;
     margin: 5px 5px;
-    height:100px;
-    width: 100px;
     background-color: #494444;
     color: white;
     position: relative;
-    padding:10px;
     text-transform: uppercase;
     font-weight: 200;
 }
 
 .item a{
     color: white;
+    display: block;
+    padding: 100px 15px 10px;
 }
 
 .item button{
     padding: 2px 5px;
     background-color: transparent;
-    border: 1px solid white;
+    border: 0px solid white;
     position: absolute;
-    bottom: 2px;
+    top: 2px;
     right: 2px;
     color: white;
-    font-weight: 100;
+    font-weight: 800;
 }
-
+.itemWrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
 .itemView{
     clear: both;
+    position: relative;
+    padding: 30px;
 }
-input, textarea{
-    display:block;
-    width: 100%;
+
+.itemView img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
-label{
-    display: block;
-    width: 100%;
-    font-weight: 200;
-}
-form{
-    display: block;
-    width: 50%;
-    margin: 20px auto 0 auto;
+.didact{
+    background-color: rgba(255, 255, 255, 0.97);
+    width: 35%;
+    padding: 1px 25px 25px;
 }

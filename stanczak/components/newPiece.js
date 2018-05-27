@@ -72,6 +72,7 @@ class newPiece extends Component {
         const artists = this.props.artists
         return (
             <div className="itemView">
+            <div className="didact">
             {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
             <form onSubmit={this.handleSubmit}>
                 <h2>Add New Artwork</h2>
@@ -93,7 +94,7 @@ class newPiece extends Component {
                 <select name="artistId" value={this.state.selectedPiece && this.state.selectedPiece.artistId} onChange={this.updateField}>
                         <option value={'null'} >Select An Artist</option>
                     {artists && artists.map(artist => (
-                        <option key={artist.id} value={artist.id}>{artist.name}</option>
+                        <option key={artist.id} className="option" value={artist.id}>{artist.name}</option>
                     ))}
                 </select>
                 <button type="submit">Submit</button>
@@ -109,10 +110,11 @@ class newPiece extends Component {
                     ) || 'artist unknown'}</div>
                     <button onClick={this.toggleEdit}>EDIT</button>
                     <button onClick={this.delete}>DELETE</button>
-                    <div>image: <img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/></div>
                 </div>
             )
             }
+            </div>
+            <div><img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/></div>
             </div>
         )
     }

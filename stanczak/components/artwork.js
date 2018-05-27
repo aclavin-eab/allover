@@ -16,6 +16,7 @@ class Artwork extends Component {
         const deletePiece = this.props.deletePiece
         return (
             <div>
+            <div className="itemWrapper">
                 {artwork && artwork.map(piece => (
                     <div className="item" key={piece.id}>
                         <Link to={`/artwork/${piece.id}`}>
@@ -24,7 +25,9 @@ class Artwork extends Component {
                         <button onClick={_ => {deletePiece(piece.id)}}>X</button>
                     </div>
                 ))}
-                <NewPiece />
+
+            </div>
+            <NewPiece />
             </div>
         )
     }

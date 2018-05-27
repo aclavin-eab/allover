@@ -5632,24 +5632,28 @@ var Artwork = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                artwork && artwork.map(function (piece) {
-                    return _react2.default.createElement(
-                        'div',
-                        { className: 'item', key: piece.id },
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/artwork/' + piece.id },
-                            _react2.default.createElement(_piece2.default, { piece: piece })
-                        ),
-                        _react2.default.createElement(
-                            'button',
-                            { onClick: function onClick(_) {
-                                    deletePiece(piece.id);
-                                } },
-                            'X'
-                        )
-                    );
-                }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'itemWrapper' },
+                    artwork && artwork.map(function (piece) {
+                        return _react2.default.createElement(
+                            'div',
+                            { className: 'item', key: piece.id },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/artwork/' + piece.id },
+                                _react2.default.createElement(_piece2.default, { piece: piece })
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { onClick: function onClick(_) {
+                                        deletePiece(piece.id);
+                                    } },
+                                'X'
+                            )
+                        );
+                    })
+                ),
                 _react2.default.createElement(_newPiece2.default, null)
             );
         }
@@ -6106,121 +6110,124 @@ var newPiece = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'itemView' },
-                !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(
-                    'form',
-                    { onSubmit: this.handleSubmit },
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        'Add New Artwork'
-                    ),
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Title',
-                        _react2.default.createElement('input', { name: 'title', type: 'text', required: true, value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField })
-                    ),
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Medium',
-                        _react2.default.createElement('input', { name: 'medium', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.medium, onChange: this.updateField })
-                    ),
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Contact',
-                        _react2.default.createElement('input', { name: 'contact', type: 'email', required: true, value: this.state.selectedPiece && this.state.selectedPiece.contact, onChange: this.updateField })
-                    ),
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        ' ImageUrl',
-                        _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.imageUrl, onChange: this.updateField })
-                    ),
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Rating',
-                        _react2.default.createElement('input', { name: 'rating', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.rating, onChange: this.updateField })
-                    ),
-                    _react2.default.createElement(
-                        'select',
-                        { name: 'artistId', value: this.state.selectedPiece && this.state.selectedPiece.artistId, onChange: this.updateField },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'didact' },
+                    !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(
+                        'form',
+                        { onSubmit: this.handleSubmit },
                         _react2.default.createElement(
-                            'option',
-                            { value: 'null' },
-                            'Select An Artist'
+                            'h2',
+                            null,
+                            'Add New Artwork'
                         ),
-                        artists && artists.map(function (artist) {
-                            return _react2.default.createElement(
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Title',
+                            _react2.default.createElement('input', { name: 'title', type: 'text', required: true, value: this.state.selectedPiece && this.state.selectedPiece.title, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Medium',
+                            _react2.default.createElement('input', { name: 'medium', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.medium, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Contact',
+                            _react2.default.createElement('input', { name: 'contact', type: 'email', required: true, value: this.state.selectedPiece && this.state.selectedPiece.contact, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            ' ImageUrl',
+                            _react2.default.createElement('input', { name: 'imageUrl', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.imageUrl, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Rating',
+                            _react2.default.createElement('input', { name: 'rating', type: 'text', value: this.state.selectedPiece && this.state.selectedPiece.rating, onChange: this.updateField })
+                        ),
+                        _react2.default.createElement(
+                            'select',
+                            { name: 'artistId', value: this.state.selectedPiece && this.state.selectedPiece.artistId, onChange: this.updateField },
+                            _react2.default.createElement(
                                 'option',
-                                { key: artist.id, value: artist.id },
-                                artist.name
-                            );
-                        })
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'submit' },
-                        'Submit'
+                                { value: 'null' },
+                                'Select An Artist'
+                            ),
+                            artists && artists.map(function (artist) {
+                                return _react2.default.createElement(
+                                    'option',
+                                    { key: artist.id, className: 'option', value: artist.id },
+                                    artist.name
+                                );
+                            })
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'submit' },
+                            'Submit'
+                        )
+                    ) : _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'h1',
+                                null,
+                                this.state.selectedPiece && this.state.selectedPiece.title
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'Medium: ',
+                            this.state.selectedPiece && this.state.selectedPiece.medium
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'Contact: ',
+                            this.state.selectedPiece && this.state.selectedPiece.contact
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'Rating: ',
+                            this.state.selectedPiece && this.state.selectedPiece.rating
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'By: ',
+                            this.state.selectedPiece && this.state.selectedPiece.artist && _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/artists/' + this.state.selectedPiece.artist.id },
+                                this.state.selectedPiece.artist.name
+                            ) || 'artist unknown'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.toggleEdit },
+                            'EDIT'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.delete },
+                            'DELETE'
+                        )
                     )
-                ) : _react2.default.createElement(
+                ),
+                _react2.default.createElement(
                     'div',
                     null,
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(
-                            'h1',
-                            null,
-                            this.state.selectedPiece && this.state.selectedPiece.title
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        'Medium: ',
-                        this.state.selectedPiece && this.state.selectedPiece.medium
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        'Contact: ',
-                        this.state.selectedPiece && this.state.selectedPiece.contact
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        'Rating: ',
-                        this.state.selectedPiece && this.state.selectedPiece.rating
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        'By: ',
-                        this.state.selectedPiece && this.state.selectedPiece.artist && _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/artists/' + this.state.selectedPiece.artist.id },
-                            this.state.selectedPiece.artist.name
-                        ) || 'artist unknown'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.toggleEdit },
-                        'EDIT'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.delete },
-                        'DELETE'
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        'image: ',
-                        _react2.default.createElement('img', { src: this.state.selectedPiece && this.state.selectedPiece.imageUrl })
-                    )
+                    _react2.default.createElement('img', { src: this.state.selectedPiece && this.state.selectedPiece.imageUrl })
                 )
             );
         }
@@ -10734,24 +10741,28 @@ var Artists = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                artists && artists.map(function (ar) {
-                    return _react2.default.createElement(
-                        'div',
-                        { className: 'item', key: ar.id },
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/artists/' + ar.id },
-                            _react2.default.createElement(_artist2.default, { artist: ar })
-                        ),
-                        _react2.default.createElement(
-                            'button',
-                            { onClick: function onClick(_) {
-                                    return _this2.props.deleteArtist(ar.id);
-                                } },
-                            'X'
-                        )
-                    );
-                }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'itemWrapper' },
+                    artists && artists.map(function (ar) {
+                        return _react2.default.createElement(
+                            'div',
+                            { className: 'item', key: ar.id },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/artists/' + ar.id },
+                                _react2.default.createElement(_artist2.default, { artist: ar })
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { onClick: function onClick(_) {
+                                        return _this2.props.deleteArtist(ar.id);
+                                    } },
+                                'X'
+                            )
+                        );
+                    })
+                ),
                 _react2.default.createElement(_newArtist2.default, null)
             );
         }

@@ -15,6 +15,7 @@ class Artists extends Component {
         const artists = this.props.artists
         return (
             <div>
+            <div className="itemWrapper">
                 {artists && artists.map(ar => (
                     <div className="item" key={ar.id}>
                         <Link to={`/artists/${ar.id}`}>
@@ -23,6 +24,7 @@ class Artists extends Component {
                         <button onClick={_ => this.props.deleteArtist(ar.id)}>X</button>
                     </div>
                 ))}
+                </div>
                 <NewArtist />
             </div>
         )
