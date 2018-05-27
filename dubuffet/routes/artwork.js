@@ -17,7 +17,7 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-    const art = await Artwork.update(req.body, { where: {id: req.body.id} }).catch(next)
+    const art = await Artwork.update(req.body, { where: {id: req.body.id} })
     res.json(art)
 })
 

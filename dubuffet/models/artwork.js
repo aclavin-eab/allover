@@ -18,7 +18,7 @@ const Artwork = db.define('artwork', {
         }
     },
     imageUrl: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         defaultValue: 'https://www.moma.org/d/assets/W1siZiIsIjIwMTUvMTAvMjEvNWZ6cDZmMzFsNl9qYWNrc29ucG9sbG9jay5qcGciXSxbInAiLCJjb252ZXJ0IiwiLXJlc2l6ZSAyMDAweDIwMDBcdTAwM2UiXV0/jacksonpollock.jpg?sha=802baec91667ec13'
     },
     rating: {

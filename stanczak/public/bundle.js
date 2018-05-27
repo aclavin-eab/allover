@@ -6290,11 +6290,11 @@ exports.default = function (props) {
     var piece = props.piece;
     return _react2.default.createElement(
         "div",
-        null,
+        { className: "piece" },
         _react2.default.createElement("div", { className: "imageStretcher", style: { backgroundImage: "url(" + piece.imageUrl + ")" } }),
         _react2.default.createElement(
-            "div",
-            null,
+            "span",
+            { className: "text" },
             piece.title
         )
     );

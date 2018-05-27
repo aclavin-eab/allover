@@ -67,8 +67,7 @@ a, a:hover, a:visited, a:focus{
     color: #fff;
     transition: 0.2s;
 }
-a:hover{
-    opacity: 1;
+nav a:hover{
     text-shadow: 0 0 4px #ffdddd;
 }
 
@@ -107,6 +106,23 @@ nav a:first-child {
     display: block;
     padding: 100px 15px 10px;
 }
+
+.item a:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    transition: 0.2s;
+    opacity: 1;
+}
+
+.item a:hover:after{
+    opacity: 0;
+}
+
 
 .item button{
     padding: 2px 5px;
@@ -156,9 +172,27 @@ nav a:first-child {
     top: 0;
     left: 0;
     z-index: 0;
+    background-size: 175%;
+    background-position: center center;
+    transition: 0.2s ease-out 0.1s;
+}
+a:hover .imageStretcher{
+    background-size: 200%;
+}
+.imageStretcher + span{
+    position: relative;
+    z-index: 1;
+    display: inline-block;
 }
 
-.imageStretcher + div{
-    position: relative;
-    z-index: 1
+.item a .text{
+    transition: 0.7s;
+    padding: 8px 11px;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+.item a:hover .text{
+    /* background-color: rgba(0, 0, 0, 0.65); */
+    opacity: 0;
 }
