@@ -5643,13 +5643,6 @@ var Artwork = function (_Component) {
                                 _reactRouterDom.Link,
                                 { to: '/artwork/' + piece.id },
                                 _react2.default.createElement(_piece2.default, { piece: piece })
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: function onClick(_) {
-                                        deletePiece(piece.id);
-                                    } },
-                                'X'
                             )
                         );
                     })
@@ -5899,7 +5892,7 @@ var newArtist = function (_Component) {
                                 )
                             );
                         }),
-                        _react2.default.createElement(
+                        this.state.selectedArtist && _react2.default.createElement(
                             'button',
                             { onClick: this.toggleEdit },
                             'CANCEL'
@@ -6119,7 +6112,16 @@ var newPiece = function (_Component) {
                         _react2.default.createElement(
                             'h2',
                             null,
-                            'Add New Artwork'
+                            this.state.selectedPiece ? _react2.default.createElement(
+                                'span',
+                                null,
+                                'Edit '
+                            ) : _react2.default.createElement(
+                                'span',
+                                null,
+                                'Add New '
+                            ),
+                            'Artwork'
                         ),
                         _react2.default.createElement(
                             'label',
@@ -6171,6 +6173,11 @@ var newPiece = function (_Component) {
                             'button',
                             { type: 'submit' },
                             'Submit'
+                        ),
+                        this.state.selectedPiece && _react2.default.createElement(
+                            'button',
+                            { onClick: this.toggleEdit },
+                            'CANCEL'
                         )
                     ) : _react2.default.createElement(
                         'div',
@@ -6282,9 +6289,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = function (props) {
     var piece = props.piece;
     return _react2.default.createElement(
-        'div',
+        "div",
         null,
-        piece.title
+        _react2.default.createElement("div", { className: "imageStretcher", style: { backgroundImage: "url(" + piece.imageUrl + ")" } }),
+        _react2.default.createElement(
+            "div",
+            null,
+            piece.title
+        )
     );
 };
 
@@ -10735,8 +10747,6 @@ var Artists = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
             var artists = this.props.artists;
             return _react2.default.createElement(
                 'div',
@@ -10752,13 +10762,6 @@ var Artists = function (_Component) {
                                 _reactRouterDom.Link,
                                 { to: '/artists/' + ar.id },
                                 _react2.default.createElement(_artist2.default, { artist: ar })
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: function onClick(_) {
-                                        return _this2.props.deleteArtist(ar.id);
-                                    } },
-                                'X'
                             )
                         );
                     })

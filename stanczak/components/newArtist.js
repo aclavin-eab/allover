@@ -106,7 +106,7 @@ class newArtist extends Component {
                 {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => (
                     <div key={art.id}><Piece piece={art} /><button onClick={_ => {this.props.editPiece({id: art.id, artistId: null})}}>Remove work</button></div>
                 ))}
-                <button onClick={this.toggleEdit}>CANCEL</button>
+                {this.state.selectedArtist && (<button onClick={this.toggleEdit}>CANCEL</button>) }
                 </div>
                 )
                 }

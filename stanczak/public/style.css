@@ -14,7 +14,7 @@ select {
 padding: 8px 15px;
 border-radius: 0;
 display: block;
-margin-top: 10px;
+margin-top: 15px;
 margin-bottom: 5px;
 background: none;
 border-color: #ff4444;
@@ -41,7 +41,7 @@ input, textarea{
     display:block;
     width: 100%;
 }
-option{
+.option{
     background-color: white;
     color: #ff4444;
 }
@@ -55,7 +55,7 @@ form{
     margin: 20px auto 0 auto;
 }
 a{
-    color: #aa0000;
+    color: #fff;
 }
 
 h2{
@@ -64,10 +64,12 @@ h2{
 
 a, a:hover, a:visited, a:focus{
     text-decoration: none;
+    color: #fff;
     transition: 0.2s;
 }
 a:hover{
-    color: #88ff00;
+    opacity: 1;
+    text-shadow: 0 0 4px #ffdddd;
 }
 
 nav a {
@@ -92,11 +94,12 @@ nav a:first-child {
 .item{
     flex: 1 1 15%;
     margin: 5px 5px;
-    background-color: #494444;
+    background-color: #6b6666;
     color: white;
     position: relative;
     text-transform: uppercase;
     font-weight: 200;
+    letter-spacing: 1.5px;
 }
 
 .item a{
@@ -135,4 +138,27 @@ nav a:first-child {
     background-color: rgba(255, 255, 255, 0.97);
     width: 35%;
     padding: 1px 25px 25px;
+}
+
+.didact.collapsed{
+    position: relative;
+    top: -120px;
+    left: -30px;
+    height: 60px;
+    overflow: hidden;
+    background-color: red;
+}
+
+.imageStretcher{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.imageStretcher + div{
+    position: relative;
+    z-index: 1
 }

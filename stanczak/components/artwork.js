@@ -22,7 +22,6 @@ class Artwork extends Component {
                         <Link to={`/artwork/${piece.id}`}>
                             <Piece piece={piece} />
                         </Link>
-                        <button onClick={_ => {deletePiece(piece.id)}}>X</button>
                     </div>
                 ))}
 

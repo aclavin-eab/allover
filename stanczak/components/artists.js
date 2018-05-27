@@ -21,7 +21,6 @@ class Artists extends Component {
                         <Link to={`/artists/${ar.id}`}>
                             <Artist artist={ar} />
                         </Link>
-                        <button onClick={_ => this.props.deleteArtist(ar.id)}>X</button>
                     </div>
                 ))}
                 </div>
