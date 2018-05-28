@@ -21,12 +21,28 @@ class newPiece extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.setState({
-            selectedPiece: nextProps.selectedPiece
-        })
+        let newProps = nextProps;
+        if(newProps.selectedPiece && newProps.selectedPiece.imageFile){
+            const r = new FileReader()
+            const blob = new Blob(nextProps.selectedPiece.imageFile.data)
+            console.log("blob", blob)
+            newProps.selectedPiece.imageFile = r.readAsDataURL(blob)
+            r.onloadend = (ev) => {
+                this.setState({
+                    selectedPiece: newProps.selectedPiece
+                })
+            }
+
+        }
+        else {
+            this.setState({
+                selectedPiece: newProps.selectedPiece
+            })
+        }
+
     }
 
-    handleSubmit = async (ev) => {
+    handleSubmit = (ev) => {
         ev.preventDefault()
         let objy = {
             title: ev.target.title.value,
@@ -39,27 +55,39 @@ class newPiece extends Component {
         if(!!ev.target.imageFile.value){
             const r = new FileReader()
             const f = ev.target.imageFile.files[0]
-            console.log(f, r, r.result)
-            await r.readAsText(f)
-            console.log("RESULT", r.result)
+            r.readAsDataURL(f)
             objy.imageFile = r.result
+            r.onloadend = (ev) => {
+                if(this.state.selectedPiece.id){
+                    objy = this.state.selectedPiece
+                    if(objy.artistId === "null"){
+                        objy.artistId = null
+                    }
+                }
+                objy.imageFile = r.result
+                this.props.addPiece(objy).then(art => {
+                    if(this.props.match && this.props.match.params.id){
+                        this.props.readPiece(this.props.match.params.id)
+                    }
+                    !objy.id && this.props.history.push(`/artwork/${art.id}`)
+                    this.setState({editMode: false})
+                }, function(){})
+            }
         } else {
-            console.log('WASNt TRUE', ev.target.imageFile.value)
-        }
-        if(this.state.selectedPiece.id){
-            objy = this.state.selectedPiece
-            if(objy.artistId === "null"){
-                objy.artistId = null
+            if(this.state.selectedPiece.id){
+                objy = this.state.selectedPiece
+                if(objy.artistId === "null"){
+                    objy.artistId = null
+                }
             }
+            this.props.addPiece(objy).then(art => {
+                if(this.props.match && this.props.match.params.id){
+                    this.props.readPiece(this.props.match.params.id)
+                }
+                !objy.id && this.props.history.push(`/artwork/${art.id}`)
+                this.setState({editMode: false})
+            }, function(){})
         }
-        console.log(objy)
-        this.props.addPiece(objy).then(art => {
-            if(this.props.match && this.props.match.params.id){
-                this.props.readPiece(this.props.match.params.id)
-            }
-            !objy.id && this.props.history.push(`/artwork/${art.id}`)
-            this.setState({editMode: false})
-        }, function(){})
     }
 
     toggleEdit = () => {
@@ -128,6 +156,7 @@ class newPiece extends Component {
             }
             </div>
             <div><img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/></div>
+            <img src={this.state.selectedPiece && this.state.selectedPiece.imageFile}/>
             </div>
         )
     }

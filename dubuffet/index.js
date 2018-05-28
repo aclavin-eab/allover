@@ -14,6 +14,7 @@ db.sync().then(() => console.log('Database is synced'))
 
 app.use(dex('dev'))
 
+app.use(express.static(path.join(__dirname, '..', 'images')))
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))
 app.use(express.static(path.join(__dirname, '..', 'stanczak/public')))
 
