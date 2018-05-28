@@ -26,7 +26,7 @@ class newPiece extends Component {
         })
     }
 
-    handleSubmit = (ev) => {
+    handleSubmit = async (ev) => {
         ev.preventDefault()
         let objy = {
             title: ev.target.title.value,
@@ -36,12 +36,23 @@ class newPiece extends Component {
             rating: +ev.target.rating.value,
         }
         !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value)
+        if(!!ev.target.imageFile.value){
+            const r = new FileReader()
+            const f = ev.target.imageFile.files[0]
+            console.log(f, r, r.result)
+            await r.readAsText(f)
+            console.log("RESULT", r.result)
+            objy.imageFile = r.result
+        } else {
+            console.log('WASNt TRUE', ev.target.imageFile.value)
+        }
         if(this.state.selectedPiece.id){
             objy = this.state.selectedPiece
             if(objy.artistId === "null"){
                 objy.artistId = null
             }
         }
+        console.log(objy)
         this.props.addPiece(objy).then(art => {
             if(this.props.match && this.props.match.params.id){
                 this.props.readPiece(this.props.match.params.id)
@@ -97,6 +108,7 @@ class newPiece extends Component {
                         <option key={artist.id} className="option" value={artist.id}>{artist.name}</option>
                     ))}
                 </select>
+                <input type="file" name="imageFile" />
                 <button type="submit">Submit</button>
                 {this.state.selectedPiece && (<button onClick={this.toggleEdit}>CANCEL</button>) }
             </form>

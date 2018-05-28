@@ -23,6 +23,7 @@ class Artists extends Component {
                         </Link>
                     </div>
                 ))}
+                {(artists.length < 1) && (<div>NO ART FOUND</div>)}
                 </div>
                 <NewArtist />
             </div>
