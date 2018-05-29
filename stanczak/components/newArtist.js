@@ -4,6 +4,8 @@ import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
 import { addArtist, readArtist, editArtist, browseArtwork, editPiece, deleteArtist } from '../store/thunks'
 import Piece from './piece'
+import ArtistDisplay from './artistDisplay'
+import ArtistForm from './artistForm'
 
 class newArtist extends Component {
     constructor() {
@@ -31,7 +33,6 @@ class newArtist extends Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        console.log(ev.target.imageUrl.value, !!ev.target.imageUrl.value)
         let objy = {name: ev.target.name.value, origin: ev.target.origin.value, bio: ev.target.bio.value}
         !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value)
         if(this.state.selectedArtist.id){
@@ -68,68 +69,16 @@ class newArtist extends Component {
         const artists = this.props.artists
         return (
             <div className="itemView">
-            {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
-                <div>
-                <form onSubmit={this.handleSubmit}>
-                <h2>Add New Artist</h2>
-                <label>Name
-                <input name="name" type="text" required value={this.state.selectedArtist && this.state.selectedArtist.name} onChange={this.updateField}/>
-                </label>
-                <label>Origin
-                <input name="origin" type="text" value={this.state.selectedArtist && this.state.selectedArtist.origin} onChange={this.updateField}/>
-                </label>
-                <label>ImageUrl
-                <input name="imageUrl" type="text" value={this.state.selectedArtist && this.state.selectedArtist.imageUrl} onChange={this.updateField}/>
-                </label>
-                <label> Bio
-                <textarea name="bio" type="text" value={this.state.selectedArtist && this.state.selectedArtist.bio} onChange={this.updateField}></textarea>
-                </label>
-                <button type="submit">Submit</button>
-                </form>
-                {this.state.selectedArtist && this.state.selectedArtist.id && (
-                    <div>
-                    <h3>art</h3>
-                    <h4>Add art to artist</h4>
-
-                <form onSubmit={this.handleSecondarySubmit}>
-                    <select name="artworkToAdd">
-                        {this.props && this.props.artwork.map(art => (
-                            <option key={`unowned${art.id}`} value={art.id}>{art.title}</option>
-                        )) }
-                    </select>
-                    <button type="submit">Claim work</button>
-                </form>
-                <h4>Artists work</h4>
-                {this.state.selectedArtist && this.state.selectedArtist.artworks.length < 1 && (
-                    <div>No art to be found here</div>
-                )}
-                {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => (
-                    <div key={art.id}><Piece piece={art} /><button onClick={_ => {this.props.editPiece({id: art.id, artistId: null})}}>Remove work</button></div>
-                ))}
-                {this.state.selectedArtist && (<button onClick={this.toggleEdit}>CANCEL</button>) }
-                </div>
-                )
+                {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
+                    <ArtistForm selectedArtist={this.state.selectedArtist} handleSubmit={this.handleSubmit}
+                        handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField}
+                        editPiece={this.props.editPiece} artwork={this.props.artwork}/>
+                    ) : (
+                        <ArtistDisplay selectedArtist={this.state.selectedArtist} />
+                    )
                 }
-
-                </div>
-            ) : (
-                <div>
-                    <div><h1>{this.state.selectedArtist && this.state.selectedArtist.name}</h1></div>
-                    <div>Origin: {this.state.selectedArtist && this.state.selectedArtist.origin}</div>
-                    <div>Bio: {this.state.selectedArtist && this.state.selectedArtist.bio}</div>
-                    <h2>ART PIECES</h2>
-                    {this.state.selectedArtist && this.state.selectedArtist.artworks.length < 1 && (
-                        <div>No art to be found here</div>
-                    )}
-                    {this.state.selectedArtist && this.state.selectedArtist.artworks.map(art => {
-                        return <Link to={`/artwork/${art.id}`}><Piece key={art.id} piece={art} /></Link>
-                    })}
-                    <button onClick={this.toggleEdit}>EDIT</button>
-                    <button onClick={this.delete}>DELETE</button>
-                    <div>Artist Picture: <img src={this.state.selectedArtist && this.state.selectedArtist.imageUrl}/></div>
-                </div>
-            )
-            }
+                <button onClick={this.toggleEdit}>EDIT</button>
+                <button onClick={this.delete}>DELETE</button>
             </div>
         )
     }
