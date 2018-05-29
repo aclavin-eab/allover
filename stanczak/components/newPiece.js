@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
-import { addPiece, browseArtists, readPiece, editPiece, deletePiece } from '../store'
+import { addPiece, browseArtists, readPiece, editPiece, deletePiece } from '../store/thunks'
 
 class newPiece extends Component {
     constructor() {

@@ -2198,20 +2198,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.sellArtist = exports.clearSelection = exports.sellPiece = exports.changeArtist = exports.changePiece = exports.featureArtist = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-exports.browseArtwork = browseArtwork;
-exports.browseArtists = browseArtists;
-exports.addArtist = addArtist;
-exports.addPiece = addPiece;
-exports.readPiece = readPiece;
-exports.editPiece = editPiece;
-exports.deletePiece = deletePiece;
-exports.readArtist = readArtist;
-exports.editArtist = editArtist;
-exports.deleteArtist = deleteArtist;
 
 var _redux = __webpack_require__(184);
 
@@ -2223,35 +2211,25 @@ var _reduxLogger = __webpack_require__(463);
 
 var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-var _axios = __webpack_require__(189);
+var _actionConstants = __webpack_require__(469);
 
-var _axios2 = _interopRequireDefault(_axios);
+var _actionConstants2 = _interopRequireDefault(_actionConstants);
+
+var _actions = __webpack_require__(470);
+
+var actions = _interopRequireWildcard(_actions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var initialState = {
     artists: [],
     artwork: [],
     selectedPiece: {},
     selectedArtist: {}
-};
-
-var ACTIONS = {
-    BROWSE_ARTWORK: 'BROWSE_ARTWORK',
-    BROWSE_ARTISTS: 'BROWSE_ARTISTS',
-    ADD_ARTIST: 'ADD_ARTIST',
-    ADD_PIECE: 'ADD_PIECE',
-    READ_PIECE: 'READ_PIECE',
-    EDIT_PIECE: 'EDIT_PIECE',
-    DELETE_PIECE: 'DELETE_PIECE',
-    READ_ARTIST: 'READ_ARTIST',
-    EDIT_ARTIST: 'EDIT_ARTIST',
-    DELETE_ARTIST: 'DELETE_ARTIST',
-    CLEAR_SELECTION: 'CLEAR_SELECTION'
 
     //helper
 };var getIndexOfPiece = function getIndexOfPiece(id, arr) {
@@ -2261,452 +2239,74 @@ var ACTIONS = {
     });
 };
 
-var stockArtwork = exports.stockArtwork = function stockArtwork(artwork) {
-    return { type: ACTIONS.BROWSE_ARTWORK, artwork: artwork };
-};
-
-var stockArtists = exports.stockArtists = function stockArtists(artists) {
-    return { type: ACTIONS.BROWSE_ARTISTS, artists: artists };
-};
-
-var buyArtist = exports.buyArtist = function buyArtist(artist) {
-    return { type: ACTIONS.ADD_ARTIST, artist: artist };
-};
-
-var buyPiece = exports.buyPiece = function buyPiece(piece) {
-    return { type: ACTIONS.ADD_PIECE, piece: piece };
-};
-
-var featurePiece = exports.featurePiece = function featurePiece(piece) {
-    return { type: ACTIONS.READ_PIECE, piece: piece };
-};
-
-var featureArtist = exports.featureArtist = function featureArtist(artist) {
-    return { type: ACTIONS.READ_ARTIST, artist: artist };
-};
-
-var changePiece = exports.changePiece = function changePiece(piece) {
-    return { type: ACTIONS.EDIT_PIECE, piece: piece };
-};
-
-var changeArtist = exports.changeArtist = function changeArtist(artist) {
-    return { type: ACTIONS.EDIT_ARTIST, artist: artist };
-};
-
-var sellPiece = exports.sellPiece = function sellPiece(piece) {
-    return { type: ACTIONS.DELETE_PIECE, piece: piece };
-};
-
-var clearSelection = exports.clearSelection = function clearSelection() {
-    return { type: ACTIONS.CLEAR_SELECTION, piece: {}, artist: {} };
-};
-
-var sellArtist = exports.sellArtist = function sellArtist(artist) {
-    console.log('selling', artist);
-    return { type: ACTIONS.DELETE_ARTIST, artist: artist };
-};
-
-//THUNKS
-function browseArtwork() {
-    var _this = this;
-
-    return function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
-            var response, art;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            _context.next = 2;
-                            return _axios2.default.get('/api/artwork');
-
-                        case 2:
-                            response = _context.sent;
-                            art = response.data;
-
-                            dispatch(stockArtwork(art));
-
-                        case 5:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, _this);
-        }));
-
-        return function (_x) {
-            return _ref.apply(this, arguments);
-        };
-    }();
-}
-
-function browseArtists() {
-    var _this2 = this;
-
-    return function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
-            var response, artists;
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                while (1) {
-                    switch (_context2.prev = _context2.next) {
-                        case 0:
-                            _context2.next = 2;
-                            return _axios2.default.get('/api/artists');
-
-                        case 2:
-                            response = _context2.sent;
-                            artists = response.data;
-
-                            dispatch(stockArtists(artists));
-
-                        case 5:
-                        case 'end':
-                            return _context2.stop();
-                    }
-                }
-            }, _callee2, _this2);
-        }));
-
-        return function (_x2) {
-            return _ref2.apply(this, arguments);
-        };
-    }();
-}
-
-function addArtist(artistObj) {
-    var _this3 = this;
-
-    return function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
-            var response, artist;
-            return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                while (1) {
-                    switch (_context3.prev = _context3.next) {
-                        case 0:
-                            _context3.next = 2;
-                            return _axios2.default.post('/api/artists', artistObj);
-
-                        case 2:
-                            response = _context3.sent;
-                            artist = response.data;
-
-                            dispatch(buyArtist(artist));
-                            return _context3.abrupt('return', artist);
-
-                        case 6:
-                        case 'end':
-                            return _context3.stop();
-                    }
-                }
-            }, _callee3, _this3);
-        }));
-
-        return function (_x3) {
-            return _ref3.apply(this, arguments);
-        };
-    }();
-}
-
-function addPiece(artObj) {
-    var _this4 = this;
-
-    return function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
-            var response, piece;
-            return regeneratorRuntime.wrap(function _callee4$(_context4) {
-                while (1) {
-                    switch (_context4.prev = _context4.next) {
-                        case 0:
-                            _context4.next = 2;
-                            return _axios2.default.post('/api/artwork', artObj);
-
-                        case 2:
-                            response = _context4.sent;
-                            piece = response.data;
-
-                            dispatch(buyPiece(piece));
-                            return _context4.abrupt('return', piece);
-
-                        case 6:
-                        case 'end':
-                            return _context4.stop();
-                    }
-                }
-            }, _callee4, _this4);
-        }));
-
-        return function (_x4) {
-            return _ref4.apply(this, arguments);
-        };
-    }();
-}
-
-function readPiece(id) {
-    var _this5 = this;
-
-    return function () {
-        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
-            var response, piece;
-            return regeneratorRuntime.wrap(function _callee5$(_context5) {
-                while (1) {
-                    switch (_context5.prev = _context5.next) {
-                        case 0:
-                            _context5.next = 2;
-                            return _axios2.default.get('/api/artwork/' + id);
-
-                        case 2:
-                            response = _context5.sent;
-                            piece = response.data;
-
-                            dispatch(featurePiece(piece));
-
-                        case 5:
-                        case 'end':
-                            return _context5.stop();
-                    }
-                }
-            }, _callee5, _this5);
-        }));
-
-        return function (_x5) {
-            return _ref5.apply(this, arguments);
-        };
-    }();
-}
-
-function editPiece(obj) {
-    var _this6 = this;
-
-    return function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
-            var response, piece;
-            return regeneratorRuntime.wrap(function _callee6$(_context6) {
-                while (1) {
-                    switch (_context6.prev = _context6.next) {
-                        case 0:
-                            _context6.next = 2;
-                            return _axios2.default.put('/api/artwork/' + obj.id, obj);
-
-                        case 2:
-                            response = _context6.sent;
-                            piece = response.data;
-
-                            dispatch(changePiece(piece));
-
-                        case 5:
-                        case 'end':
-                            return _context6.stop();
-                    }
-                }
-            }, _callee6, _this6);
-        }));
-
-        return function (_x6) {
-            return _ref6.apply(this, arguments);
-        };
-    }();
-}
-
-function deletePiece(id) {
-    var _this7 = this;
-
-    return function () {
-        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
-            var response, piece;
-            return regeneratorRuntime.wrap(function _callee7$(_context7) {
-                while (1) {
-                    switch (_context7.prev = _context7.next) {
-                        case 0:
-                            _context7.next = 2;
-                            return _axios2.default.delete('/api/artwork/' + id);
-
-                        case 2:
-                            response = _context7.sent;
-                            piece = response.data;
-
-                            dispatch(sellPiece(piece));
-
-                        case 5:
-                        case 'end':
-                            return _context7.stop();
-                    }
-                }
-            }, _callee7, _this7);
-        }));
-
-        return function (_x7) {
-            return _ref7.apply(this, arguments);
-        };
-    }();
-}
-
-function readArtist(id) {
-    var _this8 = this;
-
-    return function () {
-        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
-            var response, artist;
-            return regeneratorRuntime.wrap(function _callee8$(_context8) {
-                while (1) {
-                    switch (_context8.prev = _context8.next) {
-                        case 0:
-                            _context8.next = 2;
-                            return _axios2.default.get('/api/artists/' + id);
-
-                        case 2:
-                            response = _context8.sent;
-                            artist = response.data;
-
-                            dispatch(featureArtist(artist));
-
-                        case 5:
-                        case 'end':
-                            return _context8.stop();
-                    }
-                }
-            }, _callee8, _this8);
-        }));
-
-        return function (_x8) {
-            return _ref8.apply(this, arguments);
-        };
-    }();
-}
-
-function editArtist(obj) {
-    var _this9 = this;
-
-    return function () {
-        var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(dispatch) {
-            var response, artist;
-            return regeneratorRuntime.wrap(function _callee9$(_context9) {
-                while (1) {
-                    switch (_context9.prev = _context9.next) {
-                        case 0:
-                            _context9.next = 2;
-                            return _axios2.default.put('/api/artists/' + obj.id, obj);
-
-                        case 2:
-                            response = _context9.sent;
-                            artist = response.data;
-
-                            dispatch(changeArtist(artist));
-
-                        case 5:
-                        case 'end':
-                            return _context9.stop();
-                    }
-                }
-            }, _callee9, _this9);
-        }));
-
-        return function (_x9) {
-            return _ref9.apply(this, arguments);
-        };
-    }();
-}
-
-function deleteArtist(id) {
-    var _this10 = this;
-
-    return function () {
-        var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
-            var response, artist;
-            return regeneratorRuntime.wrap(function _callee10$(_context10) {
-                while (1) {
-                    switch (_context10.prev = _context10.next) {
-                        case 0:
-                            _context10.next = 2;
-                            return _axios2.default.delete('/api/artists/' + id);
-
-                        case 2:
-                            response = _context10.sent;
-                            artist = response.data;
-
-                            dispatch(sellArtist(artist));
-
-                        case 5:
-                        case 'end':
-                            return _context10.stop();
-                    }
-                }
-            }, _callee10, _this10);
-        }));
-
-        return function (_x10) {
-            return _ref10.apply(this, arguments);
-        };
-    }();
-}
-
 var reducer = function reducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
 
     switch (action.type) {
-        case ACTIONS.BROWSE_ARTWORK:
+        case _actionConstants2.default.BROWSE_ARTWORK:
             {
                 return _extends({}, state, {
                     artwork: action.artwork
                 });
             }
-        case ACTIONS.BROWSE_ARTISTS:
+        case _actionConstants2.default.BROWSE_ARTISTS:
             {
                 return _extends({}, state, {
                     artists: action.artists
                 });
             }
-        case ACTIONS.ADD_ARTIST:
+        case _actionConstants2.default.ADD_ARTIST:
             {
                 return _extends({}, state, {
                     artists: state.artists.concat([action.artist])
                 });
             }
-        case ACTIONS.ADD_PIECE:
+        case _actionConstants2.default.ADD_PIECE:
             {
                 return _extends({}, state, {
                     artwork: state.artwork.concat([action.piece])
                 });
             }
-        case ACTIONS.READ_PIECE:
+        case _actionConstants2.default.READ_PIECE:
             {
                 return _extends({}, state, {
                     selectedPiece: action.piece
                 });
             }
-        case ACTIONS.EDIT_PIECE:
+        case _actionConstants2.default.EDIT_PIECE:
             {
                 return _extends({}, state, {
                     artwork: [].concat(_toConsumableArray(state.artwork.slice(0, getIndexOfPiece(action.piece.id, state.artwork))), [action.piece], _toConsumableArray(state.artwork.slice(getIndexOfPiece(action.piece.id, state.artwork) + 1))),
                     selectedPiece: action.piece
                 });
             }
-        case ACTIONS.DELETE_PIECE:
+        case _actionConstants2.default.DELETE_PIECE:
             {
                 return _extends({}, state, {
                     artwork: [].concat(_toConsumableArray(state.artwork.slice(0, getIndexOfPiece(action.piece, state.artwork))), _toConsumableArray(state.artwork.slice(getIndexOfPiece(action.piece, state.artwork) + 1)))
                 });
             }
-        case ACTIONS.READ_ARTIST:
+        case _actionConstants2.default.READ_ARTIST:
             {
                 return _extends({}, state, {
                     selectedArtist: action.artist
                 });
             }
-        case ACTIONS.EDIT_ARTIST:
+        case _actionConstants2.default.EDIT_ARTIST:
             {
                 return _extends({}, state, {
                     artists: [].concat(_toConsumableArray(state.artists.slice(0, getIndexOfPiece(action.artist.id, state.artists))), [action.artist], _toConsumableArray(state.artist.slice(getIndexOfPiece(action.artist.id, state.artists) + 1))),
                     selectedArtist: action.artist
                 });
             }
-        case ACTIONS.DELETE_ARTIST:
+        case _actionConstants2.default.DELETE_ARTIST:
             {
                 return _extends({}, state, {
                     artists: [].concat(_toConsumableArray(state.artists.slice(0, getIndexOfPiece(action.artist, state.artists))), _toConsumableArray(state.artists.slice(getIndexOfPiece(action.artist, state.artists) + 1)))
                 });
             }
-        case ACTIONS.CLEAR_SELECTION:
+        case _actionConstants2.default.CLEAR_SELECTION:
             {
                 return _extends({}, state, {
                     selectedPiece: action.selectedPiece,
@@ -5591,7 +5191,9 @@ var _reactRedux = __webpack_require__(56);
 
 var _reactRouterDom = __webpack_require__(50);
 
-var _store = __webpack_require__(51);
+var _thunks = __webpack_require__(471);
+
+var _actions = __webpack_require__(470);
 
 var _piece = __webpack_require__(126);
 
@@ -5658,13 +5260,13 @@ var Artwork = function (_Component) {
 var mapDispatch = function mapDispatch(dispatch) {
     return {
         browseInitialArtwork: function browseInitialArtwork() {
-            return dispatch((0, _store.browseArtwork)());
+            return dispatch((0, _thunks.browseArtwork)());
         },
         deletePiece: function deletePiece(id) {
-            return dispatch((0, _store.deletePiece)(id));
+            return dispatch((0, _thunks.deletePiece)(id));
         },
         clearSelection: function clearSelection() {
-            return dispatch((0, _store.clearSelection)());
+            return dispatch((0, _actions.clearSelection)());
         }
 
     };
@@ -6017,7 +5619,7 @@ var _reactRouter = __webpack_require__(181);
 
 var _reactRouterDom = __webpack_require__(50);
 
-var _store = __webpack_require__(51);
+var _thunks = __webpack_require__(471);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6284,16 +5886,16 @@ var newPiece = function (_Component) {
 var mapDispatch = function mapDispatch(dispatch) {
     return {
         addPiece: function addPiece(obj) {
-            return dispatch(obj.id ? (0, _store.editPiece)(obj) : (0, _store.addPiece)(obj));
+            return dispatch(obj.id ? (0, _thunks.editPiece)(obj) : (0, _thunks.addPiece)(obj));
         },
         browseInitialArtists: function browseInitialArtists() {
-            return dispatch((0, _store.browseArtists)());
+            return dispatch((0, _thunks.browseArtists)());
         },
         readPiece: function readPiece(id) {
-            return dispatch((0, _store.readPiece)(id));
+            return dispatch((0, _thunks.readPiece)(id));
         },
         deletePiece: function deletePiece(id) {
-            return dispatch((0, _store.deletePiece)(id));
+            return dispatch((0, _thunks.deletePiece)(id));
         }
     };
 };
@@ -38988,6 +38590,460 @@ module.exports = function(originalModule) {
 __webpack_require__(188);
 module.exports = __webpack_require__(187);
 
+
+/***/ }),
+/* 469 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    BROWSE_ARTWORK: 'BROWSE_ARTWORK',
+    BROWSE_ARTISTS: 'BROWSE_ARTISTS',
+    ADD_ARTIST: 'ADD_ARTIST',
+    ADD_PIECE: 'ADD_PIECE',
+    READ_PIECE: 'READ_PIECE',
+    EDIT_PIECE: 'EDIT_PIECE',
+    DELETE_PIECE: 'DELETE_PIECE',
+    READ_ARTIST: 'READ_ARTIST',
+    EDIT_ARTIST: 'EDIT_ARTIST',
+    DELETE_ARTIST: 'DELETE_ARTIST',
+    CLEAR_SELECTION: 'CLEAR_SELECTION'
+};
+
+/***/ }),
+/* 470 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.sellArtist = exports.clearSelection = exports.sellPiece = exports.changeArtist = exports.changePiece = exports.featureArtist = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
+
+var _actionConstants = __webpack_require__(469);
+
+var _actionConstants2 = _interopRequireDefault(_actionConstants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var stockArtwork = exports.stockArtwork = function stockArtwork(artwork) {
+    return { type: _actionConstants2.default.BROWSE_ARTWORK, artwork: artwork };
+};
+
+var stockArtists = exports.stockArtists = function stockArtists(artists) {
+    return { type: _actionConstants2.default.BROWSE_ARTISTS, artists: artists };
+};
+
+var buyArtist = exports.buyArtist = function buyArtist(artist) {
+    return { type: _actionConstants2.default.ADD_ARTIST, artist: artist };
+};
+
+var buyPiece = exports.buyPiece = function buyPiece(piece) {
+    return { type: _actionConstants2.default.ADD_PIECE, piece: piece };
+};
+
+var featurePiece = exports.featurePiece = function featurePiece(piece) {
+    return { type: _actionConstants2.default.READ_PIECE, piece: piece };
+};
+
+var featureArtist = exports.featureArtist = function featureArtist(artist) {
+    return { type: _actionConstants2.default.READ_ARTIST, artist: artist };
+};
+
+var changePiece = exports.changePiece = function changePiece(piece) {
+    return { type: _actionConstants2.default.EDIT_PIECE, piece: piece };
+};
+
+var changeArtist = exports.changeArtist = function changeArtist(artist) {
+    return { type: _actionConstants2.default.EDIT_ARTIST, artist: artist };
+};
+
+var sellPiece = exports.sellPiece = function sellPiece(piece) {
+    return { type: _actionConstants2.default.DELETE_PIECE, piece: piece };
+};
+
+var clearSelection = exports.clearSelection = function clearSelection() {
+    return { type: _actionConstants2.default.CLEAR_SELECTION, piece: {}, artist: {} };
+};
+
+var sellArtist = exports.sellArtist = function sellArtist(artist) {
+    return { type: _actionConstants2.default.DELETE_ARTIST, artist: artist };
+};
+
+/***/ }),
+/* 471 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.browseArtwork = browseArtwork;
+exports.browseArtists = browseArtists;
+exports.addArtist = addArtist;
+exports.addPiece = addPiece;
+exports.readPiece = readPiece;
+exports.editPiece = editPiece;
+exports.deletePiece = deletePiece;
+exports.readArtist = readArtist;
+exports.editArtist = editArtist;
+exports.deleteArtist = deleteArtist;
+
+var _axios = __webpack_require__(189);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _actions = __webpack_require__(470);
+
+var actions = _interopRequireWildcard(_actions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//THUNKS
+function browseArtwork() {
+    var _this = this;
+
+    return function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
+            var response, art;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return _axios2.default.get('/api/artwork');
+
+                        case 2:
+                            response = _context.sent;
+                            art = response.data;
+
+                            dispatch(actions.stockArtwork(art));
+
+                        case 5:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, _this);
+        }));
+
+        return function (_x) {
+            return _ref.apply(this, arguments);
+        };
+    }();
+}
+
+function browseArtists() {
+    var _this2 = this;
+
+    return function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
+            var response, artists;
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            _context2.next = 2;
+                            return _axios2.default.get('/api/artists');
+
+                        case 2:
+                            response = _context2.sent;
+                            artists = response.data;
+
+                            dispatch(actions.stockArtists(artists));
+
+                        case 5:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, _this2);
+        }));
+
+        return function (_x2) {
+            return _ref2.apply(this, arguments);
+        };
+    }();
+}
+
+function addArtist(artistObj) {
+    var _this3 = this;
+
+    return function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
+            var response, artist;
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return _axios2.default.post('/api/artists', artistObj);
+
+                        case 2:
+                            response = _context3.sent;
+                            artist = response.data;
+
+                            dispatch(actions.buyArtist(artist));
+                            return _context3.abrupt('return', artist);
+
+                        case 6:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, _this3);
+        }));
+
+        return function (_x3) {
+            return _ref3.apply(this, arguments);
+        };
+    }();
+}
+
+function addPiece(artObj) {
+    var _this4 = this;
+
+    return function () {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
+            var response, piece;
+            return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                while (1) {
+                    switch (_context4.prev = _context4.next) {
+                        case 0:
+                            _context4.next = 2;
+                            return _axios2.default.post('/api/artwork', artObj);
+
+                        case 2:
+                            response = _context4.sent;
+                            piece = response.data;
+
+                            dispatch(actions.buyPiece(piece));
+                            return _context4.abrupt('return', piece);
+
+                        case 6:
+                        case 'end':
+                            return _context4.stop();
+                    }
+                }
+            }, _callee4, _this4);
+        }));
+
+        return function (_x4) {
+            return _ref4.apply(this, arguments);
+        };
+    }();
+}
+
+function readPiece(id) {
+    var _this5 = this;
+
+    return function () {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
+            var response, piece;
+            return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                while (1) {
+                    switch (_context5.prev = _context5.next) {
+                        case 0:
+                            _context5.next = 2;
+                            return _axios2.default.get('/api/artwork/' + id);
+
+                        case 2:
+                            response = _context5.sent;
+                            piece = response.data;
+
+                            dispatch(actions.featurePiece(piece));
+
+                        case 5:
+                        case 'end':
+                            return _context5.stop();
+                    }
+                }
+            }, _callee5, _this5);
+        }));
+
+        return function (_x5) {
+            return _ref5.apply(this, arguments);
+        };
+    }();
+}
+
+function editPiece(obj) {
+    var _this6 = this;
+
+    return function () {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
+            var response, piece;
+            return regeneratorRuntime.wrap(function _callee6$(_context6) {
+                while (1) {
+                    switch (_context6.prev = _context6.next) {
+                        case 0:
+                            _context6.next = 2;
+                            return _axios2.default.put('/api/artwork/' + obj.id, obj);
+
+                        case 2:
+                            response = _context6.sent;
+                            piece = response.data;
+
+                            dispatch(actions.changePiece(piece));
+
+                        case 5:
+                        case 'end':
+                            return _context6.stop();
+                    }
+                }
+            }, _callee6, _this6);
+        }));
+
+        return function (_x6) {
+            return _ref6.apply(this, arguments);
+        };
+    }();
+}
+
+function deletePiece(id) {
+    var _this7 = this;
+
+    return function () {
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
+            var response, piece;
+            return regeneratorRuntime.wrap(function _callee7$(_context7) {
+                while (1) {
+                    switch (_context7.prev = _context7.next) {
+                        case 0:
+                            _context7.next = 2;
+                            return _axios2.default.delete('/api/artwork/' + id);
+
+                        case 2:
+                            response = _context7.sent;
+                            piece = response.data;
+
+                            dispatch(actions.sellPiece(piece));
+
+                        case 5:
+                        case 'end':
+                            return _context7.stop();
+                    }
+                }
+            }, _callee7, _this7);
+        }));
+
+        return function (_x7) {
+            return _ref7.apply(this, arguments);
+        };
+    }();
+}
+
+function readArtist(id) {
+    var _this8 = this;
+
+    return function () {
+        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
+            var response, artist;
+            return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                while (1) {
+                    switch (_context8.prev = _context8.next) {
+                        case 0:
+                            _context8.next = 2;
+                            return _axios2.default.get('/api/artists/' + id);
+
+                        case 2:
+                            response = _context8.sent;
+                            artist = response.data;
+
+                            dispatch(actions.featureArtist(artist));
+
+                        case 5:
+                        case 'end':
+                            return _context8.stop();
+                    }
+                }
+            }, _callee8, _this8);
+        }));
+
+        return function (_x8) {
+            return _ref8.apply(this, arguments);
+        };
+    }();
+}
+
+function editArtist(obj) {
+    var _this9 = this;
+
+    return function () {
+        var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(dispatch) {
+            var response, artist;
+            return regeneratorRuntime.wrap(function _callee9$(_context9) {
+                while (1) {
+                    switch (_context9.prev = _context9.next) {
+                        case 0:
+                            _context9.next = 2;
+                            return _axios2.default.put('/api/artists/' + obj.id, obj);
+
+                        case 2:
+                            response = _context9.sent;
+                            artist = response.data;
+
+                            dispatch(actions.changeArtist(artist));
+
+                        case 5:
+                        case 'end':
+                            return _context9.stop();
+                    }
+                }
+            }, _callee9, _this9);
+        }));
+
+        return function (_x9) {
+            return _ref9.apply(this, arguments);
+        };
+    }();
+}
+
+function deleteArtist(id) {
+    var _this10 = this;
+
+    return function () {
+        var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
+            var response, artist;
+            return regeneratorRuntime.wrap(function _callee10$(_context10) {
+                while (1) {
+                    switch (_context10.prev = _context10.next) {
+                        case 0:
+                            _context10.next = 2;
+                            return _axios2.default.delete('/api/artists/' + id);
+
+                        case 2:
+                            response = _context10.sent;
+                            artist = response.data;
+
+                            dispatch(actions.sellArtist(artist));
+
+                        case 5:
+                        case 'end':
+                            return _context10.stop();
+                    }
+                }
+            }, _callee10, _this10);
+        }));
+
+        return function (_x10) {
+            return _ref10.apply(this, arguments);
+        };
+    }();
+}
 
 /***/ })
 /******/ ]);
