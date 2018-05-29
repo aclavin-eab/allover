@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
 import { addPiece, browseArtists, readPiece, editPiece, deletePiece } from '../store/thunks'
+import PieceDisplay from './PieceDisplay'
+import PieceForm from './PieceForm'
 
 class newPiece extends Component {
     constructor() {
@@ -21,24 +23,13 @@ class newPiece extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        let newProps = nextProps;
-        if(newProps.selectedPiece && newProps.selectedPiece.imageFile){
-            const r = new FileReader()
-            const blob = new Blob(nextProps.selectedPiece.imageFile.data)
-            console.log("blob", blob)
-            newProps.selectedPiece.imageFile = r.readAsDataURL(blob)
-            r.onloadend = (ev) => {
-                this.setState({
-                    selectedPiece: newProps.selectedPiece
-                })
-            }
-
-        }
-        else {
             this.setState({
-                selectedPiece: newProps.selectedPiece
+                selectedPiece: nextProps.selectedPiece
             })
-        }
+
+    }
+
+    encodeUrl = () => {
 
     }
 
@@ -56,7 +47,6 @@ class newPiece extends Component {
             const r = new FileReader()
             const f = ev.target.imageFile.files[0]
             r.readAsDataURL(f)
-            objy.imageFile = r.result
             r.onloadend = (ev) => {
                 if(this.state.selectedPiece.id){
                     objy = this.state.selectedPiece
@@ -111,52 +101,17 @@ class newPiece extends Component {
         const artists = this.props.artists
         return (
             <div className="itemView">
-            <div className="didact">
-            {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
-            <form onSubmit={this.handleSubmit}>
-                <h2>{this.state.selectedPiece ? (<span>Edit </span>) : (<span>Add New </span>)}Artwork</h2>
-                <label>Title
-                <input name="title" type="text" required value={this.state.selectedPiece && this.state.selectedPiece.title} onChange={this.updateField}/>
-                </label>
-                <label>Medium
-                <input name="medium" type="text" value={this.state.selectedPiece && this.state.selectedPiece.medium} onChange={this.updateField}/>
-                </label>
-                <label>Contact
-                <input name="contact" type="email" required value={this.state.selectedPiece && this.state.selectedPiece.contact} onChange={this.updateField}/>
-                </label>
-                <label> ImageUrl
-                <input name="imageUrl" type="text" value={this.state.selectedPiece && this.state.selectedPiece.imageUrl} onChange={this.updateField}/>
-                </label>
-                <label>Rating
-                <input name="rating" type="text" value={this.state.selectedPiece && this.state.selectedPiece.rating} onChange={this.updateField}/>
-                </label>
-                <select name="artistId" value={this.state.selectedPiece && this.state.selectedPiece.artistId} onChange={this.updateField}>
-                        <option value={'null'} >Select An Artist</option>
-                    {artists && artists.map(artist => (
-                        <option key={artist.id} className="option" value={artist.id}>{artist.name}</option>
-                    ))}
-                </select>
-                <input type="file" name="imageFile" />
-                <button type="submit">Submit</button>
-                {this.state.selectedPiece && (<button onClick={this.toggleEdit}>CANCEL</button>) }
-            </form>
-            ) : (
-                <div>
-                    <div><h1>{this.state.selectedPiece && this.state.selectedPiece.title}</h1></div>
-                    <div>Medium: {this.state.selectedPiece && this.state.selectedPiece.medium}</div>
-                    <div>Contact: {this.state.selectedPiece && this.state.selectedPiece.contact}</div>
-                    <div>Rating: {this.state.selectedPiece && this.state.selectedPiece.rating}</div>
-                    <div>By: {this.state.selectedPiece && this.state.selectedPiece.artist && (
-                        <Link to={`/artists/${this.state.selectedPiece.artist.id}`}>{this.state.selectedPiece.artist.name}</Link>
-                    ) || 'artist unknown'}</div>
+                <div className="didact">
+                    {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
+                            <PieceForm selectedPiece={this.state.selectedPiece} updateField={this.updateField} handleSubmit={this.handleSubmit} artists={artists} />
+                        ) : (
+                            <PieceDisplay selectedPiece={this.state.selectedPiece} />
+                        )
+                    }
                     <button onClick={this.toggleEdit}>EDIT</button>
                     <button onClick={this.delete}>DELETE</button>
                 </div>
-            )
-            }
-            </div>
-            <div><img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/></div>
-            <img src={this.state.selectedPiece && this.state.selectedPiece.imageFile}/>
+                <img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/>
             </div>
         )
     }

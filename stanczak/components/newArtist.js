@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
-import { addArtist, readArtist, editArtist, browseArtwork, editPiece, deleteArtist } from '../store'
+import { addArtist, readArtist, editArtist, browseArtwork, editPiece, deleteArtist } from '../store/thunks'
 import Piece from './piece'
 
 class newArtist extends Component {

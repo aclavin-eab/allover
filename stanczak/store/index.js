@@ -27,18 +27,6 @@ const reducer = (state = initialState, action) => {
                 artwork: action.artwork
             }
         }
-        case ACTIONS.BROWSE_ARTISTS: {
-            return {
-                ...state,
-                artists: action.artists
-            }
-        }
-        case ACTIONS.ADD_ARTIST: {
-            return {
-                ...state,
-                artists: state.artists.concat([action.artist])
-            }
-        }
         case ACTIONS.ADD_PIECE: {
             return {
                 ...state,
@@ -65,6 +53,18 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 artwork: [...state.artwork.slice(0, getIndexOfPiece(action.piece, state.artwork)),
                           ...state.artwork.slice(getIndexOfPiece(action.piece, state.artwork) + 1)]
+            }
+        }
+        case ACTIONS.BROWSE_ARTISTS: {
+            return {
+                ...state,
+                artists: action.artists
+            }
+        }
+        case ACTIONS.ADD_ARTIST: {
+            return {
+                ...state,
+                artists: state.artists.concat([action.artist])
             }
         }
         case ACTIONS.READ_ARTIST: {

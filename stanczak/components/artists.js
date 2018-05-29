@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {browseArtists, deleteArtist, clearSelection} from '../store'
+import {browseArtists, deleteArtist} from '../store/thunks'
+import {clearSelection} from '../store/actions'
 import Artist from './artist'
 import NewArtist from './newArtist'
 
