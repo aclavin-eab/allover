@@ -14,20 +14,24 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-    const art = await Artwork.create(req.body)
-    fs.writeFile('test.jpg', req.body.imageFile, (err) =>{
-        if(err) throw err
-        console.log('The file is saved!')
-    })
-    res.json(art)
+    if(req.body.imageFile && req.body.imageName){
+        base64Img.img(req.body.imageFile, './images', req.body.imageName, async (err) =>{
+            if(err) throw err
+            req.body.imageUrl = `/${req.body.imageName}.jpg`
+            const art = await Artwork.create(req.body)
+            res.json(art)
+        })
+    } else {
+        const art = await Artwork.create(req.body)
+        res.json(art)
+    }
 })
 
 router.put('/:id', async (req, res, next) => {
-    if(req.body.imageFile){
-        base64Img.img(req.body.imageFile, './images', 'test', async (err) =>{
+    if(req.body.imageFile && req.body.imageName){
+        base64Img.img(req.body.imageFile, './images', req.body.imageName, async (err) =>{
             if(err) throw err
-            console.log('The file is saved!')
-            req.body.imageUrl = './images/test.jpg'
+            req.body.imageUrl = `/${req.body.imageName}.jpg`
             const art = await Artwork.update(req.body, { where: {id: req.body.id} })
             res.json(art)
         })

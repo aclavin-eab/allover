@@ -35,11 +35,13 @@ class newPiece extends Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault()
+        //const submitEv = ev
         let objy = {
             title: ev.target.title.value,
             artistId: +ev.target.artistId.value,
             medium: ev.target.medium.value,
             contact: ev.target.contact.value,
+            imageName: ev.target.imageName.value,
             rating: +ev.target.rating.value,
         }
         !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value)
@@ -55,6 +57,7 @@ class newPiece extends Component {
                     }
                 }
                 objy.imageFile = r.result
+                // objy.imageName = submitEv.target.imageName.value
                 this.props.addPiece(objy).then(art => {
                     if(this.props.match && this.props.match.params.id){
                         this.props.readPiece(this.props.match.params.id)

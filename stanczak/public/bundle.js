@@ -5843,11 +5843,13 @@ var newPiece = function (_Component) {
 
         _this.handleSubmit = function (ev) {
             ev.preventDefault();
+            //const submitEv = ev
             var objy = {
                 title: ev.target.title.value,
                 artistId: +ev.target.artistId.value,
                 medium: ev.target.medium.value,
                 contact: ev.target.contact.value,
+                imageName: ev.target.imageName.value,
                 rating: +ev.target.rating.value
             };
             !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value);
@@ -5863,6 +5865,7 @@ var newPiece = function (_Component) {
                         }
                     }
                     objy.imageFile = r.result;
+                    // objy.imageName = submitEv.target.imageName.value
                     _this.props.addPiece(objy).then(function (art) {
                         if (_this.props.match && _this.props.match.params.id) {
                             _this.props.readPiece(_this.props.match.params.id);
@@ -10640,7 +10643,18 @@ exports.default = function (props) {
                 );
             })
         ),
-        _react2.default.createElement("input", { type: "file", name: "imageFile" }),
+        _react2.default.createElement(
+            "label",
+            null,
+            "Image",
+            _react2.default.createElement("input", { type: "file", name: "imageFile" })
+        ),
+        _react2.default.createElement(
+            "label",
+            null,
+            "Image Name",
+            _react2.default.createElement("input", { type: "text", name: "imageName", onChange: updateField })
+        ),
         _react2.default.createElement(
             "button",
             { type: "submit" },
@@ -10690,6 +10704,8 @@ var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(38);
+
 var _piece = __webpack_require__(62);
 
 var _piece2 = _interopRequireDefault(_piece);
@@ -10734,7 +10750,7 @@ exports.default = function (props) {
         ),
         selectedArtist && selectedArtist.artworks.map(function (art) {
             return _react2.default.createElement(
-                Link,
+                _reactRouterDom.Link,
                 { to: '/artwork/' + art.id },
                 _react2.default.createElement(_piece2.default, { key: art.id, piece: art })
             );

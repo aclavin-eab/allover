@@ -29,7 +29,12 @@ export default (props) => {
                     <option key={artist.id} className="option" value={artist.id}>{artist.name}</option>
                 ))}
             </select>
+            <label>Image
             <input type="file" name="imageFile" />
+            </label>
+            <label>Image Name
+            <input type="text" name="imageName" onChange={updateField}/>
+            </label>
             <button type="submit">Submit</button>
         </form>
     )

@@ -28,9 +28,6 @@ const Artwork = db.define('artwork', {
             min: 0.0,
             max: 5.0
         }
-    },
-    imageFile: {
-        type: Sequelize.BLOB
     }
 
 })
