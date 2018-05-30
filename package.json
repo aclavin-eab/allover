@@ -4,10 +4,12 @@
   "description": "Dispersed art gallery",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & nodemon dubuffet -w dubuffet",
-    "start-server": "nodemon server",
+    "start": "webpack -w & nodemon dubuffet -w dubuffet & npm run watch-css",
+    "start-server": "nodemon dubuffet",
     "build-client": "webpack",
-    "seed": "node seed.js"
+    "seed": "node seed.js",
+    "build-css": "node-sass --include-path scss stanczak/scss/main.scss stanczak/public/css/style.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "repository": {
     "type": "git",
@@ -48,7 +50,7 @@
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-2": "^6.22.0",
     "css-loader": "^0.26.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.0",
     "nodemon": "^1.11.0",
     "sass-loader": "^6.0.2",
     "style-loader": "^0.13.2",

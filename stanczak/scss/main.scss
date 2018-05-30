@@ -1,3 +1,7 @@
+@import "test.scss";
+
+$kruger: #ff4444;
+
 nav{
     position: absolute;
 left: 50%;
@@ -5,7 +9,7 @@ margin-left: -198px;
 top: 19px;
 padding: 20px 50px;
 color: white;
-background-color: #ff4444;
+background-color: $kruger;
 }
 
 select {
@@ -17,8 +21,8 @@ display: block;
 margin-top: 15px;
 margin-bottom: 5px;
 background: none;
-border-color: #ff4444;
-color: #ff4444;
+border-color: $kruger;
+color: $kruger;
 text-transform: uppercase;
 font-weight: 800;
 letter-spacing: 3px;
@@ -30,8 +34,8 @@ img{
 button{
     margin-top: 20px;
     background-color: transparent;
-    border-color: #ff4444;
-    color: #ff4444;
+    border-color: $kruger;
+    color: $kruger;
     text-transform: uppercase;
     font-weight: 800;
     letter-spacing: 3px;
@@ -43,7 +47,7 @@ input, textarea{
 }
 .option{
     background-color: white;
-    color: #ff4444;
+    color: $kruger;
 }
 label{
     display: block;
@@ -194,5 +198,5 @@ a:hover .imageStretcher{
 
 .item a:hover .text{
     /* background-color: rgba(0, 0, 0, 0.65); */
-    opacity: 0;
+    opacity: 0.0;
 }
