@@ -83,3 +83,12 @@ export function deleteArtist(id) {
         dispatch(actions.sellArtist(artist))
     }
 }
+
+export function addLocation(obj) {
+    return async dispatch => {
+        const response = await axios.post('/api/locations', obj)
+        const location = response.data
+        dispatch(actions.buyPiece(location))
+        return location
+    }
+}

@@ -96,6 +96,12 @@ const reducer = (state = initialState, action) => {
                 selectedArtist: action.selectedArtist
             }
         }
+        case ACTIONS.ADD_LOCATION: {
+            return {
+                ... state,
+                locations: state.locations.concat([action.location])
+            }
+        }
         default: {
             return state
         }

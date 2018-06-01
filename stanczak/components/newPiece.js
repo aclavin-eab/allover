@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
-import { addPiece, browseArtists, readPiece, editPiece, deletePiece } from '../store/thunks'
+import { addPiece, browseArtists, readPiece, editPiece, deletePiece, addLocation } from '../store/thunks'
 import PieceDisplay from './PieceDisplay'
 import PieceForm from './PieceForm'
 
@@ -26,14 +26,13 @@ class newPiece extends Component {
             this.setState({
                 selectedPiece: nextProps.selectedPiece
             })
-
     }
 
     encodeUrl = () => {
 
     }
 
-    handleSubmit = (ev) => {
+    handleSubmit = async (ev) => {
         ev.preventDefault()
         //const submitEv = ev
         let objy = {
@@ -44,7 +43,17 @@ class newPiece extends Component {
             imageName: ev.target.imageName.value,
             rating: +ev.target.rating.value,
         }
+        let location;
+        let locationObj;
+        if(ev.target.latitude.value && ev.target.longitude.value ){
+            location = {
+                latitude: +ev.target.latitude.value,
+                longitude: +ev.target.longitude.value
+            }
+            locationObj = await this.props.addLocation(location)
+        }
         !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value)
+        //const locationId =
         if(!!ev.target.imageFile.value){
             const r = new FileReader()
             const f = ev.target.imageFile.files[0]
@@ -57,6 +66,9 @@ class newPiece extends Component {
                     }
                 }
                 objy.imageFile = r.result
+                if(locationObj.id){
+                    objy.locationId = locationObj.id
+                }
                 // objy.imageName = submitEv.target.imageName.value
                 this.props.addPiece(objy).then(art => {
                     if(this.props.match && this.props.match.params.id){
@@ -67,8 +79,11 @@ class newPiece extends Component {
                 }, function(){})
             }
         } else {
-            if(this.state.selectedPiece.id){
+            if(this.state.selectedPiece && this.state.selectedPiece.id){
                 objy = this.state.selectedPiece
+                if(locationObj.id){
+                    objy.locationId = locationObj.id
+                }
                 if(objy.artistId === "null"){
                     objy.artistId = null
                 }
@@ -126,6 +141,7 @@ const mapDispatch = dispatch => {
         browseInitialArtists: () => dispatch(browseArtists()),
         readPiece: (id) => dispatch(readPiece(id)),
         deletePiece: (id) => dispatch(deletePiece(id)),
+        addLocation: (obj) => dispatch(addLocation(obj))
     }
 }
 

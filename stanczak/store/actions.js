@@ -43,3 +43,7 @@ export const clearSelection = () => {
 export const sellArtist = (artist) => {
     return {type: ACTIONS.DELETE_ARTIST, artist}
 }
+
+export const buyLocation = (location) => {
+    return {type: ACTIONS.ADD_LOCATION, location}
+}

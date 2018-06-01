@@ -7,7 +7,7 @@ export default (props) => {
     const artists = props.artists
     return (
         <form onSubmit={handleSubmit}>
-            <h2>{selectedPiece ? (<span>Edit </span>) : (<span>Add New </span>)}Artwork</h2>
+            <h2>{selectedPiece && selectedPiece.id ? (<span>Edit </span>) : (<span>Add New </span>)}Artwork</h2>
             <label>Title
             <input name="title" type="text" required value={selectedPiece && selectedPiece.title} onChange={updateField}/>
             </label>
@@ -34,6 +34,12 @@ export default (props) => {
             </label>
             <label>Image Name
             <input type="text" name="imageName" onChange={updateField}/>
+            </label>
+            <label>Longitude
+            <input type="text" name="longitude" onChange={updateField}/>
+            </label>
+            <label>Latitude
+            <input type="text" name="latitude" onChange={updateField}/>
             </label>
             <button type="submit">Submit</button>
         </form>

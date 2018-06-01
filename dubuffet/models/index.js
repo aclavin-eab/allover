@@ -5,9 +5,14 @@ const db = require('./database')
 
 const Artwork = require('./artwork')
 
-const Artist = require('./Artist')
+const Artist = require('./artist')
+
+const Location = require('./location')
 
 Artwork.belongsTo(Artist)
 Artist.hasMany(Artwork)
 
-module.exports = { db, Artwork, Artist }
+Artwork.belongsTo(Location)
+Location.hasMany(Artwork)
+
+module.exports = { db, Artwork, Artist, Location }
