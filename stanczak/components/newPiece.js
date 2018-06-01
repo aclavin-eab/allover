@@ -35,6 +35,7 @@ class newPiece extends Component {
     handleSubmit = async (ev) => {
         ev.preventDefault()
         //const submitEv = ev
+        ev.persist()
         let objy = {
             title: ev.target.title.value,
             artistId: +ev.target.artistId.value,
@@ -59,7 +60,7 @@ class newPiece extends Component {
             const f = ev.target.imageFile.files[0]
             r.readAsDataURL(f)
             r.onloadend = (ev) => {
-                if(this.state.selectedPiece.id){
+                if(this.state.selectedPiece && this.state.selectedPiece.id){
                     objy = this.state.selectedPiece
                     if(objy.artistId === "null"){
                         objy.artistId = null
