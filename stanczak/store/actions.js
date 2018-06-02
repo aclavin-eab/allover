@@ -47,3 +47,7 @@ export const sellArtist = (artist) => {
 export const buyLocation = (location) => {
     return {type: ACTIONS.ADD_LOCATION, location}
 }
+
+export const stockLocations = (locations) => {
+    return {type: ACTIONS.BROWSE_LOCATIONS, locations}
+}

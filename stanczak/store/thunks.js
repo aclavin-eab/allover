@@ -92,3 +92,12 @@ export function addLocation(obj) {
         return location
     }
 }
+
+export function browseLocations() {
+    return async dispatch => {
+        const response = await axios.get('/api/locations')
+        const locations = response.data
+        console.log("thunks", locations)
+        dispatch(actions.stockLocations(locations))
+    }
+}

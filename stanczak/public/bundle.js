@@ -2315,7 +2315,7 @@ exports.default = function (props) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.buyLocation = exports.sellArtist = exports.clearSelection = exports.sellPiece = exports.changeArtist = exports.changePiece = exports.featureArtist = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
+exports.stockLocations = exports.buyLocation = exports.sellArtist = exports.clearSelection = exports.sellPiece = exports.changeArtist = exports.changePiece = exports.featureArtist = exports.featurePiece = exports.buyPiece = exports.buyArtist = exports.stockArtists = exports.stockArtwork = undefined;
 
 var _actionConstants = __webpack_require__(128);
 
@@ -2371,6 +2371,10 @@ var buyLocation = exports.buyLocation = function buyLocation(location) {
     return { type: _actionConstants2.default.ADD_LOCATION, location: location };
 };
 
+var stockLocations = exports.stockLocations = function stockLocations(locations) {
+    return { type: _actionConstants2.default.BROWSE_LOCATIONS, locations: locations };
+};
+
 /***/ }),
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2392,6 +2396,7 @@ exports.readArtist = readArtist;
 exports.editArtist = editArtist;
 exports.deleteArtist = deleteArtist;
 exports.addLocation = addLocation;
+exports.browseLocations = browseLocations;
 
 var _axios = __webpack_require__(192);
 
@@ -2770,6 +2775,40 @@ function addLocation(obj) {
 
         return function (_x11) {
             return _ref11.apply(this, arguments);
+        };
+    }();
+}
+
+function browseLocations() {
+    var _this12 = this;
+
+    return function () {
+        var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(dispatch) {
+            var response, locations;
+            return regeneratorRuntime.wrap(function _callee12$(_context12) {
+                while (1) {
+                    switch (_context12.prev = _context12.next) {
+                        case 0:
+                            _context12.next = 2;
+                            return _axios2.default.get('/api/locations');
+
+                        case 2:
+                            response = _context12.sent;
+                            locations = response.data;
+
+                            console.log("thunks", locations);
+                            dispatch(actions.stockLocations(locations));
+
+                        case 6:
+                        case 'end':
+                            return _context12.stop();
+                    }
+                }
+            }, _callee12, _this12);
+        }));
+
+        return function (_x12) {
+            return _ref12.apply(this, arguments);
         };
     }();
 }
@@ -6074,17 +6113,18 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     BROWSE_ARTWORK: 'BROWSE_ARTWORK',
-    BROWSE_ARTISTS: 'BROWSE_ARTISTS',
-    ADD_ARTIST: 'ADD_ARTIST',
     ADD_PIECE: 'ADD_PIECE',
     READ_PIECE: 'READ_PIECE',
     EDIT_PIECE: 'EDIT_PIECE',
     DELETE_PIECE: 'DELETE_PIECE',
+    BROWSE_ARTISTS: 'BROWSE_ARTISTS',
+    ADD_ARTIST: 'ADD_ARTIST',
     READ_ARTIST: 'READ_ARTIST',
     EDIT_ARTIST: 'EDIT_ARTIST',
     DELETE_ARTIST: 'DELETE_ARTIST',
     CLEAR_SELECTION: 'CLEAR_SELECTION',
-    ADD_LOCATION: 'ADD_LOCATION'
+    ADD_LOCATION: 'ADD_LOCATION',
+    BROWSE_LOCATIONS: 'BROWSE_LOCATIONS'
 };
 
 /***/ }),
@@ -6127,6 +6167,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var initialState = {
     artists: [],
     artwork: [],
+    locations: [],
     selectedPiece: {},
     selectedArtist: {}
 
@@ -6216,6 +6257,12 @@ var reducer = function reducer() {
             {
                 return _extends({}, state, {
                     locations: state.locations.concat([action.location])
+                });
+            }
+        case _actionConstants2.default.BROWSE_LOCATIONS:
+            {
+                return _extends({}, state, {
+                    locations: action.locations
                 });
             }
         default:
@@ -11266,6 +11313,8 @@ var _private2 = _interopRequireDefault(_private);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -11283,16 +11332,45 @@ var MapView = function (_Component) {
 
     _createClass(MapView, [{
         key: 'componentDidMount',
-        value: function componentDidMount() {
-            var mymap = L.map('mapid').setView([40.7338452, -73.95652969999999], 17);
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 25,
-                id: 'mapbox.streets',
-                accessToken: _private2.default.mapToken
-            }).addTo(mymap);
-            console.log(mymap);
-        }
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                var mymap;
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _context.next = 2;
+                                return this.props.browseLocations();
+
+                            case 2:
+                                mymap = L.map('mapid').setView([40.7338452, -73.95652969999999], 17);
+
+                                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                                    maxZoom: 25,
+                                    id: 'mapbox.streets',
+                                    accessToken: _private2.default.mapToken
+                                }).addTo(mymap);
+                                console.log(this.props.locations);
+                                this.props.locations.map(function (loc) {
+                                    var m = L.marker([+loc.latitude, +loc.longitude]).addTo(mymap);
+                                    console.log(loc, m);
+                                });
+
+                            case 6:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function componentDidMount() {
+                return _ref.apply(this, arguments);
+            }
+
+            return componentDidMount;
+        }()
     }, {
         key: 'render',
         value: function render() {
@@ -11309,12 +11387,22 @@ var MapView = function (_Component) {
 
 var mapDispatch = function mapDispatch(dispatch) {
     return {
-        browseInitialArtwork: function browseInitialArtwork() {
-            return dispatch((0, _thunks.browseArtwork)());
+        browseLocations: function browseLocations() {
+            return dispatch((0, _thunks.browseLocations)());
         },
-        deletePiece: function deletePiece(id) {
-            return dispatch((0, _thunks.deletePiece)(id));
-        },
+        deletePiece: function (_deletePiece) {
+            function deletePiece(_x) {
+                return _deletePiece.apply(this, arguments);
+            }
+
+            deletePiece.toString = function () {
+                return _deletePiece.toString();
+            };
+
+            return deletePiece;
+        }(function (id) {
+            return dispatch(deletePiece(id));
+        }),
         clearSelection: function clearSelection() {
             return dispatch((0, _actions.clearSelection)());
         }
@@ -11323,7 +11411,8 @@ var mapDispatch = function mapDispatch(dispatch) {
 };
 var mapProps = function mapProps(state) {
     return {
-        artwork: state.artwork
+        artwork: state.artwork,
+        locations: state.locations
     };
 };
 

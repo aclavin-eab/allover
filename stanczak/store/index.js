@@ -7,6 +7,7 @@ import * as actions from './actions'
 const initialState = {
     artists: [],
     artwork: [],
+    locations: [],
     selectedPiece: {},
     selectedArtist: {}
 }
@@ -100,6 +101,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ... state,
                 locations: state.locations.concat([action.location])
+            }
+        }
+        case ACTIONS.BROWSE_LOCATIONS: {
+            return {
+                ... state,
+                locations: action.locations
             }
         }
         default: {

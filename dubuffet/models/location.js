@@ -17,6 +17,11 @@ const Artist = db.define('location', {
     title: {
         type: Sequelize.STRING
     }
+},
+{
+    defaultScope: {
+        include: [{ model: Artwork}]
+    }
 })
 
 module.exports = Artist
