@@ -12,4 +12,36 @@ img.leaflet-marker-icon:hover{
     width: 60px;
     border: 1px solid $kruger;
     object-fit: cover;
+    z-index: 1000 !important;
+}
+
+.leaflet-popup{
+    margin-bottom: 0;
+}
+
+.leaflet-popup-content{
+    margin: 0;
+}
+
+.leaflet-popup-content-wrapper {
+    background: $kruger;
+    color: white;
+    box-shadow: 0 0 0;
+    border-radius: 0;
+    font-weight: 200;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    a{
+        color: white;
+        padding: 5px 10px;
+        display: block;
+    }
+}
+.leaflet-container a.leaflet-popup-close-button{
+    color: white;
+    display: none;
+}
+
+.leaflet-popup-tip {
+    opacity: 0;
 }

@@ -28,7 +28,7 @@ class MapView extends Component {
                     <Piece piece={loc.artworks[0]} />
                 </Link>
                 let m = L.marker([+loc.latitude, +loc.longitude], {icon: myIcon}).addTo(mymap)
-                m.bindPopup(`<p>${loc.artworks[0].title}!<a href="artwork/${loc.artworks[0].id}">This is a nice popup</a>.</p>`)
+                m.bindPopup(`<a href="artwork/${loc.artworks[0].id}">${loc.artworks[0].title}!</a>`)
                 console.log("here", loc, m)
             }
         })
