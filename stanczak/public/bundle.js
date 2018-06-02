@@ -11353,8 +11353,20 @@ var MapView = function (_Component) {
                                 }).addTo(mymap);
                                 console.log(this.props.locations);
                                 this.props.locations.map(function (loc) {
-                                    var m = L.marker([+loc.latitude, +loc.longitude]).addTo(mymap);
-                                    console.log(loc, m);
+                                    if (loc.artworks && loc.artworks[0]) {
+                                        var myIcon = L.icon({
+                                            iconUrl: loc.artworks[0].imageUrl,
+                                            riseOnHover: true
+                                        });
+                                        var popContent = _react2.default.createElement(
+                                            _reactRouterDom.Link,
+                                            { to: '/artwork/' + loc.artworks[0].id },
+                                            _react2.default.createElement(_piece2.default, { piece: loc.artworks[0] })
+                                        );
+                                        var m = L.marker([+loc.latitude, +loc.longitude], { icon: myIcon }).addTo(mymap);
+                                        m.bindPopup('<p>' + loc.artworks[0].title + '!<a href="artwork/' + loc.artworks[0].id + '">This is a nice popup</a>.</p>');
+                                        console.log("here", loc, m);
+                                    }
                                 });
 
                             case 6:

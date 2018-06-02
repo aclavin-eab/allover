@@ -1,0 +1,15 @@
+//styles customizing the leaflet map LIBRARY
+img.leaflet-marker-icon{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    object-fit: none;
+    border: 2px solid $kruger;
+    transition: 0.2s;
+}
+img.leaflet-marker-icon:hover{
+    height: 60px;
+    width: 60px;
+    border: 1px solid $kruger;
+    object-fit: cover;
+}
