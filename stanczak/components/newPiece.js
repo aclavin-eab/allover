@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
 import { addPiece, browseArtists, readPiece, editPiece, deletePiece, addLocation } from '../store/thunks'
+import { featurePiece } from '../store/actions'
+import EncodeFile from '../utilities/encodeFile'
 import PieceDisplay from './PieceDisplay'
 import PieceForm from './PieceForm'
 
@@ -23,84 +25,46 @@ class newPiece extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
+        console.log("recieving props", nextProps)
             this.setState({
                 selectedPiece: nextProps.selectedPiece
             })
     }
 
-    encodeUrl = () => {
+    addPieceCallback = (data) =>{
+        this.setState({editMode: false})
+        data.id && this.props.history.push(`/artwork/${data.id}`)
+    }
 
+    checkForLocationToAdd = async (piece) => {
+        let locationObj
+        if(piece.latitude && piece.longitude ){
+            locationObj = await this.props.addLocation({
+                latitude: +piece.latitude,
+                longitude: +piece.longitude
+            })
+            return locationObj.id
+        }
+        return null
     }
 
     handleSubmit = async (ev) => {
         ev.preventDefault()
-        //const submitEv = ev
         ev.persist()
-        let objy = {
-            title: ev.target.title.value,
-            artistId: +ev.target.artistId.value,
-            medium: ev.target.medium.value,
-            contact: ev.target.contact.value,
-            imageName: ev.target.imageName.value,
-            rating: +ev.target.rating.value,
+        let piece = this.state.selectedPiece;
+        piece.locationId = await this.checkForLocationToAdd(piece)
+        if(piece.artistId === "null"){
+            piece.artistId = null
         }
-        let location;
-        let locationObj;
-        if(ev.target.latitude.value && ev.target.longitude.value ){
-            location = {
-                latitude: +ev.target.latitude.value,
-                longitude: +ev.target.longitude.value
-            }
-            locationObj = await this.props.addLocation(location)
+        if(!!piece.imageFile){
+            const imageEncoded = await EncodeFile(ev.target.imageFile.files[0])
+            piece.imageFile = imageEncoded
         }
-        !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value)
-        //const locationId =
-        if(!!ev.target.imageFile.value){
-            const r = new FileReader()
-            const f = ev.target.imageFile.files[0]
-            r.readAsDataURL(f)
-            r.onloadend = (ev) => {
-                if(this.state.selectedPiece && this.state.selectedPiece.id){
-                    objy = this.state.selectedPiece
-                    if(objy.artistId === "null"){
-                        objy.artistId = null
-                    }
-                }
-                objy.imageFile = r.result
-                if(locationObj.id){
-                    objy.locationId = locationObj.id
-                }
-                // objy.imageName = submitEv.target.imageName.value
-                this.props.addPiece(objy).then(art => {
-                    if(this.props.match && this.props.match.params.id){
-                        this.props.readPiece(this.props.match.params.id)
-                    }
-                    !objy.id && this.props.history.push(`/artwork/${art.id}`)
-                    this.setState({editMode: false})
-                }, function(){})
-            }
-        } else {
-            if(this.state.selectedPiece && this.state.selectedPiece.id){
-                objy = this.state.selectedPiece
-                if(locationObj.id){
-                    objy.locationId = locationObj.id
-                }
-                if(objy.artistId === "null"){
-                    objy.artistId = null
-                }
-            }
-            this.props.addPiece(objy).then(art => {
-                if(this.props.match && this.props.match.params.id){
-                    this.props.readPiece(this.props.match.params.id)
-                }
-                !objy.id && this.props.history.push(`/artwork/${art.id}`)
-                this.setState({editMode: false})
-            }, function(){})
-        }
+        this.props.addPiece(piece).then(this.addPieceCallback, err => console.log(err))
     }
 
     toggleEdit = () => {
-        this.setState({editMode: true})
+        this.setState({editMode: !this.state.editMode})
     }
 
     updateField = (ev) => {
@@ -127,8 +91,12 @@ class newPiece extends Component {
                             <PieceDisplay selectedPiece={this.state.selectedPiece} />
                         )
                     }
-                    <button onClick={this.toggleEdit}>EDIT</button>
-                    <button onClick={this.delete}>DELETE</button>
+                    {this.state.selectedPiece && this.state.selectedPiece && (
+                        <div>
+                            <button onClick={this.toggleEdit}>{this.state.editMode ? 'CANCEL' : 'EDIT'}</button>
+                            <button onClick={this.delete}>DELETE</button>
+                        </div>
+                    )}
                 </div>
                 <img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/>
             </div>

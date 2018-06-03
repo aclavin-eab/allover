@@ -30,7 +30,7 @@ export default (props) => {
                 ))}
             </select>
             <label>Image
-            <input type="file" name="imageFile" />
+            <input type="file" name="imageFile" onChange={updateField}/>
             </label>
             <label>Image Name
             <input type="text" name="imageName" onChange={updateField}/>

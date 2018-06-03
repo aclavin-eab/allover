@@ -2597,9 +2597,10 @@ function editPiece(obj) {
                             response = _context6.sent;
                             piece = response.data;
 
-                            dispatch(actions.changePiece(piece));
+                            dispatch(actions.changePiece(obj));
+                            return _context6.abrupt('return', piece);
 
-                        case 5:
+                        case 6:
                         case 'end':
                             return _context6.stop();
                     }
@@ -3902,6 +3903,12 @@ var _reactRouterDom = __webpack_require__(33);
 
 var _thunks = __webpack_require__(58);
 
+var _actions = __webpack_require__(57);
+
+var _encodeFile = __webpack_require__(478);
+
+var _encodeFile2 = _interopRequireDefault(_encodeFile);
+
 var _PieceDisplay = __webpack_require__(210);
 
 var _PieceDisplay2 = _interopRequireDefault(_PieceDisplay);
@@ -3938,97 +3945,45 @@ var newPiece = function (_Component) {
         };
 
         _this.componentWillReceiveProps = function (nextProps) {
+            console.log("recieving props", nextProps);
             _this.setState({
                 selectedPiece: nextProps.selectedPiece
             });
         };
 
-        _this.encodeUrl = function () {};
+        _this.addPieceCallback = function (data) {
+            _this.setState({ editMode: false });
+            data.id && _this.props.history.push('/artwork/' + data.id);
+        };
 
-        _this.handleSubmit = function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ev) {
-                var objy, location, locationObj, r, f;
+        _this.checkForLocationToAdd = function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(piece) {
+                var locationObj;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                ev.preventDefault();
-                                //const submitEv = ev
-                                ev.persist();
-                                objy = {
-                                    title: ev.target.title.value,
-                                    artistId: +ev.target.artistId.value,
-                                    medium: ev.target.medium.value,
-                                    contact: ev.target.contact.value,
-                                    imageName: ev.target.imageName.value,
-                                    rating: +ev.target.rating.value
-                                };
-                                location = void 0;
                                 locationObj = void 0;
 
-                                if (!(ev.target.latitude.value && ev.target.longitude.value)) {
-                                    _context.next = 10;
+                                if (!(piece.latitude && piece.longitude)) {
+                                    _context.next = 6;
                                     break;
                                 }
 
-                                location = {
-                                    latitude: +ev.target.latitude.value,
-                                    longitude: +ev.target.longitude.value
-                                };
-                                _context.next = 9;
-                                return _this.props.addLocation(location);
+                                _context.next = 4;
+                                return _this.props.addLocation({
+                                    latitude: +piece.latitude,
+                                    longitude: +piece.longitude
+                                });
 
-                            case 9:
+                            case 4:
                                 locationObj = _context.sent;
+                                return _context.abrupt('return', locationObj.id);
 
-                            case 10:
-                                !!ev.target.imageUrl.value && (objy.imageUrl = ev.target.imageUrl.value);
-                                //const locationId =
-                                if (!!ev.target.imageFile.value) {
-                                    r = new FileReader();
-                                    f = ev.target.imageFile.files[0];
+                            case 6:
+                                return _context.abrupt('return', null);
 
-                                    r.readAsDataURL(f);
-                                    r.onloadend = function (ev) {
-                                        if (_this.state.selectedPiece && _this.state.selectedPiece.id) {
-                                            objy = _this.state.selectedPiece;
-                                            if (objy.artistId === "null") {
-                                                objy.artistId = null;
-                                            }
-                                        }
-                                        objy.imageFile = r.result;
-                                        if (locationObj.id) {
-                                            objy.locationId = locationObj.id;
-                                        }
-                                        // objy.imageName = submitEv.target.imageName.value
-                                        _this.props.addPiece(objy).then(function (art) {
-                                            if (_this.props.match && _this.props.match.params.id) {
-                                                _this.props.readPiece(_this.props.match.params.id);
-                                            }
-                                            !objy.id && _this.props.history.push('/artwork/' + art.id);
-                                            _this.setState({ editMode: false });
-                                        }, function () {});
-                                    };
-                                } else {
-                                    if (_this.state.selectedPiece && _this.state.selectedPiece.id) {
-                                        objy = _this.state.selectedPiece;
-                                        if (locationObj.id) {
-                                            objy.locationId = locationObj.id;
-                                        }
-                                        if (objy.artistId === "null") {
-                                            objy.artistId = null;
-                                        }
-                                    }
-                                    _this.props.addPiece(objy).then(function (art) {
-                                        if (_this.props.match && _this.props.match.params.id) {
-                                            _this.props.readPiece(_this.props.match.params.id);
-                                        }
-                                        !objy.id && _this.props.history.push('/artwork/' + art.id);
-                                        _this.setState({ editMode: false });
-                                    }, function () {});
-                                }
-
-                            case 12:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }
@@ -4041,8 +3996,59 @@ var newPiece = function (_Component) {
             };
         }();
 
+        _this.handleSubmit = function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ev) {
+                var piece, imageEncoded;
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                ev.preventDefault();
+                                ev.persist();
+                                piece = _this.state.selectedPiece;
+                                _context2.next = 5;
+                                return _this.checkForLocationToAdd(piece);
+
+                            case 5:
+                                piece.locationId = _context2.sent;
+
+                                if (piece.artistId === "null") {
+                                    piece.artistId = null;
+                                }
+
+                                if (!piece.imageFile) {
+                                    _context2.next = 12;
+                                    break;
+                                }
+
+                                _context2.next = 10;
+                                return (0, _encodeFile2.default)(ev.target.imageFile.files[0]);
+
+                            case 10:
+                                imageEncoded = _context2.sent;
+
+                                piece.imageFile = imageEncoded;
+
+                            case 12:
+                                _this.props.addPiece(piece).then(_this.addPieceCallback, function (err) {
+                                    return console.log(err);
+                                });
+
+                            case 13:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, _this2);
+            }));
+
+            return function (_x2) {
+                return _ref2.apply(this, arguments);
+            };
+        }();
+
         _this.toggleEdit = function () {
-            _this.setState({ editMode: true });
+            _this.setState({ editMode: !_this.state.editMode });
         };
 
         _this.updateField = function (ev) {
@@ -4075,15 +4081,19 @@ var newPiece = function (_Component) {
                     'div',
                     { className: 'didact' },
                     !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(_PieceForm2.default, { selectedPiece: this.state.selectedPiece, updateField: this.updateField, handleSubmit: this.handleSubmit, artists: artists }) : _react2.default.createElement(_PieceDisplay2.default, { selectedPiece: this.state.selectedPiece }),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.toggleEdit },
-                        'EDIT'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.delete },
-                        'DELETE'
+                    this.state.selectedPiece && this.state.selectedPiece && _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.toggleEdit },
+                            this.state.editMode ? 'CANCEL' : 'EDIT'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.delete },
+                            'DELETE'
+                        )
                     )
                 ),
                 _react2.default.createElement('img', { src: this.state.selectedPiece && this.state.selectedPiece.imageUrl })
@@ -10793,7 +10803,7 @@ exports.default = function (props) {
             "label",
             null,
             "Image",
-            _react2.default.createElement("input", { type: "file", name: "imageFile" })
+            _react2.default.createElement("input", { type: "file", name: "imageFile", onChange: updateField })
         ),
         _react2.default.createElement(
             "label",
@@ -39486,6 +39496,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__(191);
 module.exports = __webpack_require__(190);
 
+
+/***/ }),
+/* 478 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var reader = new FileReader();
+
+var encodeFile = function encodeFile(file) {
+    return new Promise(function (resolve, reject) {
+        reader.readAsDataURL(file);
+        reader.onloadend = function (ev) {
+            resolve(reader.result);
+            // objy.imageName = submitEv.target.imageName.value
+        };
+        reader.onerror = function (ev) {
+            reject(reader.error);
+        };
+    });
+};
+
+exports.default = encodeFile;
 
 /***/ })
 /******/ ]);

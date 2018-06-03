@@ -48,7 +48,8 @@ export function editPiece(obj) {
     return async dispatch => {
         const response = await axios.put(`/api/artwork/${obj.id}`, obj)
         const piece = response.data
-        dispatch(actions.changePiece(piece))
+        dispatch(actions.changePiece(obj))
+        return piece
     }
 }
 
