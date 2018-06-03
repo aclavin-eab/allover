@@ -7,26 +7,43 @@ import Artist from './artist'
 import NewArtist from './newArtist'
 
 class Artists extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            newView: false,
+        }
+    }
+
     componentDidMount() {
         this.props.browseInitialArtists()
         this.props.clearSelection()
     }
 
+    toggleView = () => {
+        console.log("here", this)
+        this.setState({
+            newView: !this.state.newView
+        })
+    }
+
     render() {
         const artists = this.props.artists
         return (
-            <div>
-            <div className="itemWrapper">
-                {artists && artists.map(ar => (
-                    <div className="item" key={ar.id}>
-                        <Link to={`/artists/${ar.id}`}>
-                            <Artist artist={ar} />
-                        </Link>
-                    </div>
-                ))}
-                {(artists.length < 1) && (<div>NO ART FOUND</div>)}
+            <div className="artistsWrapper">
+                <div className="itemWrapper">
+                    {artists && artists.map(ar => (
+                        <div className="item" key={ar.id}>
+                            <Link to={`/artists/${ar.id}`}>
+                                <Artist artist={ar} />
+                            </Link>
+                        </div>
+                    ))}
+                    {(artists.length < 1) && (<div>NO ARTISTS FOUND</div>)}
                 </div>
-                <NewArtist />
+                {this.state.newView && (
+                    <NewArtist cancel={this.toggleView}/>
+                )}
+                <button className="headerButton" onClick={this.toggleView}>Add New Artist</button>
             </div>
         )
     }

@@ -1,6 +1,7 @@
 @import "variables";
 @import "leaflet.scss";
 @import "artwork";
+@import "artists";
 
 nav{
     position: absolute;
@@ -171,7 +172,7 @@ nav a:hover{
     }
 }
 
-.didact{
+.didact, .artistFormWrapper{
     background-color: rgba(255, 255, 255, 0.97);
     width: 35%;
     padding: 1px 25px 25px;

@@ -39,10 +39,10 @@ class Artwork extends Component {
                         </Link>
                     </div>
                 ))}
-
+                {(artwork.length < 1) && (<div>NO ARTWORKS FOUND</div>)}
             </div>
             {this.state.newView && (
-            <NewPiece cancel={this.toggleView}/>
+                <NewPiece cancel={this.toggleView}/>
             )}
             <button className="headerButton" onClick={this.toggleView}>Add New Piece</button>
             </div>

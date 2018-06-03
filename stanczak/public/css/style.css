@@ -53,22 +53,81 @@ img.leaflet-marker-icon:hover {
 .leaflet-popup-tip {
   opacity: 0; }
 
-.artworkWrapper .itemView {
+.artworkWrapper .itemView, .artistsWrapper .itemView {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   padding: 40px 18%; }
 
-.artworkWrapper .didact {
+.artworkWrapper .didact, .artworkWrapper .artistFormWrapper, .artistsWrapper .didact, .artistsWrapper .artistFormWrapper {
   width: 100%;
   border: 3px solid #ff4444; }
 
-.artworkWrapper .closer {
+.artworkWrapper .closer, .artistsWrapper .closer {
   position: absolute;
   top: 44px;
   right: 20%;
   margin-right: 13px; }
+
+.artistView .info {
+  float: left; }
+
+.artistView .artistWorkWrap {
+  clear: both;
+  padding-top: 10px; }
+
+.artistView .artistWork {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap; }
+  .artistView .artistWork a {
+    flex: 1 1 15%;
+    max-width: 30%;
+    margin: 5px 5px;
+    background-color: #6b6666;
+    color: white;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 200;
+    letter-spacing: 1.5px;
+    display: block;
+    padding: 100px 15px 10px; }
+    .artistView .artistWork a .text {
+      transition: 0.7s;
+      padding: 8px 11px;
+      letter-spacing: 2px;
+      font-size: 12px; }
+    .artistView .artistWork a:hover .text {
+      /* background-color: rgba(0, 0, 0, 0.65); */
+      opacity: 0.0; }
+    .artistView .artistWork a:hover:after {
+      opacity: 0; }
+    .artistView .artistWork a:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.65);
+      transition: 0.2s;
+      opacity: 1; }
+
+.artistView .artistImage {
+  float: left;
+  max-width: 50%;
+  margin-right: 20px; }
+
+.artistsWrapper .artistView {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 110px 20%;
+  width: 100%; }
+
+.artistsWrapper .artistsFormWrapper {
+  width: 100%; }
 
 nav {
   position: absolute;
@@ -213,11 +272,11 @@ nav a:hover {
     left: 0;
     z-index: -1; }
 
-.didact {
+.didact, .artistFormWrapper {
   background-color: rgba(255, 255, 255, 0.97);
   width: 35%;
   padding: 1px 25px 25px; }
-  .didact.collapsed {
+  .didact.collapsed, .artistFormWrapper.collapsed {
     position: relative;
     top: -120px;
     left: -30px;

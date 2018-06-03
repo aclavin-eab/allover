@@ -5921,7 +5921,12 @@ var Artwork = function (_Component) {
                                 _react2.default.createElement(_piece2.default, { piece: piece })
                             )
                         );
-                    })
+                    }),
+                    artwork.length < 1 && _react2.default.createElement(
+                        'div',
+                        null,
+                        'NO ARTWORKS FOUND'
+                    )
                 ),
                 this.state.newView && _react2.default.createElement(_newPiece2.default, { cancel: this.toggleView }),
                 _react2.default.createElement(
@@ -6080,19 +6085,28 @@ var newArtist = function (_Component) {
             var artists = this.props.artists;
             return _react2.default.createElement(
                 'div',
-                { className: 'itemView' },
+                { className: 'artistView' },
                 !this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? _react2.default.createElement(_artistForm2.default, { selectedArtist: this.state.selectedArtist, handleSubmit: this.handleSubmit,
                     handleSecondarySubmit: this.handleSecondarySubmit, updateField: this.updateField,
                     editPiece: this.props.editPiece, artwork: this.props.artwork }) : _react2.default.createElement(_artistDisplay2.default, { selectedArtist: this.state.selectedArtist }),
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.toggleEdit },
-                    'EDIT'
+                this.state.selectedArtist && this.state.selectedArtist && _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.toggleEdit },
+                        'EDIT'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.delete },
+                        'DELETE'
+                    )
                 ),
-                _react2.default.createElement(
+                this.props.cancel && _react2.default.createElement(
                     'button',
-                    { onClick: this.delete },
-                    'DELETE'
+                    { className: 'closer', onClick: this.props.cancel },
+                    'Cancel'
                 )
             );
         }
@@ -10906,47 +10920,58 @@ exports.default = function (props) {
         null,
         _react2.default.createElement(
             'div',
-            null,
+            { className: 'artistImage' },
+            _react2.default.createElement('img', { src: selectedArtist && selectedArtist.imageUrl })
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'info' },
             _react2.default.createElement(
-                'h1',
+                'div',
                 null,
-                selectedArtist && selectedArtist.name
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    selectedArtist && selectedArtist.name
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                null,
+                'Origin: ',
+                selectedArtist && selectedArtist.origin
+            ),
+            _react2.default.createElement(
+                'div',
+                null,
+                'Bio: ',
+                selectedArtist && selectedArtist.bio
             )
         ),
         _react2.default.createElement(
             'div',
-            null,
-            'Origin: ',
-            selectedArtist && selectedArtist.origin
-        ),
-        _react2.default.createElement(
-            'div',
-            null,
-            'Bio: ',
-            selectedArtist && selectedArtist.bio
-        ),
-        _react2.default.createElement(
-            'h2',
-            null,
-            'ART PIECES'
-        ),
-        selectedArtist && selectedArtist.artworks.length < 1 && _react2.default.createElement(
-            'div',
-            null,
-            'No art to be found here'
-        ),
-        selectedArtist && selectedArtist.artworks.map(function (art) {
-            return _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: '/artwork/' + art.id },
-                _react2.default.createElement(_piece2.default, { key: art.id, piece: art })
-            );
-        }),
-        _react2.default.createElement(
-            'div',
-            null,
-            'Artist Picture: ',
-            _react2.default.createElement('img', { src: selectedArtist && selectedArtist.imageUrl })
+            { className: 'artistWorkWrap' },
+            _react2.default.createElement(
+                'h2',
+                null,
+                'ART PIECES'
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'artistWork' },
+                selectedArtist && selectedArtist.artworks.length < 1 && _react2.default.createElement(
+                    'div',
+                    null,
+                    'No art to be found here'
+                ),
+                selectedArtist && selectedArtist.artworks.map(function (art) {
+                    return _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/artwork/' + art.id },
+                        _react2.default.createElement(_piece2.default, { key: art.id, piece: art })
+                    );
+                })
+            )
         )
     );
 };
@@ -10981,7 +11006,7 @@ exports.default = function (props) {
     var artwork = props.artwork;
     return _react2.default.createElement(
         'div',
-        null,
+        { className: 'artistFormWrapper' },
         _react2.default.createElement(
             'form',
             { onSubmit: handleSubmit },
@@ -11125,10 +11150,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Artists = function (_Component) {
     _inherits(Artists, _Component);
 
-    function Artists() {
+    function Artists(props) {
         _classCallCheck(this, Artists);
 
-        return _possibleConstructorReturn(this, (Artists.__proto__ || Object.getPrototypeOf(Artists)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Artists.__proto__ || Object.getPrototypeOf(Artists)).call(this, props));
+
+        _this.toggleView = function () {
+            console.log("here", _this);
+            _this.setState({
+                newView: !_this.state.newView
+            });
+        };
+
+        _this.state = {
+            newView: false
+        };
+        return _this;
     }
 
     _createClass(Artists, [{
@@ -11143,7 +11180,7 @@ var Artists = function (_Component) {
             var artists = this.props.artists;
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'artistsWrapper' },
                 _react2.default.createElement(
                     'div',
                     { className: 'itemWrapper' },
@@ -11161,10 +11198,15 @@ var Artists = function (_Component) {
                     artists.length < 1 && _react2.default.createElement(
                         'div',
                         null,
-                        'NO ART FOUND'
+                        'NO ARTISTS FOUND'
                     )
                 ),
-                _react2.default.createElement(_newArtist2.default, null)
+                this.state.newView && _react2.default.createElement(_newArtist2.default, { cancel: this.toggleView }),
+                _react2.default.createElement(
+                    'button',
+                    { className: 'headerButton', onClick: this.toggleView },
+                    'Add New Artist'
+                )
             );
         }
     }]);

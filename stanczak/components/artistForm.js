@@ -9,7 +9,7 @@ export default (props) => {
     const editPiece = props.editPiece
     const artwork = props.artwork
     return (
-        <div>
+        <div className="artistFormWrapper">
         <form onSubmit={handleSubmit}>
         <h2>Add New Artist</h2>
         <label>Name

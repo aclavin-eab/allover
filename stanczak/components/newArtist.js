@@ -68,7 +68,7 @@ class newArtist extends Component {
     render() {
         const artists = this.props.artists
         return (
-            <div className="itemView">
+            <div className="artistView">
                 {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
                     <ArtistForm selectedArtist={this.state.selectedArtist} handleSubmit={this.handleSubmit}
                         handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField}
@@ -77,8 +77,15 @@ class newArtist extends Component {
                         <ArtistDisplay selectedArtist={this.state.selectedArtist} />
                     )
                 }
-                <button onClick={this.toggleEdit}>EDIT</button>
-                <button onClick={this.delete}>DELETE</button>
+                {this.state.selectedArtist && this.state.selectedArtist && (
+                    <div>
+                        <button onClick={this.toggleEdit}>EDIT</button>
+                        <button onClick={this.delete}>DELETE</button>
+                    </div>
+                )}
+                {this.props.cancel && (
+                    <button className="closer" onClick={this.props.cancel}>Cancel</button>
+                )}
             </div>
         )
     }
