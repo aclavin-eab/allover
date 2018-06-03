@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
-import { addPiece, browseArtists, readPiece, editPiece, deletePiece, addLocation } from '../store/thunks'
+import { addPiece, browseArtists, readPiece, editPiece, deletePiece, addLocation, browseLocations } from '../store/thunks'
 import { featurePiece } from '../store/actions'
 import EncodeFile from '../utilities/encodeFile'
+import Geolocate from '../utilities/geolocate'
 import PieceDisplay from './PieceDisplay'
 import PieceForm from './PieceForm'
 
@@ -21,6 +22,7 @@ class newPiece extends Component {
 
     componentDidMount = () => {
         this.props.browseInitialArtists()
+        this.props.browseLocations()
         this.props.match && this.props.match.params.id && this.props.readPiece(this.props.match.params.id)
     }
 
@@ -40,7 +42,9 @@ class newPiece extends Component {
         if(piece.latitude && piece.longitude ){
             locationObj = await this.props.addLocation({
                 latitude: +piece.latitude,
-                longitude: +piece.longitude
+                longitude: +piece.longitude,
+                title: piece.loctitle,
+                description: piece.locdescription
             })
             return locationObj.id
         }
@@ -53,7 +57,9 @@ class newPiece extends Component {
         if(!!piece.imageFile){
             piece.imageFile = await EncodeFile(ev.target.imageFile.files[0])
         }
-        piece.locationId = await this.checkForLocationToAdd(piece)
+        if(!piece.locationId){
+            piece.locationId = await this.checkForLocationToAdd(piece)
+        }
         if(piece.artistId === "null"){
             piece.artistId = null
         }
@@ -77,13 +83,26 @@ class newPiece extends Component {
         })
     }
 
+    geolocate = async () => {
+        const position = await Geolocate();
+        this.setState({selectedPiece: {
+            ...this.state.selectedPiece,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        }});
+    }
+
     render() {
         const artists = this.props.artists
+        const locations = this.props.locations
         return (
             <div className="itemView">
                 <div className="didact">
                     {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
-                            <PieceForm selectedPiece={this.state.selectedPiece} updateField={this.updateField} handleSubmit={this.handleSubmit} artists={artists} />
+                            <PieceForm selectedPiece={this.state.selectedPiece}
+                            //TODO CREATE THE GEOLOCATER FUNCTION TO PASS IN TO THE FORM
+                                updateField={this.updateField} handleSubmit={this.handleSubmit} geolocate={this.geolocate}
+                                artists={artists} locations={locations}/>
                         ) : (
                             <PieceDisplay selectedPiece={this.state.selectedPiece} />
                         )
@@ -108,6 +127,7 @@ const mapDispatch = dispatch => {
     return {
         addPiece: (obj) => dispatch(obj.id ? editPiece(obj) : addPiece(obj)),
         browseInitialArtists: () => dispatch(browseArtists()),
+        browseLocations: () => dispatch(browseLocations()),
         readPiece: (id) => dispatch(readPiece(id)),
         deletePiece: (id) => dispatch(deletePiece(id)),
         addLocation: (obj) => dispatch(addLocation(obj))
@@ -117,6 +137,7 @@ const mapDispatch = dispatch => {
 const mapProps = state => {
     return {
         artists: state.artists,
+        locations: state.locations,
         selectedPiece: state.selectedPiece
     }
 }

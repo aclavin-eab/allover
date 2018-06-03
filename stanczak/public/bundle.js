@@ -3909,6 +3909,10 @@ var _encodeFile = __webpack_require__(219);
 
 var _encodeFile2 = _interopRequireDefault(_encodeFile);
 
+var _geolocate = __webpack_require__(479);
+
+var _geolocate2 = _interopRequireDefault(_geolocate);
+
 var _PieceDisplay = __webpack_require__(210);
 
 var _PieceDisplay2 = _interopRequireDefault(_PieceDisplay);
@@ -3941,6 +3945,7 @@ var newPiece = function (_Component) {
 
         _this.componentDidMount = function () {
             _this.props.browseInitialArtists();
+            _this.props.browseLocations();
             _this.props.match && _this.props.match.params.id && _this.props.readPiece(_this.props.match.params.id);
         };
 
@@ -3972,7 +3977,9 @@ var newPiece = function (_Component) {
                                 _context.next = 4;
                                 return _this.props.addLocation({
                                     latitude: +piece.latitude,
-                                    longitude: +piece.longitude
+                                    longitude: +piece.longitude,
+                                    title: piece.loctitle,
+                                    description: piece.locdescription
                                 });
 
                             case 4:
@@ -4017,12 +4024,18 @@ var newPiece = function (_Component) {
                                 piece.imageFile = _context2.sent;
 
                             case 6:
-                                _context2.next = 8;
+                                if (piece.locationId) {
+                                    _context2.next = 10;
+                                    break;
+                                }
+
+                                _context2.next = 9;
                                 return _this.checkForLocationToAdd(piece);
 
-                            case 8:
+                            case 9:
                                 piece.locationId = _context2.sent;
 
+                            case 10:
                                 if (piece.artistId === "null") {
                                     piece.artistId = null;
                                 }
@@ -4030,7 +4043,7 @@ var newPiece = function (_Component) {
                                     return console.log(err);
                                 });
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -4057,6 +4070,31 @@ var newPiece = function (_Component) {
             });
         };
 
+        _this.geolocate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            var position;
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return (0, _geolocate2.default)();
+
+                        case 2:
+                            position = _context3.sent;
+
+                            _this.setState({ selectedPiece: _extends({}, _this.state.selectedPiece, {
+                                    latitude: position.coords.latitude,
+                                    longitude: position.coords.longitude
+                                }) });
+
+                        case 4:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, _this2);
+        }));
+
         _this.state = {
             editMode: false,
             selectedPiece: {
@@ -4070,13 +4108,17 @@ var newPiece = function (_Component) {
         key: 'render',
         value: function render() {
             var artists = this.props.artists;
+            var locations = this.props.locations;
             return _react2.default.createElement(
                 'div',
                 { className: 'itemView' },
                 _react2.default.createElement(
                     'div',
                     { className: 'didact' },
-                    !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(_PieceForm2.default, { selectedPiece: this.state.selectedPiece, updateField: this.updateField, handleSubmit: this.handleSubmit, artists: artists }) : _react2.default.createElement(_PieceDisplay2.default, { selectedPiece: this.state.selectedPiece }),
+                    !this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? _react2.default.createElement(_PieceForm2.default, { selectedPiece: this.state.selectedPiece
+                        //TODO CREATE THE GEOLOCATER FUNCTION TO PASS IN TO THE FORM
+                        , updateField: this.updateField, handleSubmit: this.handleSubmit, geolocate: this.geolocate,
+                        artists: artists, locations: locations }) : _react2.default.createElement(_PieceDisplay2.default, { selectedPiece: this.state.selectedPiece }),
                     this.state.selectedPiece && this.state.selectedPiece && _react2.default.createElement(
                         'div',
                         null,
@@ -4113,6 +4155,9 @@ var mapDispatch = function mapDispatch(dispatch) {
         browseInitialArtists: function browseInitialArtists() {
             return dispatch((0, _thunks.browseArtists)());
         },
+        browseLocations: function browseLocations() {
+            return dispatch((0, _thunks.browseLocations)());
+        },
         readPiece: function readPiece(id) {
             return dispatch((0, _thunks.readPiece)(id));
         },
@@ -4128,6 +4173,7 @@ var mapDispatch = function mapDispatch(dispatch) {
 var mapProps = function mapProps(state) {
     return {
         artists: state.artists,
+        locations: state.locations,
         selectedPiece: state.selectedPiece
     };
 };
@@ -10769,6 +10815,8 @@ exports.default = function (props) {
     var selectedPiece = props.selectedPiece;
     var updateField = props.updateField;
     var artists = props.artists;
+    var locations = props.locations;
+    console.log(locations);
     return _react2.default.createElement(
         "form",
         { onSubmit: handleSubmit },
@@ -10845,16 +10893,49 @@ exports.default = function (props) {
             _react2.default.createElement("input", { type: "text", name: "imageName", onChange: updateField })
         ),
         _react2.default.createElement(
+            "select",
+            { name: "locationId", value: selectedPiece && selectedPiece.locationId, onChange: updateField },
+            _react2.default.createElement(
+                "option",
+                { value: 'null' },
+                "Select A Location"
+            ),
+            locations && locations.map(function (local) {
+                return _react2.default.createElement(
+                    "option",
+                    { key: local.id, className: "option", value: local.id },
+                    local.title ? local.title : local.longitude + 'E ' + local.latitude + "N "
+                );
+            })
+        ),
+        _react2.default.createElement(
+            "div",
+            { onClick: props.geolocate },
+            "Geolocate me!"
+        ),
+        _react2.default.createElement(
             "label",
             null,
             "Longitude",
-            _react2.default.createElement("input", { type: "text", name: "longitude", onChange: updateField })
+            _react2.default.createElement("input", { type: "text", name: "longitude", value: selectedPiece && selectedPiece.longitude, onChange: updateField })
         ),
         _react2.default.createElement(
             "label",
             null,
             "Latitude",
-            _react2.default.createElement("input", { type: "text", name: "latitude", onChange: updateField })
+            _react2.default.createElement("input", { type: "text", name: "latitude", value: selectedPiece && selectedPiece.latitude, onChange: updateField })
+        ),
+        _react2.default.createElement(
+            "label",
+            null,
+            "Location Title",
+            _react2.default.createElement("input", { type: "text", name: "loctitle", value: selectedPiece && selectedPiece.loctitle, onChange: updateField })
+        ),
+        _react2.default.createElement(
+            "label",
+            null,
+            "Location Description",
+            _react2.default.createElement("input", { type: "text", name: "locdescription", value: selectedPiece && selectedPiece.locdescription, onChange: updateField })
         ),
         _react2.default.createElement(
             "button",
@@ -11278,9 +11359,17 @@ var _nav = __webpack_require__(218);
 
 var _nav2 = _interopRequireDefault(_nav);
 
+var _footer = __webpack_require__(480);
+
+var _footer2 = _interopRequireDefault(_footer);
+
 var _mapView = __webpack_require__(217);
 
 var _mapView2 = _interopRequireDefault(_mapView);
+
+var _locations = __webpack_require__(481);
+
+var _locations2 = _interopRequireDefault(_locations);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11319,8 +11408,10 @@ var Components = function (_Component) {
                     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/artwork', component: _artwork2.default }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/artwork/:id', component: _newPiece2.default }),
                     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/artists', component: _artists2.default }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/artists/:id', component: _newArtist2.default })
-                )
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/artists/:id', component: _newArtist2.default }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/locations', component: _locations2.default })
+                ),
+                _react2.default.createElement(_footer2.default, null)
             );
         }
     }]);
@@ -39584,6 +39675,222 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__(191);
 module.exports = __webpack_require__(190);
 
+
+/***/ }),
+/* 479 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var geolocate = function geolocate() {
+    return new Promise(function (resolve, reject) {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                resolve(position);
+            });
+        } else {
+            reject("you don't have geolocation!");
+        }
+    });
+};
+
+exports.default = geolocate;
+
+/***/ }),
+/* 480 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(33);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (props) {
+    return _react2.default.createElement(
+        'footer',
+        null,
+        _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/' },
+            ' Allover '
+        ),
+        ' |',
+        _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/locations' },
+            ' Locations '
+        ),
+        ' | Site by Andrew Clavin \xA9 2018'
+    );
+};
+
+/***/ }),
+/* 481 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(51);
+
+var _reactRouterDom = __webpack_require__(33);
+
+var _thunks = __webpack_require__(58);
+
+var _actions = __webpack_require__(52);
+
+var _artist = __webpack_require__(212);
+
+var _artist2 = _interopRequireDefault(_artist);
+
+var _newArtist = __webpack_require__(127);
+
+var _newArtist2 = _interopRequireDefault(_newArtist);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Locations = function (_Component) {
+    _inherits(Locations, _Component);
+
+    function Locations(props) {
+        _classCallCheck(this, Locations);
+
+        var _this = _possibleConstructorReturn(this, (Locations.__proto__ || Object.getPrototypeOf(Locations)).call(this, props));
+
+        _this.toggleView = function () {
+            console.log("here", _this);
+            _this.setState({
+                newView: !_this.state.newView
+            });
+        };
+
+        _this.state = {
+            newView: false
+        };
+        return _this;
+    }
+
+    _createClass(Locations, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.props.browseLocations();
+            this.props.clearSelection();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var locations = this.props.locations;
+            return _react2.default.createElement(
+                'div',
+                { className: 'artistsWrapper' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'itemWrapper' },
+                    locations && locations.map(function (loc) {
+                        return _react2.default.createElement(
+                            'div',
+                            { className: 'item', key: loc.id },
+                            _react2.default.createElement(
+                                'h2',
+                                null,
+                                loc.title
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                loc.description
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                'Latitude: ',
+                                _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    loc.latitude
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                'Longitude: ',
+                                _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    loc.longitude
+                                )
+                            )
+                        );
+                    }),
+                    locations.length < 1 && _react2.default.createElement(
+                        'div',
+                        null,
+                        'NO LOCATIONS FOUND'
+                    )
+                ),
+                this.state.newView && _react2.default.createElement(_newArtist2.default, { cancel: this.toggleView }),
+                _react2.default.createElement(
+                    'button',
+                    { className: 'headerButton', onClick: this.toggleView },
+                    'Add New Location'
+                )
+            );
+        }
+    }]);
+
+    return Locations;
+}(_react.Component);
+
+var mapDispatch = function mapDispatch(dispatch) {
+    return {
+        browseLocations: function browseLocations() {
+            return dispatch((0, _thunks.browseLocations)());
+        },
+        deleteArtist: function deleteArtist(id) {
+            return dispatch((0, _thunks.deleteArtist)(id));
+        },
+        clearSelection: function clearSelection() {
+            return dispatch((0, _actions.clearSelection)());
+        }
+    };
+};
+var mapProps = function mapProps(state) {
+    return {
+        locations: state.locations
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapProps, mapDispatch)(Locations);
 
 /***/ })
 /******/ ]);

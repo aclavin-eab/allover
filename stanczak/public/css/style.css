@@ -53,12 +53,17 @@ img.leaflet-marker-icon:hover {
 .leaflet-popup-tip {
   opacity: 0; }
 
-.artworkWrapper .itemView, .artistsWrapper .itemView {
+footer {
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: -40px;
   width: 100%;
-  padding: 40px 18%; }
+  text-align: center;
+  background-color: #ff4444;
+  padding: 10px;
+  color: white;
+  font-weight: 100;
+  letter-spacing: 2px;
+  font-size: 10px; }
 
 .artworkWrapper .didact, .artworkWrapper .artistFormWrapper, .artistsWrapper .didact, .artistsWrapper .artistFormWrapper {
   width: 100%;
@@ -69,6 +74,14 @@ img.leaflet-marker-icon:hover {
   top: 44px;
   right: 20%;
   margin-right: 13px; }
+
+.artworkWrapper .itemView {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 18%;
+  z-index: 2; }
 
 .artistView .info {
   float: left; }
@@ -128,6 +141,24 @@ img.leaflet-marker-icon:hover {
 
 .artistsWrapper .artistsFormWrapper {
   width: 100%; }
+
+.artistsWrapper .item {
+  background-color: transparent;
+  color: black;
+  border: 2px solid black;
+  font-weight: 500;
+  text-align: center; }
+  .artistsWrapper .item a {
+    padding: 10px 25px;
+    color: black; }
+    .artistsWrapper .item a:after {
+      background-color: transparent; }
+
+.artistsWrapper .closer {
+  position: absolute;
+  top: 115px;
+  right: 20%;
+  margin-right: 27px; }
 
 nav {
   position: absolute;

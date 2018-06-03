@@ -7,7 +7,9 @@ import Artists from './artists'
 import NewPiece from './newPiece'
 import NewArtist from './newArtist'
 import Nav from './nav'
+import Footer from './footer'
 import MapView from './mapView'
+import Locations from './locations'
 
 class Components extends Component {
 
@@ -26,7 +28,9 @@ class Components extends Component {
                     <Route path="/artwork/:id" component={NewPiece} />
                     <Route exact path="/artists" component={Artists} />
                     <Route path="/artists/:id" component={NewArtist} />
+                    <Route path="/locations" component={Locations} />
                 </div>
+                <Footer />
             </div>
         )
     }
