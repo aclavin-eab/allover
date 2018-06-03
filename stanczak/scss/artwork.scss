@@ -1,0 +1,19 @@
+.artworkWrapper{
+    .itemView{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 40px 18%;
+    }
+    .didact{
+        width: 100%;
+        border: 3px solid $kruger;
+    }
+    .closer{
+        position: absolute;
+        top: 44px;
+        right: 20%;
+        margin-right: 13px;
+    }
+}

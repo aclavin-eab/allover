@@ -1,3 +1,15 @@
+.map.large {
+  width: 100%;
+  height: 100%; }
+
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; }
+
 img.leaflet-marker-icon {
   height: 20px;
   width: 20px;
@@ -41,6 +53,23 @@ img.leaflet-marker-icon:hover {
 .leaflet-popup-tip {
   opacity: 0; }
 
+.artworkWrapper .itemView {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 18%; }
+
+.artworkWrapper .didact {
+  width: 100%;
+  border: 3px solid #ff4444; }
+
+.artworkWrapper .closer {
+  position: absolute;
+  top: 44px;
+  right: 20%;
+  margin-right: 13px; }
+
 nav {
   position: absolute;
   left: 50%;
@@ -49,6 +78,15 @@ nav {
   padding: 20px 50px;
   color: white;
   background-color: #ff4444; }
+  nav a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    margin: 15px;
+    font-weight: 200;
+    letter-spacing: 3px; }
+    nav a:first-child {
+      font-weight: 800; }
 
 select {
   appearance: none;
@@ -77,6 +115,13 @@ button {
   font-weight: 800;
   letter-spacing: 3px;
   padding: 8px 15px; }
+  button:focus {
+    outline: none; }
+  button.headerButton {
+    position: absolute;
+    top: 0;
+    border-width: 2px;
+    padding: 18px 15px; }
 
 input, textarea {
   display: block;
@@ -95,9 +140,6 @@ form {
   display: block;
   margin: 20px auto 0 auto; }
 
-a {
-  color: #fff; }
-
 h2 {
   font-weight: 100; }
 
@@ -108,17 +150,6 @@ a, a:hover, a:visited, a:focus {
 
 nav a:hover {
   text-shadow: 0 0 4px #ffdddd; }
-
-nav a {
-  text-decoration: none;
-  color: white;
-  text-transform: uppercase;
-  margin: 15px;
-  font-weight: 200;
-  letter-spacing: 3px; }
-
-nav a:first-child {
-  font-weight: 800; }
 
 .content {
   margin-top: 110px;
@@ -134,35 +165,39 @@ nav a:first-child {
   text-transform: uppercase;
   font-weight: 200;
   letter-spacing: 1.5px; }
-
-.item a {
-  color: white;
-  display: block;
-  padding: 100px 15px 10px; }
-
-.item a:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
-  transition: 0.2s;
-  opacity: 1; }
-
-.item a:hover:after {
-  opacity: 0; }
-
-.item button {
-  padding: 2px 5px;
-  background-color: transparent;
-  border: 0px solid white;
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  color: white;
-  font-weight: 800; }
+  .item a {
+    color: white;
+    display: block;
+    padding: 100px 15px 10px; }
+    .item a .text {
+      transition: 0.7s;
+      padding: 8px 11px;
+      letter-spacing: 2px;
+      font-size: 12px; }
+    .item a:hover .text {
+      /* background-color: rgba(0, 0, 0, 0.65); */
+      opacity: 0.0; }
+    .item a:hover:after {
+      opacity: 0; }
+  .item a:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    transition: 0.2s;
+    opacity: 1; }
+  .item button {
+    padding: 2px 5px;
+    background-color: transparent;
+    border: 0px solid white;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    color: white;
+    font-weight: 800; }
 
 .itemWrapper {
   display: flex;
@@ -172,25 +207,23 @@ nav a:first-child {
   clear: both;
   position: relative;
   padding: 30px; }
-
-.itemView img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1; }
+  .itemView img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; }
 
 .didact {
   background-color: rgba(255, 255, 255, 0.97);
   width: 35%;
   padding: 1px 25px 25px; }
-
-.didact.collapsed {
-  position: relative;
-  top: -120px;
-  left: -30px;
-  height: 60px;
-  overflow: hidden;
-  background-color: red; }
+  .didact.collapsed {
+    position: relative;
+    top: -120px;
+    left: -30px;
+    height: 60px;
+    overflow: hidden;
+    background-color: red; }
 
 .imageStretcher {
   height: 100%;
@@ -202,33 +235,10 @@ nav a:first-child {
   background-size: 175%;
   background-position: center center;
   transition: 0.2s ease-out 0.1s; }
+  .imageStretcher + span {
+    position: relative;
+    z-index: 1;
+    display: inline-block; }
 
 a:hover .imageStretcher {
   background-size: 200%; }
-
-.imageStretcher + span {
-  position: relative;
-  z-index: 1;
-  display: inline-block; }
-
-.item a .text {
-  transition: 0.7s;
-  padding: 8px 11px;
-  letter-spacing: 2px;
-  font-size: 12px; }
-
-.item a:hover .text {
-  /* background-color: rgba(0, 0, 0, 0.65); */
-  opacity: 0.0; }
-
-.map.large {
-  width: 100%;
-  height: 100%; }
-
-.map-wrapper {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1; }

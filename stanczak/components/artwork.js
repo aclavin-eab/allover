@@ -7,16 +7,30 @@ import Piece from './piece'
 import NewPiece from './newPiece'
 
 class Artwork extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            newView: false,
+        }
+    }
+
     componentDidMount() {
         this.props.browseInitialArtwork()
         this.props.clearSelection()
+    }
+
+    toggleView = () => {
+        console.log("here", this)
+        this.setState({
+            newView: !this.state.newView
+        })
     }
 
     render() {
         const artwork = this.props.artwork
         const deletePiece = this.props.deletePiece
         return (
-            <div>
+            <div className="artworkWrapper">
             <div className="itemWrapper">
                 {artwork && artwork.map(piece => (
                     <div className="item" key={piece.id}>
@@ -27,7 +41,10 @@ class Artwork extends Component {
                 ))}
 
             </div>
-            <NewPiece />
+            {this.state.newView && (
+            <NewPiece cancel={this.toggleView}/>
+            )}
+            <button className="headerButton" onClick={this.toggleView}>Add New Piece</button>
             </div>
         )
     }
@@ -41,6 +58,7 @@ const mapDispatch = dispatch => {
 
     }
 }
+
 const mapProps = state => {
     return {
         artwork: state.artwork

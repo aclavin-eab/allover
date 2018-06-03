@@ -1,3 +1,16 @@
+.map.large{
+     width: 100%; height:100%;
+}
+
+.map-wrapper {
+    width: 100%;
+    height:100%;
+     position: fixed;
+     top: 0;
+     left: 0;
+     z-index: -1;
+ }
+
 //styles customizing the leaflet map LIBRARY
 img.leaflet-marker-icon{
     height: 20px;

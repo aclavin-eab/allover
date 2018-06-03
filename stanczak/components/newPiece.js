@@ -25,10 +25,9 @@ class newPiece extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        console.log("recieving props", nextProps)
-            this.setState({
-                selectedPiece: nextProps.selectedPiece
-            })
+        this.setState({
+            selectedPiece: nextProps.selectedPiece
+        })
     }
 
     addPieceCallback = (data) =>{
@@ -50,15 +49,13 @@ class newPiece extends Component {
 
     handleSubmit = async (ev) => {
         ev.preventDefault()
-        ev.persist()
         let piece = this.state.selectedPiece;
+        if(!!piece.imageFile){
+            piece.imageFile = await EncodeFile(ev.target.imageFile.files[0])
+        }
         piece.locationId = await this.checkForLocationToAdd(piece)
         if(piece.artistId === "null"){
             piece.artistId = null
-        }
-        if(!!piece.imageFile){
-            const imageEncoded = await EncodeFile(ev.target.imageFile.files[0])
-            piece.imageFile = imageEncoded
         }
         this.props.addPiece(piece).then(this.addPieceCallback, err => console.log(err))
     }
@@ -96,6 +93,9 @@ class newPiece extends Component {
                             <button onClick={this.toggleEdit}>{this.state.editMode ? 'CANCEL' : 'EDIT'}</button>
                             <button onClick={this.delete}>DELETE</button>
                         </div>
+                    )}
+                    {this.props.cancel && (
+                        <button className="closer" onClick={this.props.cancel}>Cancel</button>
                     )}
                 </div>
                 <img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/>
