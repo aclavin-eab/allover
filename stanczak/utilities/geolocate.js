@@ -10,7 +10,7 @@ const geolocate = function(){
             });
         } else {
             console.log('nah, about to reject')
-            reject("you don't have geolocation!")
+            reject("you don't have geolocation!!")
         }
     })
 }
