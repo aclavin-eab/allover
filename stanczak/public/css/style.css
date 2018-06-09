@@ -54,8 +54,6 @@ img.leaflet-marker-icon:hover {
   opacity: 0; }
 
 footer {
-  position: absolute;
-  bottom: -40px;
   width: 100%;
   text-align: center;
   background-color: #ff4444;
@@ -63,17 +61,27 @@ footer {
   color: white;
   font-weight: 100;
   letter-spacing: 2px;
-  font-size: 10px; }
-
-.artworkWrapper .didact, .artworkWrapper .artistFormWrapper, .artistsWrapper .didact, .artistsWrapper .artistFormWrapper {
-  width: 100%;
-  border: 3px solid #ff4444; }
-
-.artworkWrapper .closer, .artistsWrapper .closer {
+  font-size: 10px;
   position: absolute;
-  top: 44px;
-  right: 20%;
-  margin-right: 13px; }
+  top: 100%; }
+
+.artworkWrapper, .artistsWrapper {
+  margin: 0 5px; }
+  .artworkWrapper .didact, .artworkWrapper .artistFormWrapper, .artistsWrapper .didact, .artistsWrapper .artistFormWrapper {
+    width: 100%;
+    border: 3px solid #ff4444; }
+  .artworkWrapper .didact, .artistsWrapper .didact {
+    position: absolute;
+    top: 60px;
+    left: 60px; }
+  .artworkWrapper .closer, .artistsWrapper .closer {
+    position: absolute;
+    top: 44px;
+    right: 20%;
+    margin-right: 13px; }
+  .artworkWrapper .itemWrapper, .artistsWrapper .itemWrapper {
+    margin-left: -5px;
+    margin-right: -5px; }
 
 .artworkWrapper .itemView {
   position: absolute;
@@ -82,6 +90,23 @@ footer {
   width: 100%;
   padding: 40px 18%;
   z-index: 2; }
+
+@media (max-width: 900px) {
+  .artworkWrapper, .artistsWrapper {
+    position: relative;
+    margin-top: 180px; }
+    .artworkWrapper button.headerButton, .artistsWrapper button.headerButton {
+      position: absolute;
+      top: -75px;
+      left: 0;
+      border-width: 2px;
+      padding: 13px 15px;
+      width: 100%; }
+    .artworkWrapper .itemView, .artworkWrapper div.artistView, .artistsWrapper .itemView, .artistsWrapper div.artistView {
+      padding: 10px 5px; }
+    .artworkWrapper button.closer, .artistsWrapper button.closer {
+      top: 15px;
+      right: 6px; } }
 
 .artistView .info {
   float: left; }
@@ -132,6 +157,31 @@ footer {
   max-width: 50%;
   margin-right: 20px; }
 
+.artistFormWrapper .piece {
+  position: relative;
+  padding: 20px;
+  color: white;
+  text-transform: uppercase;
+  font-size: 16px; }
+  .artistFormWrapper .piece:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); }
+
+.artistFormWrapper .artistWorkWrap {
+  display: flex;
+  flex-wrap: wrap; }
+
+.artistFormWrapper .pieceWrap {
+  margin: 5px; }
+  .artistFormWrapper .pieceWrap button {
+    width: 100%;
+    margin-top: 0; }
+
 .artistsWrapper .artistView {
   position: absolute;
   top: 0;
@@ -147,12 +197,23 @@ footer {
   color: black;
   border: 2px solid black;
   font-weight: 500;
+  font-size: 20px;
   text-align: center; }
   .artistsWrapper .item a {
-    padding: 10px 25px;
-    color: black; }
+    padding: 20px 25px;
+    color: black;
+    background-size: cover;
+    background-position: center; }
     .artistsWrapper .item a:after {
-      background-color: transparent; }
+      background-color: rgba(255, 255, 255, 0.75);
+      z-index: 0; }
+    .artistsWrapper .item a div {
+      position: relative;
+      z-index: 1; }
+    .artistsWrapper .item a:hover {
+      color: #ff4444;
+      font-weight: 800;
+      letter-spacing: 3px; }
 
 .artistsWrapper .closer {
   position: absolute;
@@ -304,9 +365,7 @@ nav a:hover {
     z-index: -1; }
 
 .didact, .artistFormWrapper {
-  background-color: rgba(255, 255, 255, 0.97);
-  width: 35%;
-  padding: 1px 25px 25px; }
+  background-color: rgba(255, 255, 255, 0.97); }
   .didact.collapsed, .artistFormWrapper.collapsed {
     position: relative;
     top: -120px;
@@ -314,6 +373,11 @@ nav a:hover {
     height: 60px;
     overflow: hidden;
     background-color: red; }
+
+.didact {
+  width: 35%;
+  padding: 1px 25px 25px;
+  min-width: 330px; }
 
 .imageStretcher {
   height: 100%;

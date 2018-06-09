@@ -1,6 +1,4 @@
 footer{
-    position: absolute;
-    bottom: -40px;
     width: 100%;
     text-align: center;
     background-color: $kruger;
@@ -9,4 +7,6 @@ footer{
     font-weight: 100;
     letter-spacing: 2px;
     font-size: 10px;
+    position: absolute;
+    top: 100%;
 }

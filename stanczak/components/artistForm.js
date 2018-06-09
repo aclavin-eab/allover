@@ -43,9 +43,11 @@ export default (props) => {
         {selectedArtist && selectedArtist.artworks.length < 1 && (
             <div>No art to be found here</div>
         )}
+        <div class="artistWorkWrap">
         {selectedArtist && selectedArtist.artworks.map(art => (
-            <div key={art.id}><Piece piece={art} /><button onClick={_ => {editPiece({id: art.id, artistId: null})}}>Remove work</button></div>
+            <div className="pieceWrap" key={art.id}><Piece piece={art} /><button onClick={_ => {editPiece({id: art.id, artistId: null})}}>Remove work</button></div>
         ))}
+        </div>
         </div>
         )
         }
