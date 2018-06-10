@@ -71,7 +71,6 @@ footer {
     width: 100%;
     border: 3px solid #ff4444; }
   .artworkWrapper .didact, .artistsWrapper .didact {
-    position: absolute;
     top: 60px;
     left: 60px; }
   .artworkWrapper .closer, .artistsWrapper .closer {
@@ -325,6 +324,9 @@ footer {
     .locationsWrapper .item a:hover {
       color: #ff4444;
       font-weight: 800; }
+
+.locationsWrapper .itemWrapper > a {
+  flex: 1 1 15%; }
 
 .locationsWrapper .closer {
   position: absolute;
