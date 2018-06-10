@@ -6,6 +6,7 @@ import Artwork from './artwork'
 import Artists from './artists'
 import NewPiece from './newPiece'
 import NewArtist from './newArtist'
+import NewLocation from './newLocation'
 import Nav from './nav'
 import Footer from './footer'
 import MapView from './mapView'
@@ -28,7 +29,8 @@ class Components extends Component {
                     <Route path="/artwork/:id" component={NewPiece} />
                     <Route exact path="/artists" component={Artists} />
                     <Route path="/artists/:id" component={NewArtist} />
-                    <Route path="/locations" component={Locations} />
+                    <Route exact path="/locations" component={Locations} />
+                    <Route path="/locations/:id" component={NewLocation} />
                 </div>
                 <Footer />
             </div>

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Location } = require('../models')
+const { Location, Artwork } = require('../models')
 
 router.get('/', async (req, res, next) => {
     const locations = await Location.findAll()

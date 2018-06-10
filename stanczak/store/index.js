@@ -9,7 +9,8 @@ const initialState = {
     artwork: [],
     locations: [],
     selectedPiece: {},
-    selectedArtist: {}
+    selectedArtist: {},
+    selectedLocation: {}
 }
 
 //helper
@@ -79,7 +80,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 artists: [...state.artists.slice(0, getIndexOfPiece(action.artist.id, state.artists)),
                             action.artist,
-                          ...state.artist.slice(getIndexOfPiece(action.artist.id, state.artists) + 1)],
+                          ...state.artists.slice(getIndexOfPiece(action.artist.id, state.artists) + 1)],
                 selectedArtist: action.artist,
             }
         }
@@ -107,6 +108,29 @@ const reducer = (state = initialState, action) => {
             return {
                 ... state,
                 locations: action.locations
+            }
+        }
+        case ACTIONS.EDIT_LOCATION: {
+            return{
+                ...state,
+                locations: [...state.locations.slice(0, getIndexOfPiece(action.location.id, state.locations)),
+                        action.location,
+                      ...state.locations.slice(getIndexOfPiece(action.location.id, state.locations) + 1)],
+                selectedLocation: action.location,
+            }
+        }
+        case ACTIONS.READ_LOCATION: {
+            console.log('in this case')
+            return {
+                ... state,
+                selectedLocation: action.location
+            }
+        }
+        case ACTIONS.DELETE_LOCATION: {
+            return {
+                ...state,
+                locations: [...state.locations.slice(0, getIndexOfPiece(action.location, state.locations)),
+                          ...state.locations.slice(getIndexOfPiece(action.location, state.locations) + 1)]
             }
         }
         default: {

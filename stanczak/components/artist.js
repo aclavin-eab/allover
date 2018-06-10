@@ -3,6 +3,6 @@ import React, {Component} from 'react'
 export default (props) => {
     const artist = props.artist
     return (
-        <div>{artist.name}</div>
+        <div><span>{artist.name}</span><div className="imageStretcher" style={{backgroundImage: `url(${artist.imageUrl})`}}></div></div>
     )
 }

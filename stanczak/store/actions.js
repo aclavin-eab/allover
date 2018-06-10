@@ -51,3 +51,15 @@ export const buyLocation = (location) => {
 export const stockLocations = (locations) => {
     return {type: ACTIONS.BROWSE_LOCATIONS, locations}
 }
+
+export const featureLocation = (location) => {
+    return {type: ACTIONS.READ_LOCATION, location}
+}
+
+export const changeLocation = (location) => {
+    return {type: ACTIONS.EDIT_LOCATION, location}
+}
+
+export const sellLocation = (location) => {
+    return {type: ACTIONS.DELETE_LOCATION, location}
+}

@@ -33,7 +33,7 @@ class Artists extends Component {
                 <div className="itemWrapper">
                     {artists && artists.map(ar => (
                         <div className="item" key={ar.id}>
-                            <Link style={{backgroundImage: `url(${ar.imageUrl})`}} to={`/artists/${ar.id}`}>
+                            <Link to={`/artists/${ar.id}`}>
                                 <Artist artist={ar} />
                             </Link>
                         </div>

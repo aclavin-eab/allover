@@ -207,15 +207,126 @@ footer {
     .artistsWrapper .item a:after {
       background-color: rgba(255, 255, 255, 0.75);
       z-index: 0; }
-    .artistsWrapper .item a div {
+    .artistsWrapper .item a span {
       position: relative;
       z-index: 1; }
     .artistsWrapper .item a:hover {
       color: #ff4444;
-      font-weight: 800;
-      letter-spacing: 3px; }
+      font-weight: 800; }
 
 .artistsWrapper .closer {
+  position: absolute;
+  top: 115px;
+  right: 20%;
+  margin-right: 27px; }
+
+.locationView .info {
+  float: left; }
+
+.locationView .locationWorkWrap {
+  clear: both;
+  padding-top: 10px; }
+
+.locationView .locationWork {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap; }
+  .locationView .locationWork a {
+    flex: 1 1 15%;
+    max-width: 30%;
+    margin: 5px 5px;
+    background-color: #6b6666;
+    color: white;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 200;
+    letter-spacing: 1.5px;
+    display: block;
+    padding: 100px 15px 10px; }
+    .locationView .locationWork a .text {
+      transition: 0.7s;
+      padding: 8px 11px;
+      letter-spacing: 2px;
+      font-size: 12px; }
+    .locationView .locationWork a:hover .text {
+      /* background-color: rgba(0, 0, 0, 0.65); */
+      opacity: 0.0; }
+    .locationView .locationWork a:hover:after {
+      opacity: 0; }
+    .locationView .locationWork a:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.65);
+      transition: 0.2s;
+      opacity: 1; }
+
+.locationView .locationImage {
+  float: left;
+  max-width: 50%;
+  margin-right: 20px; }
+
+.locationFormWrapper .piece {
+  position: relative;
+  padding: 20px;
+  color: white;
+  text-transform: uppercase;
+  font-size: 16px; }
+  .locationFormWrapper .piece:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); }
+
+.locationFormWrapper .locationWorkWrap {
+  display: flex;
+  flex-wrap: wrap; }
+
+.locationFormWrapper .pieceWrap {
+  margin: 5px; }
+  .locationFormWrapper .pieceWrap button {
+    width: 100%;
+    margin-top: 0; }
+
+.locationsWrapper .locationView {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 110px 20%;
+  width: 100%; }
+
+.locationsWrapper .locationsFormWrapper {
+  width: 100%; }
+
+.locationsWrapper .item {
+  background-color: transparent;
+  color: black;
+  border: 2px solid black;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center; }
+  .locationsWrapper .item a {
+    padding: 20px 25px;
+    color: black;
+    background-size: cover;
+    background-position: center; }
+    .locationsWrapper .item a:after {
+      background-color: rgba(255, 255, 255, 0.75);
+      z-index: 0; }
+    .locationsWrapper .item a span {
+      position: relative;
+      z-index: 1; }
+    .locationsWrapper .item a:hover {
+      color: #ff4444;
+      font-weight: 800; }
+
+.locationsWrapper .closer {
   position: absolute;
   top: 115px;
   right: 20%;

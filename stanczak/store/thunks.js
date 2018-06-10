@@ -98,7 +98,31 @@ export function browseLocations() {
     return async dispatch => {
         const response = await axios.get('/api/locations')
         const locations = response.data
-        console.log("thunks", locations)
         dispatch(actions.stockLocations(locations))
+    }
+}
+
+export function readLocation(id) {
+    return async dispatch => {
+        const response = await axios.get(`/api/locations/${id}`)
+        const location = response.data
+        dispatch(actions.featureLocation(location))
+        return location
+    }
+}
+
+export function editLocation(obj) {
+    return async dispatch => {
+        const response = await axios.put(`/api/locations/${obj.id}`, obj)
+        const locations = response.data
+        dispatch(actions.changeLocation(location))
+    }
+}
+
+export function deleteLocation(id) {
+    return async dispatch => {
+        const response = await axios.delete(`/api/locations/${id}`)
+        const location = response.data
+        dispatch(actions.sellArtist(location))
     }
 }
