@@ -6,18 +6,18 @@ import {clearSelection} from '../store/actions'
 import Piece from './piece'
 import NewPiece from './newPiece'
 import tokens from '../../private'
+import Geolocate from '../utilities/geolocate'
 
 class MapView extends Component {
     async componentDidMount() {
-        await this.props.browseLocations()
-        const mymap = L.map('mapid').setView([40.7338452, -73.95652969999999], 17);
+        const mymap = L.map('mapid').setView([40.7338452, -83.95652969999999], 6);
         L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}`, {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 25,
                 id: 'mapbox.streets',
                 accessToken: tokens.mapToken
         }).addTo(mymap);
-        console.log(this.props.locations)
+        await this.props.browseLocations()
         this.props.locations.map(loc => {
             if(loc.artworks && loc.artworks[0]){
                 let myIcon = L.icon({
@@ -29,9 +29,10 @@ class MapView extends Component {
                 </Link>
                 let m = L.marker([+loc.latitude, +loc.longitude], {icon: myIcon}).addTo(mymap)
                 m.bindPopup(`<a href="artwork/${loc.artworks[0].id}">${loc.artworks[0].title}!</a>`)
-                console.log("here", loc, m)
             }
         })
+        const position = await Geolocate();
+        mymap.setView([position.coords.latitude || 30.7338452, position.coords.longitude || -83.95652969999999], 17);
     }
 
     render() {
