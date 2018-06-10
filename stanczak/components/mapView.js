@@ -24,11 +24,16 @@ class MapView extends Component {
                     iconUrl: loc.artworks[0].imageUrl,
                     riseOnHover: true
                 })
-                let popContent = <Link to={`/artwork/${loc.artworks[0].id}`}>
+                let link = `/artwork/${loc.artworks[0].id}`
+                if(loc.artworks[1]){
+                    console.log("IN HERE")
+                    link = `/locations/${loc.id}`
+                }
+                let popContent = <Link to={link}>
                     <Piece piece={loc.artworks[0]} />
                 </Link>
                 let m = L.marker([+loc.latitude, +loc.longitude], {icon: myIcon}).addTo(mymap)
-                m.bindPopup(`<a href="artwork/${loc.artworks[0].id}">${loc.artworks[0].title}!</a>`)
+                m.bindPopup(`<a href="${link}">${loc.artworks[0].title}!</a>`)
             }
         })
         const position = await Geolocate();
