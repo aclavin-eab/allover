@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import SmallMap from './smallMap'
 
 export default (props) => {
     const handleSubmit = props.handleSubmit
@@ -6,6 +7,7 @@ export default (props) => {
     const updateField = props.updateField
     const artists = props.artists
     const locations = props.locations
+    const addressLookup = props.addressLookup
     console.log(locations)
     return (
         <form onSubmit={handleSubmit}>
@@ -16,6 +18,12 @@ export default (props) => {
             <label>Medium
             <input name="medium" type="text" value={selectedPiece && selectedPiece.medium} onChange={updateField}/>
             </label>
+            <select name="artistId" value={selectedPiece && selectedPiece.artistId} onChange={updateField}>
+                    <option value={'null'} >Select An Artist</option>
+                {artists && artists.map(artist => (
+                    <option key={artist.id} className="option" value={artist.id}>{artist.name}</option>
+                ))}
+            </select>
             <label>Contact
             <input name="contact" type="email" required value={selectedPiece && selectedPiece.contact} onChange={updateField}/>
             </label>
@@ -25,12 +33,6 @@ export default (props) => {
             <label>Rating
             <input name="rating" type="text" value={selectedPiece && selectedPiece.rating} onChange={updateField}/>
             </label>
-            <select name="artistId" value={selectedPiece && selectedPiece.artistId} onChange={updateField}>
-                    <option value={'null'} >Select An Artist</option>
-                {artists && artists.map(artist => (
-                    <option key={artist.id} className="option" value={artist.id}>{artist.name}</option>
-                ))}
-            </select>
             <label>Image
             <input type="file" name="imageFile" onChange={updateField}/>
             </label>
@@ -43,7 +45,8 @@ export default (props) => {
                     <option key={local.id} className="option" value={local.id}>{local.title ? local.title : local.longitude + 'E ' + local.latitude + "N "}</option>
                 ))}
             </select>
-            <div onClick={props.geolocate}>Geolocate me!</div>
+            <button type="button" onClick={props.geolocate}>Geolocate me!</button>
+            <SmallMap />
             <label>Longitude
             <input type="text" name="longitude" value={selectedPiece && selectedPiece.longitude} onChange={updateField}/>
             </label>

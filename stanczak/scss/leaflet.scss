@@ -9,10 +9,19 @@
      top: 0;
      left: 0;
      z-index: -1;
+     &.small{
+         position: static;
+         height: 300px;
+         width: 300px;
+         .map{
+             height: 100%;
+             width: 100%;
+         }
+     }
  }
 
 //styles customizing the leaflet map LIBRARY
-img.leaflet-marker-icon{
+.map-wrapper:not(.small) img.leaflet-marker-icon{
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -20,7 +29,7 @@ img.leaflet-marker-icon{
     border: 2px solid $kruger;
     transition: 0.2s;
 }
-img.leaflet-marker-icon:hover{
+.map-wrapper:not(.small) img.leaflet-marker-icon:hover{
     height: 60px;
     width: 60px;
     margin-left: -20px;

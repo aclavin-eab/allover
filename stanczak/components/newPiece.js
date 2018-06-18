@@ -102,7 +102,8 @@ class newPiece extends Component {
                             <PieceForm selectedPiece={this.state.selectedPiece}
                             //TODO CREATE THE GEOLOCATER FUNCTION TO PASS IN TO THE FORM
                                 updateField={this.updateField} handleSubmit={this.handleSubmit} geolocate={this.geolocate}
-                                artists={artists} locations={locations}/>
+                                artists={artists} locations={locations} addressLookup={this.addressLookup}
+                                />
                         ) : (
                             <PieceDisplay selectedPiece={this.state.selectedPiece} />
                         )

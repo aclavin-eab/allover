@@ -9,8 +9,15 @@
   top: 0;
   left: 0;
   z-index: -1; }
+  .map-wrapper.small {
+    position: static;
+    height: 300px;
+    width: 300px; }
+    .map-wrapper.small .map {
+      height: 100%;
+      width: 100%; }
 
-img.leaflet-marker-icon {
+.map-wrapper:not(.small) img.leaflet-marker-icon {
   height: 20px;
   width: 20px;
   border-radius: 50%;
@@ -18,7 +25,7 @@ img.leaflet-marker-icon {
   border: 2px solid #ff4444;
   transition: 0.2s; }
 
-img.leaflet-marker-icon:hover {
+.map-wrapper:not(.small) img.leaflet-marker-icon:hover {
   height: 60px;
   width: 60px;
   margin-left: -20px;
@@ -119,7 +126,7 @@ footer {
   display: flex;
   flex-wrap: wrap; }
   .artistView .artistWork a {
-    flex: 1 1 15%;
+    flex: 1 1 20%;
     max-width: 30%;
     margin: 5px 5px;
     background-color: #6b6666;
@@ -186,10 +193,12 @@ footer {
   top: 0;
   left: 0;
   padding: 110px 20%;
-  width: 100%; }
+  width: 100%;
+  z-index: 1; }
 
-.artistsWrapper .artistsFormWrapper {
-  width: 100%; }
+.artistsWrapper .artistFormWrapper {
+  width: 100%;
+  padding: 0 20px 20px 20px; }
 
 .artistsWrapper .item {
   background-color: transparent;
@@ -309,7 +318,8 @@ footer {
   border: 2px solid black;
   font-weight: 500;
   font-size: 20px;
-  text-align: center; }
+  text-align: center;
+  height: 95%; }
   .locationsWrapper .item a {
     padding: 20px 25px;
     color: black;

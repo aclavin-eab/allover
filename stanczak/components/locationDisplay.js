@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Piece from './piece'
 
+
 export default (props) => {
     const selectedLocation = props.selectedLocation
     return (
