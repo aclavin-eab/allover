@@ -1,10 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {browseArtists, deleteArtist} from '../store/thunks'
 import {clearSelection} from '../store/actions'
-import Artist from './artist'
-import NewArtist from './newArtist'
 import ArtistsTmpl from './artists.tmpl'
 
 class Artists extends Component {
