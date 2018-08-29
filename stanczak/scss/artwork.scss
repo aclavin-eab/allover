@@ -29,6 +29,11 @@
         z-index: 2;
     }
 }
+.itemView .didact{
+    a{
+        color: $kruger;
+    }
+}
 @media (max-width: 900px) {
     .artworkWrapper, .artistsWrapper{
         position: relative;

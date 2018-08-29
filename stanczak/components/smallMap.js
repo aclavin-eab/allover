@@ -24,7 +24,6 @@ class SmallMap extends Component {
     render() {
         return (
             <div className="map-wrapper small">
-                ONPAGE
              <div id="locatemap" className="map"></div>
              </div>
 

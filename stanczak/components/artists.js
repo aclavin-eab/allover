@@ -5,6 +5,7 @@ import {browseArtists, deleteArtist} from '../store/thunks'
 import {clearSelection} from '../store/actions'
 import Artist from './artist'
 import NewArtist from './newArtist'
+import ArtistsTmpl from './artists.tmpl'
 
 class Artists extends Component {
     constructor(props) {
@@ -20,7 +21,6 @@ class Artists extends Component {
     }
 
     toggleView = () => {
-        console.log("here", this)
         this.setState({
             newView: !this.state.newView
         })
@@ -29,22 +29,7 @@ class Artists extends Component {
     render() {
         const artists = this.props.artists
         return (
-            <div className="artistsWrapper">
-                <div className="itemWrapper">
-                    {artists && artists.map(ar => (
-                        <div className="item" key={ar.id}>
-                            <Link to={`/artists/${ar.id}`}>
-                                <Artist artist={ar} />
-                            </Link>
-                        </div>
-                    ))}
-                    {(artists.length < 1) && (<div>NO ARTISTS FOUND</div>)}
-                </div>
-                {this.state.newView && (
-                    <NewArtist cancel={this.toggleView}/>
-                )}
-                <button className="headerButton" onClick={this.toggleView}>Add New Artist</button>
-            </div>
+            <ArtistsTmpl artists={this.props.artists} toggleView={this.toggleView} newView={this.state.newView} />
         )
     }
 }

@@ -97,6 +97,9 @@ footer {
   padding: 40px 18%;
   z-index: 2; }
 
+.itemView .didact a {
+  color: #ff4444; }
+
 @media (max-width: 900px) {
   .artworkWrapper, .artistsWrapper {
     position: relative;

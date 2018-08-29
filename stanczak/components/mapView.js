@@ -37,7 +37,7 @@ class MapView extends Component {
             }
         })
         const position = await Geolocate();
-        mymap.setView([position.coords.latitude || 30.7338452, position.coords.longitude || -83.95652969999999], 17);
+        mymap.setView([position.coords.latitude || 30.7338452, position.coords.longitude || -83.95652969999999], 14);
     }
 
     render() {
