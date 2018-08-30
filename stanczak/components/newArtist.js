@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
 import { addArtist, readArtist, editArtist, browseArtwork, editPiece, deleteArtist } from '../store/thunks'
-import Piece from './piece'
-import ArtistDisplay from './artistDisplay'
-import ArtistForm from './artistForm'
+import { NewArtistTmpl } from './'
 
 class newArtist extends Component {
     constructor() {
@@ -68,25 +66,9 @@ class newArtist extends Component {
     render() {
         const artists = this.props.artists
         return (
-            <div className="artistView">
-                {!this.state.selectedArtist || !this.state.selectedArtist.id || this.state.editMode ? (
-                    <ArtistForm selectedArtist={this.state.selectedArtist} handleSubmit={this.handleSubmit}
-                        handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField}
-                        editPiece={this.props.editPiece} artwork={this.props.artwork}/>
-                    ) : (
-                        <ArtistDisplay selectedArtist={this.state.selectedArtist} />
-                    )
-                }
-                {this.state.selectedArtist && this.state.selectedArtist && (
-                    <div>
-                        <button onClick={this.toggleEdit}>EDIT</button>
-                        <button onClick={this.delete}>DELETE</button>
-                    </div>
-                )}
-                {this.props.cancel && (
-                    <button className="closer" onClick={this.props.cancel}>Cancel</button>
-                )}
-            </div>
+            <NewArtistTmpl artists={this.props.artists} selectedArtist={this.state.selectedArtist} editMode={this.state.editMode} handleSubmit={this.handleSubmit}
+            handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField} editPiece={this.props.editPiece} artwork={this.props.artwork}
+            toggleEdit={this.toggleEdit} deleter={this.delete} cancel={this.props.cancel} />
         )
     }
 }

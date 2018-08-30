@@ -8,7 +8,6 @@ export default (props) => {
     const artists = props.artists
     const locations = props.locations
     const addressLookup = props.addressLookup
-    console.log(locations)
     return (
         <form onSubmit={handleSubmit}>
             <h2>{selectedPiece && selectedPiece.id ? (<span>Edit </span>) : (<span>Add New </span>)}Artwork</h2>
