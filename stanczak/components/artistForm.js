@@ -1,5 +1,5 @@
 import React from 'react'
-import Piece from './piece'
+import { Piece } from './'
 
 export default (props) => {
     const { selectedArtist, handleSubmit, updateField, handleSecondarySubmit, editPiece, artwork } = props

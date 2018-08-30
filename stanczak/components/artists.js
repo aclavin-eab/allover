@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browseArtists, deleteArtist} from '../store/thunks'
 import {clearSelection} from '../store/actions'
-import ArtistsTmpl from './artists.tmpl'
+import { ArtistsTmpl } from './'
 
 class Artists extends Component {
     constructor(props) {

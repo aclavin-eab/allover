@@ -3,8 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {browseArtwork, deletePiece} from '../store/thunks'
 import {clearSelection} from '../store/actions'
-import Piece from './piece'
-import NewPiece from './newPiece'
+import { Piece, NewPiece, ArtworkTmpl } from './'
 
 class Artwork extends Component {
     constructor(props) {
@@ -27,25 +26,8 @@ class Artwork extends Component {
     }
 
     render() {
-        const artwork = this.props.artwork
-        const deletePiece = this.props.deletePiece
         return (
-            <div className="artworkWrapper">
-            <div className="itemWrapper">
-                {artwork && artwork.map(piece => (
-                    <div className="item" key={piece.id}>
-                        <Link to={`/artwork/${piece.id}`}>
-                            <Piece piece={piece} />
-                        </Link>
-                    </div>
-                ))}
-                {(artwork.length < 1) && (<div>NO ARTWORKS FOUND</div>)}
-            </div>
-            {this.state.newView && (
-                <NewPiece cancel={this.toggleView}/>
-            )}
-            <button className="headerButton" onClick={this.toggleView}>Add New Piece</button>
-            </div>
+            <ArtworkTmpl artwork={this.props.artwork} deletePiece={this.props.deletePiece} newView={this.state.newView} toggleView={this.toggleView} />
         )
     }
 }
