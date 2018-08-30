@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import Piece from './piece'
+import { Piece } from './'
 
 
 export default (props) => {

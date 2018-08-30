@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {browseArtwork, deletePiece} from '../store/thunks'
 import {clearSelection} from '../store/actions'
-import { Piece, NewPiece, ArtworkTmpl } from './'
+import { ArtworkTmpl } from './'
 
 class Artwork extends Component {
     constructor(props) {

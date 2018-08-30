@@ -3,8 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {browseLocations} from '../store/thunks'
 import {clearSelection} from '../store/actions'
-import Piece from './piece'
-import NewPiece from './newPiece'
+import { Piece, MapTmpl } from './'
 import tokens from '../../private'
 import Geolocate from '../utilities/geolocate'
 
@@ -42,10 +41,7 @@ class MapView extends Component {
 
     render() {
         return (
-            <div className="map-wrapper">
-             <div id="mapid" className="map large"></div>
-             </div>
-
+            <MapTmpl />
         )
     }
 }
