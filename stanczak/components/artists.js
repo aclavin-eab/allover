@@ -14,7 +14,7 @@ class Artists extends Component {
 
     componentDidMount() {
         this.props.browseInitialArtists()
-        this.props.clearSelection()
+        // this.props.clearSelection()
     }
 
     toggleView = () => {

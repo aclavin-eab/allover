@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import Artist from './artist'
-import NewArtist from './newArtist'
+import { Artist, NewArtist } from './'
 
 export default (props) => {
     const {artists, newView, toggleView} = props

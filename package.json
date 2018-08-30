@@ -4,7 +4,7 @@
   "description": "Dispersed art gallery",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & nodemon dubuffet -w dubuffet & npm run watch-css",
+    "start": "set NODE_ENV=development & webpack -w & nodemon dubuffet -w dubuffet & npm run watch-css",
     "start-server": "nodemon dubuffet",
     "build-client": "webpack",
     "seed": "node seed.js",

@@ -1,4 +1,14 @@
-
+import React, {Component} from 'react'
+import {Route, Link, Switch, Redirect, withRouter} from 'react-router-dom'
+import Artwork from './components/artwork'
+import Artists from './components/artists'
+import NewPiece from './components/newPiece'
+import NewArtist from './components/newArtist'
+import NewLocation from './components/newLocation'
+import Nav from './components/nav'
+import Footer from './components/footer'
+import MapView from './components/mapView'
+import Locations from './components/locations'
 
 export default (props) =>  {
         return (
@@ -16,5 +26,4 @@ export default (props) =>  {
                 <Footer />
             </div>
         )
-    }
 }

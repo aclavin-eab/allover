@@ -6,6 +6,7 @@ module.exports = {
         path: __dirname,
         filename: './stanczak/public/bundle.js'
     },
+    mode: 'development',
     devtool: 'source-map',
     module: {
         rules: [
