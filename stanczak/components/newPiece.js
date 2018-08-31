@@ -6,8 +6,7 @@ import { addPiece, browseArtists, readPiece, editPiece, deletePiece, addLocation
 import { featurePiece } from '../store/actions'
 import EncodeFile from '../utilities/encodeFile'
 import Geolocate from '../utilities/geolocate'
-import PieceDisplay from './PieceDisplay'
-import PieceForm from './PieceForm'
+import { NewPieceTmpl } from './'
 
 class newPiece extends Component {
     constructor() {
@@ -96,30 +95,9 @@ class newPiece extends Component {
         const artists = this.props.artists
         const locations = this.props.locations
         return (
-            <div className="itemView">
-                <div className="didact">
-                    {!this.state.selectedPiece || !this.state.selectedPiece.id || this.state.editMode ? (
-                            <PieceForm selectedPiece={this.state.selectedPiece}
-                            //TODO CREATE THE GEOLOCATER FUNCTION TO PASS IN TO THE FORM
-                                updateField={this.updateField} handleSubmit={this.handleSubmit} geolocate={this.geolocate}
-                                artists={artists} locations={locations} addressLookup={this.addressLookup}
-                                />
-                        ) : (
-                            <PieceDisplay selectedPiece={this.state.selectedPiece} />
-                        )
-                    }
-                    {this.state.selectedPiece && this.state.selectedPiece && (
-                        <div>
-                            <button onClick={this.toggleEdit}>{this.state.editMode ? 'CANCEL' : 'EDIT'}</button>
-                            <button onClick={this.delete}>DELETE</button>
-                        </div>
-                    )}
-                    {this.props.cancel && (
-                        <button className="closer" onClick={this.props.cancel}>Cancel</button>
-                    )}
-                </div>
-                <img src={this.state.selectedPiece && this.state.selectedPiece.imageUrl}/>
-            </div>
+            <NewPieceTmpl artists={this.props.artists} locations={this.props.locations} selectedPiece={this.state.selectedLocation} editMode={this.state.editMode} handleSubmit={this.handleSubmit}
+            handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField} editPiece={this.props.editPiece} artwork={this.props.artwork}
+            toggleEdit={this.toggleEdit} deleter={this.delete} cancel={this.props.cancel} geolocate={this.geolocate} />
         )
     }
 }

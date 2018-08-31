@@ -24,9 +24,8 @@ class SmallMap extends Component {
     render() {
         return (
             <div className="map-wrapper small">
-             <div id="locatemap" className="map"></div>
-             </div>
-
+                <div id="locatemap" className="map"></div>
+            </div>
         )
     }
 }
