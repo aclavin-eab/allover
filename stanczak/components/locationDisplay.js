@@ -21,7 +21,7 @@ export default (props) => {
                 <div>No art to be found here</div>
             )}
             {selectedLocation && selectedLocation.artworks.map(art => {
-                return <Link to={`/artwork/${art.id}`}><Piece key={art.id} piece={art} /></Link>
+                return <Link key={art.id} to={`/artwork/${art.id}`}><Piece piece={art} /></Link>
             })}
             </div>
             </div>

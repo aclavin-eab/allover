@@ -26,7 +26,6 @@ class Locations extends Component {
     }
 
     render() {
-        const locations = this.props.locations
         return (
             <LocationsTmpl locations={this.props.locations} deletePiece={this.props.deletePiece} newView={this.state.newView} toggleView={this.toggleView} />
         )

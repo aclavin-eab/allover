@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
 import { addLocation, readLocation, editLocation, browseArtwork, editPiece, deleteLocation } from '../store/thunks'
-import Piece from './piece'
-import LocationDisplay from './LocationDisplay'
-import LocationForm from './locationForm'
+import { NewLocationTmpl } from './'
 
 class newLocation extends Component {
     constructor() {
@@ -68,25 +66,9 @@ class newLocation extends Component {
     render() {
         const locations = this.props.locations
         return (
-            <div className="locationView">
-                {!this.state.selectedLocation || !this.state.selectedLocation.id || this.state.editMode ? (
-                    <LocationForm selectedLocation={this.state.selectedLocation} handleSubmit={this.handleSubmit}
-                        handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField}
-                        editPiece={this.props.editPiece} artwork={this.props.artwork}/>
-                    ) : (
-                        <LocationDisplay selectedLocation={this.state.selectedLocation} />
-                    )
-                }
-                {this.state.selectedLocation && this.state.selectedLocation && (
-                    <div>
-                        <button onClick={this.toggleEdit}>EDIT</button>
-                        <button onClick={this.delete}>DELETE</button>
-                    </div>
-                )}
-                {this.props.cancel && (
-                    <button className="closer" onClick={this.props.cancel}>Cancel</button>
-                )}
-            </div>
+            <NewLocationTmpl locations={this.props.locations} selectedLocation={this.state.selectedLocation} editMode={this.state.editMode} handleSubmit={this.handleSubmit}
+            handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField} editPiece={this.props.editPiece} artwork={this.props.artwork}
+            toggleEdit={this.toggleEdit} deleter={this.delete} cancel={this.props.cancel} />
         )
     }
 }
