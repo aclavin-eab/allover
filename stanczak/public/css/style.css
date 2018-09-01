@@ -1,7 +1,3 @@
-.map.large {
-  width: 100%;
-  height: 100%; }
-
 .map-wrapper {
   width: 100%;
   height: 100%;
@@ -16,6 +12,9 @@
     .map-wrapper.small .map {
       height: 100%;
       width: 100%; }
+  .map-wrapper.large .map {
+    width: 100%;
+    height: 100%; }
 
 .map-wrapper:not(.small) img.leaflet-marker-icon {
   height: 20px;

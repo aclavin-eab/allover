@@ -12,7 +12,6 @@ export default (props) => {
             <div>By: {selectedPiece && selectedPiece.artist && (
                 <Link to={`/artists/${selectedPiece.artist.id}`}>{selectedPiece.artist.name}</Link>
             ) || 'artist unknown'}</div>
-
         </div>
     )
 }

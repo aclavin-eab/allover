@@ -41,7 +41,7 @@ class MapView extends Component {
 
     render() {
         return (
-            <MapTmpl />
+            <MapTmpl type="large"/>
         )
     }
 }

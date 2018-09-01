@@ -3,10 +3,11 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import tokens from '../../private'
 import Geolocate from '../utilities/geolocate'
+import { MapTmpl } from './'
 
 class SmallMap extends Component {
     async componentDidMount() {
-        const mymap = L.map('locatemap').setView([40.7338452, -83.95652969999999], 2);
+        const mymap = L.map('mapid').setView([40.7338452, -83.95652969999999], 2);
         L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}`, {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 25,
@@ -23,9 +24,7 @@ class SmallMap extends Component {
 
     render() {
         return (
-            <div className="map-wrapper small">
-                <div id="locatemap" className="map"></div>
-            </div>
+            <MapTmpl type="small" />
         )
     }
 }

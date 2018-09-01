@@ -2,12 +2,7 @@ import React, {Component} from 'react'
 import SmallMap from './smallMap'
 
 export default (props) => {
-    const handleSubmit = props.handleSubmit
-    const selectedPiece = props.selectedPiece
-    const updateField = props.updateField
-    const artists = props.artists
-    const locations = props.locations
-    const addressLookup = props.addressLookup
+    const { handleSubmit, selectedPiece, updateField, artists, locations, addressLookup }  = props
     return (
         <form onSubmit={handleSubmit}>
             <h2>{selectedPiece && selectedPiece.id ? (<span>Edit </span>) : (<span>Add New </span>)}Artwork</h2>
