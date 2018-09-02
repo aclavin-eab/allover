@@ -1,4 +1,3 @@
-console.log('data structures on')
 const Sequelize = require('sequelize')
 
 const db = require('./database')
@@ -9,10 +8,12 @@ const Artist = require('./artist')
 
 const Location = require('./location')
 
+const User = require('./user')
+
 Artwork.belongsTo(Artist)
 Artist.hasMany(Artwork)
 
 Artwork.belongsTo(Location)
 Location.hasMany(Artwork)
 
-module.exports = { db, Artwork, Artist, Location }
+module.exports = { db, Artwork, Artist, Location, User }
