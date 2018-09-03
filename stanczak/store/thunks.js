@@ -2,6 +2,22 @@ import axios from 'axios'
 import * as actions from './actions'
 
 //THUNKS
+export function getUser(userObj) {
+    return async dispatch => {
+        const response = await axios.get('/api/users/login', userObj)
+        const user = response.data
+        dispatch(actions.login(user))
+    }
+}
+
+export function addUser(userObj) {
+    return async dispatch => {
+        const response = await axios.get('/api/users/signup', userObj)
+        const user = response.data
+        dispatch(actions.signup(user))
+    }
+}
+
 export function browseArtwork() {
     return async dispatch => {
         const response = await axios.get('/api/artwork')

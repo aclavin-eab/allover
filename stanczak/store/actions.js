@@ -1,5 +1,13 @@
 import ACTIONS from './actionConstants'
 
+export const login = (user) => {
+    return {type: ACTIONS.LOGIN, user}
+}
+
+export const signup = (user) => {
+    return {type: ACTIONS.SIGNUP, user}
+}
+
 export const stockArtwork = (artwork) => {
     return {type: ACTIONS.BROWSE_ARTWORK, artwork}
 }

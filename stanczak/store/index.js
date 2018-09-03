@@ -10,7 +10,8 @@ const initialState = {
     locations: [],
     selectedPiece: {},
     selectedArtist: {},
-    selectedLocation: {}
+    selectedLocation: {},
+    user: {}
 }
 
 //helper
@@ -23,6 +24,18 @@ const getIndexOfPiece = (id, arr) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case ACTIONS.LOGIN: {
+            return {
+                ...state,
+                user: action.user
+            }
+        }
+        case ACTIONS.SIGUNP: {
+            return {
+                ...state,
+                user: action.user
+            }
+        }
         case ACTIONS.BROWSE_ARTWORK: {
             return {
                 ...state,

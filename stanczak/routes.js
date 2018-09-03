@@ -9,6 +9,7 @@ import Nav from './components/nav'
 import Footer from './components/footer'
 import MapView from './components/mapView'
 import Locations from './components/locations'
+import Login from './components/login'
 
 export default (props) =>  {
         return (
@@ -16,6 +17,7 @@ export default (props) =>  {
                 <Nav />
                 <div className="content">
                     <Route exact path="/" component={MapView} />
+                    <Route exact path="/login" component={Login} />
                     <Route exact path="/artwork" component={Artwork} />
                     <Route path="/artwork/:id" component={NewPiece} />
                     <Route exact path="/artists" component={Artists} />

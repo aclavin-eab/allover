@@ -1,4 +1,6 @@
 export default {
+    LOGIN: 'LOGIN',
+    SIGNUP: 'SIGNUP',
     BROWSE_ARTWORK: 'BROWSE_ARTWORK',
     ADD_PIECE: 'ADD_PIECE',
     READ_PIECE: 'READ_PIECE',
