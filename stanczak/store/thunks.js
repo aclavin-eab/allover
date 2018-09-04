@@ -4,7 +4,8 @@ import * as actions from './actions'
 //THUNKS
 export function getUser(userObj) {
     return async dispatch => {
-        const response = await axios.get('/api/users/login', userObj)
+        console.log("about to send", userObj)
+        const response = await axios.post('/api/users/login', userObj)
         const user = response.data
         dispatch(actions.login(user))
     }
@@ -12,7 +13,8 @@ export function getUser(userObj) {
 
 export function addUser(userObj) {
     return async dispatch => {
-        const response = await axios.get('/api/users/signup', userObj)
+        console.log("about to send", userObj)
+        const response = await axios.post('/api/users/signup', userObj)
         const user = response.data
         dispatch(actions.signup(user))
     }

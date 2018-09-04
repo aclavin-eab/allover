@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import {getUser, addUser} from '../store/thunks'
+
 class Login extends Component {
     constructor(props) {
         super(props)
@@ -11,16 +13,19 @@ class Login extends Component {
 
     updateField = (event) => {
         this.setState({
-            [event.target.name]: event.target.value
+            user: {
+                ...this.state.user,
+                [event.target.name]: event.target.value
+            }
         })
     }
 
     login = () => {
-        getUser(this.state.user)
+        this.props.getUser(this.state.user)
     }
 
     signup = () => {
-        addUser(this.state.user)
+        this.props.addUser(this.state.user)
     }
 
     render() {
@@ -36,4 +41,11 @@ class Login extends Component {
     }
 }
 
-export default Login
+const mapDispatch = dispatch => {
+    return {
+        addUser: (user) => dispatch(addUser(user)),
+        getUser: (user) => dispatch(getUser(user))
+    }
+}
+
+export default connect(null, mapDispatch)(Login)
