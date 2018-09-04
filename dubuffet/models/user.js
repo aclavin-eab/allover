@@ -1,5 +1,6 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
+const Artwork = require('./artwork')
 const db = require('./database')
 
 const User = db.define('user', {
@@ -26,7 +27,20 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
-  }
+  },
+  first: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  last: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+},
+{
+    defaultScope: {
+        include: [{ model: Artwork}]
+    }
 })
 
 module.exports = User

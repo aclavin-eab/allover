@@ -3,7 +3,6 @@ const {User} = require('../models')
 module.exports = router
 
 router.post('/login', (req, res, next) => {
-    console.log("here", req.body)
   User.findOne({where: {email: req.body.email}})
     .then(user => {
       if (!user) {
@@ -13,16 +12,13 @@ router.post('/login', (req, res, next) => {
         console.log('Incorrect password for user:', req.body.email)
         res.status(401).send('Wrong username and/or password')
       } else {
-          console.log('in success', res)
-        req.json(true)
-        console.log('out of success')
+        res.json(user)
       }
     })
     .catch(next)
 })
 
 router.post('/signup', (req, res, next) => {
-  console.log(req.body)
   User.create(req.body)
     .then(user => {
       //req.login(user, err => (err ? next(err) : res.json(user)))

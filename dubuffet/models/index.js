@@ -16,4 +16,7 @@ Artist.hasMany(Artwork)
 Artwork.belongsTo(Location)
 Location.hasMany(Artwork)
 
+Artwork.belongsTo(User)
+User.hasMany(Artwork)
+
 module.exports = { db, Artwork, Artist, Location, User }
