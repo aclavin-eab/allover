@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as actions from './actions'
 
 //THUNKS
-export function getUser(userObj) {
+export function readUser(userObj) {
     return async dispatch => {
         console.log("about to send", userObj)
         const response = await axios.post('/api/users/login', userObj)

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import { Piece, NewPiece} from './'
 
 export default (props) => {
-    const {artwork, deletePiece, newView, toggleView} = props
+    const {artwork, deletePiece, newView, toggleView, user} = props
     return (
         <div className="artworkWrapper">
         <div className="itemWrapper">
@@ -18,8 +18,12 @@ export default (props) => {
         </div>
         {newView && (
             <NewPiece cancel={toggleView}/>
-        )}
-        <button className="headerButton" onClick={toggleView}>Add New Piece</button>
+        )}{user && user.id && (
+            <button className="headerButton" onClick={toggleView}>Add New Piece</button>
+        ) || (
+            <Link to={'/login'}><button className="headerButton">Login</button></Link>
+        )
+        }
         </div>
     )
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {getUser, addUser} from '../store/thunks'
+import {readUser, addUser} from '../store/thunks'
 
 class Login extends Component {
     constructor(props) {
@@ -20,8 +21,9 @@ class Login extends Component {
         })
     }
 
-    login = () => {
-        this.props.getUser(this.state.user)
+    login = async () => {
+        await this.props.readUser(this.state.user)
+        this.props.history.push('/')
     }
 
     signup = () => {
@@ -44,7 +46,7 @@ class Login extends Component {
 const mapDispatch = dispatch => {
     return {
         addUser: (user) => dispatch(addUser(user)),
-        getUser: (user) => dispatch(getUser(user))
+        readUser: (user) => dispatch(readUser(user))
     }
 }
 

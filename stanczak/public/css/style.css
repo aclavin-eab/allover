@@ -103,7 +103,7 @@ footer {
   .artworkWrapper, .artistsWrapper {
     position: relative;
     margin-top: 180px; }
-    .artworkWrapper button.headerButton, .artistsWrapper button.headerButton {
+    .artworkWrapper .headerButton, .artistsWrapper .headerButton {
       position: absolute;
       top: -75px;
       left: 0;

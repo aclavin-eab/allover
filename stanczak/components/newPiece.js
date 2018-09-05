@@ -62,6 +62,7 @@ class newPiece extends Component {
         if(piece.artistId === "null"){
             piece.artistId = null
         }
+        piece.userId = this.props.userId
         this.props.addPiece(piece).then(this.addPieceCallback, err => console.log(err))
     }
 
@@ -95,7 +96,7 @@ class newPiece extends Component {
         const artists = this.props.artists
         const locations = this.props.locations
         return (
-            <NewPieceTmpl artists={this.props.artists} locations={this.props.locations} selectedPiece={this.state.selectedLocation} editMode={this.state.editMode} handleSubmit={this.handleSubmit}
+            <NewPieceTmpl artists={this.props.artists} locations={this.props.locations} selectedPiece={this.state.selectedPiece} editMode={this.state.editMode} handleSubmit={this.handleSubmit}
             handleSecondarySubmit={this.handleSecondarySubmit} updateField={this.updateField} editPiece={this.props.editPiece} artwork={this.props.artwork}
             toggleEdit={this.toggleEdit} deleter={this.delete} cancel={this.props.cancel} geolocate={this.geolocate} />
         )
@@ -117,7 +118,8 @@ const mapProps = state => {
     return {
         artists: state.artists,
         locations: state.locations,
-        selectedPiece: state.selectedPiece
+        selectedPiece: state.selectedPiece,
+        userId: state.user.id
     }
 }
 

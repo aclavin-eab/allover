@@ -26,7 +26,7 @@ class Artwork extends Component {
 
     render() {
         return (
-            <ArtworkTmpl artwork={this.props.artwork} deletePiece={this.props.deletePiece} newView={this.state.newView} toggleView={this.toggleView} />
+            <ArtworkTmpl artwork={this.props.artwork} deletePiece={this.props.deletePiece} newView={this.state.newView} toggleView={this.toggleView} user={this.props.user} />
         )
     }
 }
@@ -42,7 +42,8 @@ const mapDispatch = dispatch => {
 
 const mapProps = state => {
     return {
-        artwork: state.artwork
+        artwork: state.artwork,
+        user: state.user
     }
 }
 
